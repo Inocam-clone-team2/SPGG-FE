@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import moment from "moment";
 import "moment/locale/ko";
 import axios from "axios";
-import CommunityDetail from "./CommunityDetail";
+import CommunityDetail from "./PostDetail";
 import styled from "styled-components";
 
 const CommentWrap = (props) => {

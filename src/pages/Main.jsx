@@ -7,7 +7,7 @@ const Main = () => {
 			<Link to="/Community">Community</Link>
 			<Link to="/Edit">Edit</Link>
 			<Link to="/History">History</Link>
-			<Link to="/Detail">Detail</Link>
+			<Link to="/CommunityDetail">CommunityDetail</Link>
 			<Link to="/Login">Login</Link>
 			<Link to="/PostForm">PostForm</Link>
 			<Link to="/Ranking">Ranking</Link>

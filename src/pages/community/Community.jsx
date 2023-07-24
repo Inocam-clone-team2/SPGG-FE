@@ -3,10 +3,271 @@ import Header1 from "./../../components/Header1";
 import Footer2 from "./../../components/Footer2";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-import MainForm from "./MainForm";
+import MainForm from "./CommunityMainForm";
 import moment from "moment";
 import axios from "axios";
 import "moment/locale/ko";
+
+const Community = () => {
+
+  moment.locale("ko");
+
+  const [community, setCommunity] = useState([]);
+  const [postPage, setPostPage] = useState(0);
+  const [statusCode, setStatusCode] = useState(0);
+  const [inputValue, setInputValue] = useState("");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    axios
+      .get("http://3.37.36./api/post")
+      .then((response) => {
+        setCommunity(response.data.data.content);
+        setStatusCode(response.data.statusCode);
+        console.log(1, community);
+        console.log(2, statusCode);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  const handlePrevPage = () => {
+    let prevPage = postPage - 1;
+    if (postPage < 0) {
+      return;
+    }
+    console.log(6, prevPage);
+    axios
+      .get("http://3.37.36./api/post/" + prevPage)
+      .then((response) => {
+        console.log(response.data.statusCode);
+        setCommunity(response.data.data.content);
+        setStatusCode(response.data.statusCode);
+
+        setPostPage(postPage - 1);
+      })
+      .catch((error) => {
+        console.log(error.response);
+      });
+  };
+
+  const handleNextPage = () => {
+    let nextPage = postPage + 1;
+
+    axios
+      .get("http://3.37.36./api/post/" + nextPage)
+      .then((response) => {
+        console.log(response.data.statusCode);
+        setCommunity(response.data.data.content);
+        setStatusCode(response.data.statusCode);
+        setPostPage(postPage + 1);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const handleOnSubmit = (e) => {
+    e.preventDefault();
+    axios
+      .get("api/post/find/" + inputValue)
+      .then((response) => {
+        console.log(2, inputValue);
+        setCommunity(response.data.data.content);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const handleOnChange = (e) => {
+    console.log(1, inputValue);
+    setInputValue(e.target.value);
+
+    const search = async () => {
+      await axios
+        .get("api/post/find/" + inputValue)
+        .then((response) => {
+          console.log(2, inputValue);
+
+          setCommunity(response.data.data.content);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+    setTimeout(400);
+    search();
+  };
+
+  return (
+    <div>
+      <CommunityWrap>
+        <Header1 />
+        <div className="community-container">
+          <MainForm />
+          <ContentBox >
+            <div className="community-header">
+              <div className="community-header-1">
+                <h2 className="header-text">전체</h2>
+                <div style={{ marginRight: "24px" }}>
+                  <Link to="/PostWrite">
+                    <img
+                      src="/img/iconWrite.png"
+                      style={{ width: "24px" }}
+                      alt="글쓰기"
+                    />
+                  </Link>
+                </div>
+              </div>
+              <div
+                className=" community-header-2"
+                style={{ height: "48px", position: "relative" }}
+              >
+                <div className="post-search-wrap">
+                  <form className="post-search" onSubmit={handleOnSubmit}>
+                    <select className="post-search-select">
+                      <option>제목+내용</option>
+                    </select>
+                    <input
+                      onChange={handleOnChange}
+                      tpye="text"
+                      value={inputValue}
+                      className="post-search-input"
+                      placeholder="검색"
+                    />
+                    <button className="post-search-button">
+                      <img
+                        className="post-search-img"
+                        src="/img/iconSearch.png"
+                        alt="검색"
+                        style={{ cursor: "pointer" }}
+                      />
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+            <div className="article-list">
+              {/* 여기서 부터 반복 */}
+              {community.map(
+                (community) =>
+                (
+                    <div className="article-box" key={community.id}>
+                      <div
+                        className="article-item"
+                        style={{ display: "contents" }}
+                      >
+                        <div
+                          className="article-number"
+                          style={{ alignSelf: "center", width: "72px" }}
+                        >
+                          {community.id}
+                        </div>
+                        <div
+                          className="article-list-item__content"
+                          style={{ alignSelf: "center" }}
+                        >
+                          <Link
+                            to={"/PostDetail/" + community.id}
+                            style={{ cursor: "pointer" }}
+                          >
+                            <div
+                              className="aritcle-list-item__title"
+                              style={{ textAlign: "left" }}
+                            >
+                              <span className="post-title">
+                                {community.title}
+                              </span>
+                              {/* <em
+                                style={{
+                                  color: "#16ae81",
+                                  fontStyle: "normal",
+                                }}
+                              >
+                                [{community.commentList.length}]
+                              </em> */}
+                            </div>
+                          </Link>
+                          <div className="article-list-item-meta">
+                            <div className="article-list-item-meta__item">
+                              <span style={{ color: "#98a0a7" }}>
+                                {moment(community.createdAt)
+                                  .startOf("second")
+                                  .fromNow()}
+                              </span>
+                              <span className="article-list-author">
+                                {community.nickname}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )
+              )}
+
+              <div>
+                <div className="article-list-paging">
+                  <div>
+                    {postPage > 0 && (
+                      <div style={{ display: "inline-block" }}>
+                        <button
+                          style={{ marginRight: "6px" }}
+                          onClick={handlePrevPage}
+                          className="article-list-paging__button"
+                        >
+                          <img
+                            src="/img/iconArrowLeft.png"
+                            alt="이전"
+                            style={{
+                              width: "24px",
+                              height: "24px",
+                              verticalAlign: "middle",
+                              cursor: "pointer",
+                            }}
+                          />
+                          이전
+                        </button>
+                      </div>
+                    )}
+
+                    {statusCode !== 204 ? (
+                      <div style={{ display: "inline-block" }}>
+                        <button
+                          style={{ marginLeft: "6px" }}
+                          onClick={handleNextPage}
+                          className="article-list-paging__button"
+                        >
+                          다음
+                          <img
+                            src="/img/iconArrowRight.png"
+                            alt="다음"
+                            style={{
+                              width: "24px",
+                              height: "24px",
+                              verticalAlign: "middle",
+                              cursor: "pointer",
+                            }}
+                          />
+                        </button>
+                      </div>
+                    ) : (
+                      <div></div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <Footer2 />
+          </ContentBox>
+        </div>
+      </CommunityWrap>
+    </div>
+  );
+};
 
 export const CommunityWrap = styled.div`
 margin: 0 auto;
@@ -26,13 +287,13 @@ background-color: white;
 margin: auto;
 ;
 
-.content-header {
+.community-header {
   position: relative;
   margin-bottom: 8px;
   background-color: #fff;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.15);
 }
-.content-header-wrap {
+.community-header-1 {
   display: flex;
   padding-top: 18px;
   padding-bottom: 0px;
@@ -114,7 +375,7 @@ margin: auto;
   padding-left: 8px;
 }
 
-.sub-search-wrap {
+.post-search-wrap {
   position: absolute;
   right: 0;
   bottom: 0;
@@ -122,7 +383,7 @@ margin: auto;
   margin-bottom: 6px;
 }
 
-.sub-header-search__select {
+.post-search-select {
   float: left;
   width: 122px;
   padding: 9px 0 8px 15px;
@@ -141,7 +402,7 @@ margin: auto;
   outline: none;
 }
 
-.sub-header-search__input {
+.post-search-input {
   float: left;
   border: none;
   width: 200px;
@@ -154,7 +415,7 @@ margin: auto;
   font-size: 14px;
 }
 
-.sub-header-search__button {
+.post-search-button {
   float: left;
   position: absolute;
   top: 0;
@@ -164,7 +425,7 @@ margin: auto;
   border: none;
 }
 
-.sub-header-search__img {
+.post-search-img {
   width: 24px;
   height: 24px;
 }
@@ -189,265 +450,5 @@ margin: auto;
 .article-list-author {
   margin-left: 5px;
 }`;
-
-const Community = () => {
-  moment.locale("ko");
-
-  const [communityDtos, setCommunityDtos] = useState([]);
-  const [postPage, setPostPage] = useState(0);
-  const [statusCode, setStatusCode] = useState(0);
-  const [inputValue, setInputValue] = useState("");
-  const navigate = useNavigate(); // useNavigate 훅을 사용하여 navigate 함수를 가져옵니다.
-
-  useEffect(() => {
-    axios
-      .get("http://59.20.79.42:58002/post/" + postPage)
-      .then((response) => {
-        setCommunityDtos(response.data.data);
-        setStatusCode(response.data.statusCode);
-        console.log(1, communityDtos);
-        console.log(2, statusCode);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
-
-  const handlePrevPage = () => {
-    let prevPage = postPage - 1;
-    if (postPage < 0) {
-      return;
-    }
-    console.log(6, prevPage);
-    axios
-      .get("http://59.20.79.42:58002/post/" + prevPage)
-      .then((response) => {
-        console.log(response.data.statusCode);
-        setCommunityDtos(response.data.data);
-        setStatusCode(response.data.statusCode);
-
-        setPostPage(postPage - 1);
-      })
-      .catch((error) => {
-        console.log(error.response);
-      });
-  };
-
-  const handleNextPage = () => {
-    let nextPage = postPage + 1;
-
-    axios
-      .get("http://59.20.79.42:58002/post/" + nextPage)
-      .then((response) => {
-        console.log(response.data.statusCode);
-        setCommunityDtos(response.data.data);
-        setStatusCode(response.data.statusCode);
-        setPostPage(postPage + 1);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const handleOnSubmit = (e) => {
-    e.preventDefault();
-    axios
-      .get("http://59.20.79.42:58002/post/find/" + inputValue)
-      .then((response) => {
-        console.log(2, inputValue);
-        setCommunityDtos(response.data.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const handleOnChange = (e) => {
-    console.log(1, inputValue);
-    setInputValue(e.target.value);
-
-    const search = async () => {
-      await axios
-        .get("http://59.20.79.42:58002/post/find/" + inputValue)
-        .then((response) => {
-          console.log(2, inputValue);
-
-          setCommunityDtos(response.data.data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    };
-    setTimeout(400);
-    search();
-  };
-
-  return (
-    <div>
-      <CommunityWrap>
-        <Header1 />
-        <div className="community-container">
-          <MainForm />
-          <ContentBox >
-            <div className="content-header">
-              <div className="content-header-wrap">
-                <h2 className="header-text">전체</h2>
-                <div style={{ marginRight: "24px" }}>
-                      <Link to="/write">
-                        <img
-                          src="/img/iconWrite.png"
-                          style={{ width: "24px" }}
-                          alt="글쓰기"
-                        />
-                      </Link>
-                </div>
-              </div>
-              <div
-                className="content-header-sub"
-                style={{ height: "48px", position: "relative" }}
-              >
-                <div className="sub-search-wrap">
-                  <form className="sub-search" onSubmit={handleOnSubmit}>
-                    <select className="sub-header-search__select">
-                      <option>제목+내용</option>
-                    </select>
-                    <input
-                      onChange={handleOnChange}
-                      tpye="text"
-                      value={inputValue}
-                      className="sub-header-search__input"
-                      placeholder="검색"
-                    />
-                    <button className="sub-header-search__button">
-                      <img
-                        className="sub-header-search__img"
-                        src="/img/iconSearch.png"
-                        alt="검색"
-                        style={{cursor: "pointer"}}
-                      />
-                    </button>
-                  </form>
-                </div>
-              </div>
-            </div>
-
-            <div className="article-list">
-              {/* 여기서 부터 반복 */}
-              {communityDtos.map(
-                (communityDto) =>
-                  communityDto.type === 1 && (
-                    <div className="article-box" key={communityDto.post.id}>
-                      <div
-                        className="article-item"
-                        style={{ display: "contents" }}
-                      >
-                        <div
-                          className="article-number"
-                          style={{ alignSelf: "center", width: "72px" }}
-                        >
-                          {communityDto.post.id}
-                        </div>
-                        <div
-                          className="article-list-item__content"
-                          style={{ alignSelf: "center" }}
-                        >
-                          <Link
-                            to={"/community/" + communityDto.post.id}
-                            style={{ cursor: "pointer" }}
-                          >
-                            <div
-                              className="aritcle-list-item__title"
-                              style={{ textAlign: "left" }}
-                            >
-                              <span className="post-title">
-                                {communityDto.post.title}
-                              </span>
-                              <em
-                                style={{
-                                  color: "#16ae81",
-                                  fontStyle: "normal",
-                                }}
-                              >
-                                [{communityDto.post.replies.length}]
-                              </em>
-                            </div>
-                          </Link>
-                          <div className="article-list-item-meta">
-                            <div className="article-list-item-meta__item">
-                              <span style={{ color: "#98a0a7" }}>
-                                {moment(communityDto.post.createDate)
-                                  .startOf("second")
-                                  .fromNow()}
-                              </span>
-                              <span className="article-list-author">
-                                {communityDto.post.user.nickname}
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )
-              )}
-
-              <div>
-                <div className="article-list-paging">
-                  <div>
-                    {postPage > 0 && (
-                      <div style={{ display: "inline-block" }}>
-                        <button
-                          style={{ marginRight: "6px" }}
-                          onClick={handlePrevPage}
-                          className="article-list-paging__button"
-                        >
-                          <img
-                            src="/img/iconArrowLeft.png"
-                            alt="이전"
-                            style={{
-                              width: "24px",
-                              height: "24px",
-                              verticalAlign: "middle",
-                              cursor: "pointer",
-                            }}
-                          />
-                          이전
-                        </button>
-                      </div>
-                    )}
-
-                    {statusCode !== 204 ? (
-                      <div style={{ display: "inline-block" }}>
-                        <button
-                          style={{ marginLeft: "6px" }}
-                          onClick={handleNextPage}
-                          className="article-list-paging__button"
-                        >
-                          다음
-                          <img
-                            src="/img/iconArrowRight.png"
-                            alt="다음"
-                            style={{
-                              width: "24px",
-                              height: "24px",
-                              verticalAlign: "middle",
-                              cursor: "pointer",
-                            }}
-                          />
-                        </button>
-                      </div>
-                    ) : (
-                      <div></div>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-            <Footer2 />
-          </ContentBox>
-        </div>
-      </CommunityWrap>
-    </div>
-  );
-};
 
 export default Community;
