@@ -8,51 +8,59 @@ const Main = () => {
 	return (
 		<div>
 			<Header>
-				<HeaderDiv height="40px" backgroundColor={colors.secondary}>
-					<LogoImg src={logo} alt="logo" />
-					<Nav>
-						<NavItem>
-							<img
-								src="https://opgg-gnb.akamaized.net/static/images/icons/img-navi-lol-white.svg?image=q_auto,f_webp,w_48&v=1690002931051"
-								alt="lol"
-							/>
-							<span>리그오브레전드</span>
-						</NavItem>
-						<NavItem>
-							<img
-								src="
+				<HeaderDiv height="40px" justify="space-between" backgroundColor={colors.secondary}>
+					<HeaderLeft>
+						<LogoLink to="/">
+							<LogoImg src={logo} alt="logo" />
+						</LogoLink>
+						<Nav>
+							<NavItem>
+								<img
+									src="https://opgg-gnb.akamaized.net/static/images/icons/img-navi-lol-white.svg?image=q_auto,f_webp,w_48&v=1690002931051"
+									alt="lol"
+								/>
+								<span>리그오브레전드</span>
+							</NavItem>
+							<NavItem>
+								<NavLink to="/community">
+									<img
+										src="
 								https://opgg-gnb.akamaized.net/static/images/icons/img-navi-talk-white.svg"
-								alt="lol"
-							/>
-							<span>톡피지지</span>
-						</NavItem>
-						<FuncBtnWrapper>
-							<FuncBtn background="https://s-lol-web.op.gg/images/icon/feedback.svg">
-								<TooltipText>FAQ/피드백</TooltipText>
-							</FuncBtn>
-							<FuncBtn background="https://s-lol-web.op.gg/images/icon/icon-lightmode.svg">
-								<TooltipText>Light mode</TooltipText>
-							</FuncBtn>
-							<FuncBtn background="https://s-lol-web.op.gg/images/icon/icon-world-light-blue.svg?v=1690030599664"></FuncBtn>
-							<span>한국어 ▾</span>
-							<LoginBtn>로그인</LoginBtn>
-						</FuncBtnWrapper>
-					</Nav>
+										alt="lol"
+									/>
+									톡피지지
+								</NavLink>
+							</NavItem>
+						</Nav>
+					</HeaderLeft>
+					<FuncBtnWrapper>
+						<FuncBtn background="https://s-lol-web.op.gg/images/icon/feedback.svg">
+							<TooltipText>FAQ/피드백</TooltipText>
+						</FuncBtn>
+						<FuncBtn background="https://s-lol-web.op.gg/images/icon/icon-lightmode.svg">
+							<TooltipText>Light mode</TooltipText>
+						</FuncBtn>
+						<FuncBtn background="https://s-lol-web.op.gg/images/icon/icon-world-light-blue.svg?v=1690030599664"></FuncBtn>
+						<span>한국어 ▾</span>
+						<LoginLink to="/login">로그인</LoginLink>
+					</FuncBtnWrapper>
 				</HeaderDiv>
-				<HeaderDiv height="50px">
+				<HeaderDiv hasBottomBorder>
 					<Nav>
-						<NavItem>홈</NavItem>
-						<NavItem>랭킹</NavItem>
+						<NavItem fontSize="15px">홈</NavItem>
+						<NavLink to="ranking" fontSize="15px">
+							랭킹
+						</NavLink>
 					</Nav>
-					<Link to="https://www.youtube.com/watch?v=7KRBH8RadNc">
+					<PatchLink to="https://www.youtube.com/watch?v=7KRBH8RadNc">
 						13.14 패치노트 보기
-					</Link>
+					</PatchLink>
 				</HeaderDiv>
-				<HeaderDiv backgroundColor={colors.point}>
-					<Link to="https://gigs.op.gg/intro?&utm_source=opgg&utm_medium=txt&utm_campaign=gnb_tier_1">
+				{/* <HeaderDiv backgroundColor={colors.point}>
+					<AdLink to="https://gigs.op.gg/intro?&utm_source=opgg&utm_medium=txt&utm_campaign=gnb_tier_1">
 						이번 배치는 망할 수 없으니까! 프로 전문가한테 강의 받고 티어 올리자!
-					</Link>
-				</HeaderDiv>
+					</AdLink>
+				</HeaderDiv> */}
 			</Header>
 			<MainSection>
 				<img
@@ -197,14 +205,27 @@ const Header = styled.header`
 const HeaderDiv = styled.div`
 	width: 100%;
 	display: flex;
+	justify-content: ${(props) => props.justify || "center"};
 	height: ${(props) => props.height || "50px"};
 	background-color: ${(props) => props.backgroundColor || colors.primary};
+	${({ hasBottomBorder }) => hasBottomBorder && "border-bottom: 1px solid #4171D6;"}
+`;
+
+// 헤더 윗줄
+const HeaderLeft = styled.div`
+	display: flex;
+`;
+
+const LogoLink = styled(Link)`
+	display: flex;
+	align-items: center;
+	background-color: ${colors.primary};
+	height: 100%;
 `;
 
 const LogoImg = styled.img`
-	height: 100%;
-	width: auto;
-	background-color: ${colors.primary};
+	width: 70px;
+	margin: 10px 20px;
 `;
 const Nav = styled.ul`
 	display: flex;
@@ -215,16 +236,33 @@ const Nav = styled.ul`
 
 	& > :first-child {
 		background-color: ${colors.primary};
+		color: white;
+	}
+
+	& > :last-child {
+		margin-right: 400px;
 	}
 `;
 
 const NavItem = styled.li`
 	display: flex;
 	align-items: center;
-	width: calc(100% + 20px);
+	font-size: ${(props) => props.fontSize || "12px"};
+	font-weight: 600;
 	height: 100%;
+	gap: 10px;
+	padding: 0 10px;
 `;
 
+const NavLink = styled(Link)`
+	text-decoration: none;
+	color: ${colors.text_back};
+	display: flex;
+	align-items: center;
+	gap: 15px;
+	cursor: pointer;
+	font-size: ${(props) => props.fontSize || "14px"};
+`;
 const FuncBtn = styled.button`
 	width: 24px;
 	height: 24px;
@@ -243,6 +281,8 @@ const FuncBtn = styled.button`
 
 const FuncBtnWrapper = styled.div`
 	display: flex;
+	align-items: center;
+	justify-content: end;
 `;
 
 const TooltipText = styled.div`
@@ -259,10 +299,16 @@ const TooltipText = styled.div`
 	white-space: nowrap;
 `;
 
-const LoginBtn = styled.button`
+const LoginLink = styled(Link)`
 	background-color: ${colors.primary};
 	border: none;
 	border-radius: 4px;
+	width: 64px;
+	height: 26px;
+	text-decoration: none;
+	color: white;
+	text-align: center;
+	font-weight: bold;
 `;
 
 const MainSection = styled.section`
@@ -271,7 +317,26 @@ const MainSection = styled.section`
 	min-height: 100vh;
 	height: calc(100% + 100px);
 	text-align: center;
-	padding-bottom: 100px;
+	padding: 130px;
+`;
+
+// 링크
+const AdLink = styled(Link)`
+	text-decoration: none;
+	color: ${colors.text};
+`;
+
+const PatchLink = styled(Link)`
+	background-color: #4171d6;
+	border-radius: 18px;
+	width: 140px;
+	height: 30px;
+	color: white;
+	text-decoration: none;
+	font-size: 12px;
+	line-height: 30px;
+	text-align: center;
+	margin-top: 10px;
 `;
 
 const SearchWrapper = styled.form`
