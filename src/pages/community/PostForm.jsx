@@ -8,8 +8,94 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const WriteBox = styled.div`
-  // 스타일 코드 생략
-`;
+text-align: center;
+  width: 728px;
+  margin: auto;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.15);
+
+  .article-write {
+    background: rgb(255, 255, 255);
+    padding: 20px 10px;
+  }
+  .article-write__title {
+    text-align: left;
+  }
+
+  .article-write__title {
+    color: rgb(30, 32, 34);
+    font-weight: 700;
+  }
+  .article-write-input {
+    margin-top: 16px;
+  }
+  .article-write-header {
+    position: static;
+    text-align: left;
+    padding-bottom: 0px;
+    padding-top: 8px;
+    background: rgb(255, 255, 255);
+  }
+
+  .article-write__text {
+    display: block;
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    line-height: 19px;
+    font-size: 16px;
+    color: rgb(30, 32, 34);
+    box-sizing: border-box;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(221, 223, 228);
+    border-image: initial;
+    padding: 10px 16px 9px;
+  }
+
+  .article-write-content {
+    width: 100%;
+  }
+  .article-write__textarea {
+    width: 97.8%;
+    margin-top: 13px;
+    border: 1px solid rgb(221, 223, 228);
+    color: rgb(30, 32, 34);
+    resize: none;
+    height: 447px;
+    font-size: 17px;
+    padding: 10px;
+  }
+
+  .article-write__button--submit {
+    margin-top: 16px;
+    position: static;
+    border: 0;
+    color: #fff;
+    border-radius: 4px;
+    background-color: #46cfa7;
+    width: 154px;
+    height: 48px;
+    line-height: 19px;
+    font-size: 16px;
+  }
+
+  .article-write__button--cancel {
+    margin-top: 16px;
+    line-height: 19px;
+    font-size: 16px;
+    color: #7b858e;
+    border-radius: 4px;
+    background-color: #fff;
+    border: 1px solid #dddfe4;
+    width: 154px;
+    height: 48px;
+  }
+
+  .article-write__btn {
+    display: flex;
+    justify-content: space-between;
+  }`;
+
+  
 
 const CommunityWrite = () => {
   const [title, setTitle] = useState("");
@@ -65,7 +151,7 @@ const CommunityWrite = () => {
         <Header1 />
         <div className="communityWrite-conatiner">
           <MainForm />
-          <div>
+          <div style={{backgroundColor:'#ebeef1'}}>
             <WriteBox>
               <div className="content">
                 <form onSubmit={handleSubmit}>
@@ -109,7 +195,7 @@ const CommunityWrite = () => {
               </div>
             </WriteBox>
           </div>
-          <Footer2 />
+          <Footer2/>
         </div>
       </CommunityWrap>
     </div>

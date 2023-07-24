@@ -8,12 +8,13 @@ import CommentWrap from "./CommentWrap";
 import moment from "moment";
 import "moment/locale/ko";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
 const CommunityContentBox = styled.div`
-  max-width: 1044px;
+  max-width: 728px;
   text-align: left;
+  margin: auto;
 
   .article {
     background: #fff;
@@ -210,8 +211,7 @@ const CommunityContentBox = styled.div`
 `;
 
 const CommunityDetail = ({ match, history }) => {
-  let postId = match.params.id;
-
+  const { postId } = useParams();
   const [replies, setReplies] = useState([]);
   const [resp, setResp] = useState({});
   const [postUserId, setPostUserId] = useState(0);
@@ -397,7 +397,6 @@ const CommunityDetail = ({ match, history }) => {
     <div>
       <CommunityWrap>
         <Header1 />
-
         <div className="community-container">
           <MainForm />
           <CommunityContentBox>

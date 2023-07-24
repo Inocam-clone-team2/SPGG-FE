@@ -2,7 +2,7 @@ import React from "react";
 import "./Header1.css";
 import { Link } from "react-router-dom";
 
-const Header1 = ({ history }) => {
+const Header1 = () => {
   const logout = () => {
     if (window.confirm("로그아웃 하시겠습니까?") == true) {
       localStorage.clear();
