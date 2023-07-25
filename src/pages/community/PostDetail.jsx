@@ -4,7 +4,6 @@ import { CommunityWrap } from "./Community";
 import Header1 from "../../components/community/Header1";
 import Footer2 from "../../components/community/Footer2";
 import MainForm from "./CommunityMainForm";
-// import CommentWrap from "./CommentWrap";
 import moment from "moment";
 import "moment/locale/ko";
 import { Link } from "react-router-dom";
@@ -36,20 +35,6 @@ const PostDetail = () => {
   if (!post) {
     return <div>Loading...</div>;
   }
-
-  const handlePostClick = () => {
-    navigate(`/`);
-  };
-
-  const handleGoBackPage = (id) => {
-    if (id === '1') {
-      alert('첫번째 페이지입니다!');
-      return; // 첫 번째 요소이면 함수 실행을 중지하고 종료합니다.
-    } else {
-      const previousId = parseInt(id) - 1;
-      navigate(`/detail/${previousId}`);
-    }
-  };
 
   const onDeletePost = async () => {
     try {
@@ -144,7 +129,6 @@ const PostDetail = () => {
                   </button>
                 </div>
               </div>
-              {/* <CommentWrap/> */}
             </div>
             <Footer2 />
           </CommunityContentBox>
