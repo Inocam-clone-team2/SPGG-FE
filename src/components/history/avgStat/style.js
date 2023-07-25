@@ -11,27 +11,36 @@ export const StatContainer = styled.section`
 	padding: 20px;
 `;
 
-export const Stats = styled.div``;
+export const StatsDiv = styled.div``;
 
 export const ChrPlayed = styled.div`
+	display: flex;
+	align-items: center;
+	margin-top: 10px;
+
 	img {
 		width: 24px;
 		height: 24px;
 		border-radius: 50%;
+		margin-right: 5px;
 	}
 `;
 
+export const TextAlign = styled.div`
+	display: flex;
+	gap: 10px;
+`;
 export const GraphWrapper = styled.div`
 	display: flex;
-	gap: 40px;
 	justify-content: center;
 	align-items: center;
 `;
 
-export const StatText = styled.h5`
+export const StatText = styled.p`
 	color: ${(props) => props.color || "#758592"};
 	font-size: ${(props) => props.fontSize || "12px"};
-	line-height: 16px;
+	font-weight: bold;
+	margin: 0;
 `;
 
 // ! donut chart
@@ -78,4 +87,37 @@ export const DonutChartWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+`;
+
+// ! 막대그래프
+export const BarGraphWrapper = styled.div`
+	width: 20px;
+	height: 100px;
+	background-color: #5383e8;
+	margin-bottom: 5px;
+`;
+
+export const BarGraphFill = styled.div`
+	width: 100%;
+	height: ${(props) => props.percentage}%; /* props로 전달된 퍼센트에 따라 너비 조정 */
+	background-color: #dbe0e4; /* 파란색 */
+`;
+
+export const Kda = styled.div`
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	margin: 10px 0 0 40px;
+	height: 88px;
+`;
+
+export const PrfChr = styled.div`
+	display: flex;
+	justify-content: start;
+	margin-top: 10px;
+`;
+
+export const GraphAlign = styled.div`
+	text-align: center;
+	margin-right: 20px;
 `;

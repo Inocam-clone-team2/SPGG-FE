@@ -1,0 +1,162 @@
+import React from "react";
+import * as S from "./style";
+import { Link } from "react-router-dom";
+
+const PrevGame = () => {
+	return (
+		<S.StatsPerGame>
+			<S.GameInfo>
+				<div>
+					<p>솔랭</p>
+					<p>3시간 전</p>
+					<p>승리</p>
+					<p>20분 35초</p>
+				</div>
+				<div>
+					<S.ChamInfo>
+						<img
+							src="https://opgg-static.akamaized.net/meta/images/lol/champion/Rakan.png?image=c_crop,h_103,w_103,x_9,y_9/q_auto,f_webp,w_96&v=1690128491870"
+							alt="cham"
+						/>
+						<S.SpellWrapper>
+							<img
+								src="https://opgg-static.akamaized.net/meta/images/lol/spell/SummonerFlash.png?image=q_auto,f_webp,w_44&v=1690128491870"
+								alt=""
+							/>
+							<img
+								src="https://opgg-static.akamaized.net/meta/images/lol/spell/SummonerFlash.png?image=q_auto,f_webp,w_44&v=1690128491870"
+								alt=""
+							/>
+							<img
+								src="https://opgg-static.akamaized.net/meta/images/lol/spell/SummonerFlash.png?image=q_auto,f_webp,w_44&v=1690128491870"
+								alt=""
+							/>
+							<img
+								src="https://opgg-static.akamaized.net/meta/images/lol/spell/SummonerFlash.png?image=q_auto,f_webp,w_44&v=1690128491870"
+								alt=""
+							/>
+						</S.SpellWrapper>
+						<div>
+							<p>1 / 0 / 13</p>
+							<p>Perfect 평점</p>
+						</div>
+					</S.ChamInfo>
+					<S.ItemInfo>
+						<img
+							src="https://opgg-static.akamaized.net/meta/images/lol/item/2065.png?image=q_auto,f_webp,w_44&v=1690128491870"
+							alt="item"
+						/>
+						<img
+							src="https://opgg-static.akamaized.net/meta/images/lol/item/2065.png?image=q_auto,f_webp,w_44&v=1690128491870"
+							alt="item"
+						/>
+						<img
+							src="https://opgg-static.akamaized.net/meta/images/lol/item/2065.png?image=q_auto,f_webp,w_44&v=1690128491870"
+							alt="item"
+						/>
+						<img
+							src="https://opgg-static.akamaized.net/meta/images/lol/item/2065.png?image=q_auto,f_webp,w_44&v=1690128491870"
+							alt="item"
+						/>
+						<img
+							src="https://opgg-static.akamaized.net/meta/images/lol/item/2065.png?image=q_auto,f_webp,w_44&v=1690128491870"
+							alt="item"
+						/>
+						<img
+							src="https://opgg-static.akamaized.net/meta/images/lol/item/2065.png?image=q_auto,f_webp,w_44&v=1690128491870"
+							alt="item"
+						/>
+						<img
+							src="https://opgg-static.akamaized.net/meta/images/lol/item/2065.png?image=q_auto,f_webp,w_44&v=1690128491870"
+							alt="item"
+						/>
+					</S.ItemInfo>
+				</div>
+				<div>
+					<p>킬관여 78%</p>
+					<p>제어 와드 9</p>
+					<p>CS 29 (1.4)</p>
+					<p>Master</p>
+				</div>
+				<S.Players>
+					<ul>
+						<li>
+							<img
+								src="https://opgg-static.akamaized.net/meta/images/lol/champion/Jax.png?image=c_crop,h_103,w_103,x_9,y_9/q_auto,f_webp,w_32&v=1690128491870"
+								alt=""
+							/>
+							nickname
+						</li>
+						<li>
+							<img
+								src="https://opgg-static.akamaized.net/meta/images/lol/champion/Jax.png?image=c_crop,h_103,w_103,x_9,y_9/q_auto,f_webp,w_32&v=1690128491870"
+								alt=""
+							/>
+							nickname
+						</li>
+						<li>
+							<img
+								src="https://opgg-static.akamaized.net/meta/images/lol/champion/Jax.png?image=c_crop,h_103,w_103,x_9,y_9/q_auto,f_webp,w_32&v=1690128491870"
+								alt=""
+							/>
+							nickname
+						</li>
+						<li>
+							<img
+								src="https://opgg-static.akamaized.net/meta/images/lol/champion/Jax.png?image=c_crop,h_103,w_103,x_9,y_9/q_auto,f_webp,w_32&v=1690128491870"
+								alt=""
+							/>
+							nickname
+						</li>
+						<li>
+							<img
+								src="https://opgg-static.akamaized.net/meta/images/lol/champion/Jax.png?image=c_crop,h_103,w_103,x_9,y_9/q_auto,f_webp,w_32&v=1690128491870"
+								alt=""
+							/>
+							nickname
+						</li>
+					</ul>
+					<ul>
+						<li>
+							<img
+								src="https://opgg-static.akamaized.net/meta/images/lol/champion/Jax.png?image=c_crop,h_103,w_103,x_9,y_9/q_auto,f_webp,w_32&v=1690128491870"
+								alt=""
+							/>
+							nickname
+						</li>
+						<li>
+							<img
+								src="https://opgg-static.akamaized.net/meta/images/lol/champion/Jax.png?image=c_crop,h_103,w_103,x_9,y_9/q_auto,f_webp,w_32&v=1690128491870"
+								alt=""
+							/>
+							nickname
+						</li>
+						<li>
+							<img
+								src="https://opgg-static.akamaized.net/meta/images/lol/champion/Jax.png?image=c_crop,h_103,w_103,x_9,y_9/q_auto,f_webp,w_32&v=1690128491870"
+								alt=""
+							/>
+							nickname
+						</li>
+						<li>
+							<img
+								src="https://opgg-static.akamaized.net/meta/images/lol/champion/Jax.png?image=c_crop,h_103,w_103,x_9,y_9/q_auto,f_webp,w_32&v=1690128491870"
+								alt=""
+							/>
+							nickname
+						</li>
+						<li>
+							<img
+								src="https://opgg-static.akamaized.net/meta/images/lol/champion/Jax.png?image=c_crop,h_103,w_103,x_9,y_9/q_auto,f_webp,w_32&v=1690128491870"
+								alt=""
+							/>
+							nickname
+						</li>
+					</ul>
+				</S.Players>
+			</S.GameInfo>
+		</S.StatsPerGame>
+	);
+};
+
+export default PrevGame;
