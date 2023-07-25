@@ -7,6 +7,7 @@ import {
 } from "./Signup";
 import * as s from "../components/signup-slide/SignupStyleComponents";
 import { useNavigate } from "react-router-dom";
+import instance from "../api/post";
 
 const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 
@@ -47,6 +48,35 @@ const Login = () => {
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    const { email, password } = state;
+    console.log(state);
+    console.log(email);
+    console.log(password);
+    if (email && password) {
+      try {
+        const response = await instance.post(`/api/auth/login`, {
+          email,
+          password,
+        });
+        console.log("response", response);
+
+        if (response.status === 200) {
+          // localStorage.setItem("authorization", accesstoken);
+          let accessToken = response.headers.get("authorization");
+          localStorage.setItem("authorization", accessToken);
+          alert("로그인 성공");
+          handleGotoMain();
+        } else {
+          alert("로그인 실패");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
   const handleFocus = (field) => {
     dispatch({ type: "SET_FOCUS", field, isFocused: true });
   };
@@ -75,16 +105,6 @@ const Login = () => {
 
   const isAnyInputEmpty = () => {
     return state.email.trim() === "" || state.password.trim() === "";
-  };
-
-  const handleAgreementBtn = () => {
-    if (!isAnyInputEmpty()) {
-      //   onNextButtonClick(); 로그인 하도록!
-      alert("로그인시도!");
-    } else {
-      alert("이메일과 비밀번호를 모두 입력해주세요!");
-      return;
-    }
   };
 
   return (
@@ -187,7 +207,7 @@ const Login = () => {
                 }}
               >
                 <s.NextButton
-                  onClick={handleAgreementBtn}
+                  onClick={handleLogin}
                   style={{
                     marginTop: "5px",
                     height: "60px",
