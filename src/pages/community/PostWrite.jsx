@@ -5,13 +5,53 @@ import Header1 from "../../components/community/Header1";
 import MainForm from "./CommunityMainForm";
 import Footer2 from "../../components/community/Footer2";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../../api/post"
 
 const PostWrite = () => {
+  const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const storageUserId = parseInt(localStorage.getItem("userId"));
-  const navigate = useNavigate();
+  const [file, setFile] = useState(null);
+
+  const onSubmitHandler = async (event, title, content, file) => {
+    if (title === "" || content === "") {
+      alert("제목과 내용을 입력해주세요.");
+
+      return;
+    }
+
+    const postFormData = new FormData();
+
+    const data = {
+      title: title,
+      content: content,
+    };
+
+    postFormData.append(
+      "data",
+      new Blob([JSON.stringify(data)], { type: "application/json" })
+    );
+    postFormData.append("file", file);
+
+    try {
+      const response = await api.post(`api/post`, postFormData);
+      navigate(`/community`);
+      setTitle("");
+      setContent("");
+      setFile(null);
+
+      console.log(response);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const handleFileUpload = (event) => {
+    const selectedFile = event.target.files[0];
+    if (selectedFile) {
+      setFile(selectedFile);
+    }
+  };
 
   const handleChangeTitle = (e) => {
     setTitle(e.target.value);
@@ -19,40 +59,6 @@ const PostWrite = () => {
 
   const handleChangeContent = (e) => {
     setContent(e.target.value);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(title);
-    console.log(content);
-
-    axios
-      .post(
-        "http://3.37.36./api/post",
-        {
-          title: title,
-          content: content,
-          userId: {
-            id: storageUserId,
-          },
-        },
-        {
-          headers: {
-            // Accept: 'application/json',
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + localStorage.getItem("jwtToken"),
-          },
-        }
-      )
-      .then((response) => {
-        console.log(response);
-
-        alert("글작성이 완료되었습니다.");
-        navigate("/community");
-      })
-      .catch((error) => {
-        console.log(error.response);
-      });
   };
 
   return (
@@ -64,7 +70,10 @@ const PostWrite = () => {
           <div style={{backgroundColor:'#ebeef1'}}>
             <WriteBox>
               <div className="content">
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={(event) => {
+              event.preventDefault();
+              onSubmitHandler(event, title, content, file);
+            }}>
                   <div className="article-write">
                     <div className="article-write-header">
                       <div className="article-write__title">글쓰기</div>
@@ -85,6 +94,16 @@ const PostWrite = () => {
                         className="article-write__textarea"
                       ></textarea>
                     </div>
+                    <div>
+                    <label htmlFor="file">파일</label>
+                      <input
+                        type="file"
+                        className="file-input"
+                        id="image"
+                        name="image"
+                        accept="image/*"
+                        onChange={handleFileUpload}
+                      /></div>
                     <div className="article-write__btn">
                       <button
                         className="article-write__button article-write__button--cancel"
@@ -111,6 +130,8 @@ const PostWrite = () => {
     </div>
   );
 };
+
+export default PostWrite;
 
 const WriteBox = styled.div`
 text-align: center;
@@ -199,5 +220,3 @@ text-align: center;
     display: flex;
     justify-content: space-between;
   }`;
-
-export default PostWrite;
