@@ -20,7 +20,7 @@ const Community = () => {
 
   useEffect(() => {
     axios
-      .get("http://3.37.36./api/post")
+      .get("http://3.37.36.202/api/post")
       .then((response) => {
         setCommunity(response.data.data.content);
         setStatusCode(response.data.statusCode);

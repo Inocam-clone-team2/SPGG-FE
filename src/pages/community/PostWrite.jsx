@@ -6,11 +6,13 @@ import MainForm from "./CommunityMainForm";
 import Footer2 from "../../components/community/Footer2";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import instance from "../../api/post"
 
 const PostWrite = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const storageUserId = parseInt(localStorage.getItem("userId"));
+  const [image, setImage] = useState(null);
+  const [category, setCategory] = useState("FREE");
   const navigate = useNavigate();
 
   const handleChangeTitle = (e) => {
@@ -21,38 +23,78 @@ const PostWrite = () => {
     setContent(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleChangeCategory = (e) => {setCategory(e.target.value);};
+  const handleChangeImage = (e) => {
+    setImage(e.target.file);
+}
+  const handleSubmit = (e) => async (event, title, content, file) => {
     e.preventDefault();
     console.log(title);
     console.log(content);
 
-    axios
-      .post(
-        "http://3.37.36./api/post",
-        {
-          title: title,
-          content: content,
-          userId: {
-            id: storageUserId,
-          },
-        },
-        {
-          headers: {
-            // Accept: 'application/json',
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + localStorage.getItem("jwtToken"),
-          },
-        }
-      )
-      .then((response) => {
-        console.log(response);
+    const data = {
+      title: title,
+      content: content,
+      category: category,
+    };
 
-        alert("글작성이 완료되었습니다.");
-        navigate("/community");
-      })
-      .catch((error) => {
-        console.log(error.response);
-      });
+    postFormData.append(
+      "data",
+      new Blob([JSON.stringify(data)], { type: "application/json" })
+    );
+
+    try {
+      const response = await instance.post(`api/post`, postFormData);
+      navigate(`/community`); // 이동
+      setTitle("");
+      setContent("");
+      setFile(null);
+
+      console.log(response);
+      // 요청에 대한 응답 처리
+    } catch (error) {
+      console.error("Error:", error);
+
+      // 에러 처리
+    }
+    // setTitle("");
+    // setContent("");
+
+
+  }
+
+    // instance
+    //   .post(
+    //     "/api/post",
+    //     {
+    //       title: title,
+    //       content: content,
+    //       category: category,
+    //     },
+    //     {
+    //       headers: {
+    //         // Accept: 'application/json',
+    //         Authorization: "Bearer " + localStorage.getItem("jwtToken"),
+    //       },
+    //     }
+    //   )
+    //   .then((response) => {
+    //     console.log(response);
+
+    //     alert("글작성이 완료되었습니다.");
+    //     navigate("/community");
+    //   })
+    //   .catch((error) => {
+    //     console.log(error.response);
+    //   });
+  };
+
+  const handleFileUpload = (event) => {
+    const selectedFile = event.target.files[0];
+    if (selectedFile) {
+      setFile(selectedFile);
+      // onSubmitHandler(event, title, content, file); // 전송
+    }
   };
 
   return (
@@ -85,6 +127,16 @@ const PostWrite = () => {
                         className="article-write__textarea"
                       ></textarea>
                     </div>
+                    <div>
+                    <label htmlFor="file">파일</label>
+                      <input
+                        type="file"
+                        className="file-input"
+                        id="image"
+                        name="image"
+                        accept="image/*"
+                        onChange={handleFileUpload}
+                      /></div>
                     <div className="article-write__btn">
                       <button
                         className="article-write__button article-write__button--cancel"

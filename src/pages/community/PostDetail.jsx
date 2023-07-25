@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { CommunityWrap } from "./Community";
-import Header1 from "../../components/Header1";
-import Footer2 from "../../components/Footer2";
+import Header1 from "../../components/community/Header1";
+import Footer2 from "../../components/community/Footer2";
 import MainForm from "./CommunityMainForm";
 import CommentWrap from "./CommentWrap";
 import moment from "moment";
