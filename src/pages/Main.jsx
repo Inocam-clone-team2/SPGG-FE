@@ -39,7 +39,7 @@ const Main = () => {
 	return (
 		<div>
 			<Header>
-				<HeaderDiv height="40px" justify="space-between" backgroundColor={colors.secondary}>
+				<HeaderDiv height="40px" justify="space-between" background={colors.secondary}>
 					<HeaderLeft>
 						<LogoLink to="/">
 							<LogoImg src={logo} alt="logo" />
@@ -76,7 +76,7 @@ const Main = () => {
 						<LoginLink to="/login">로그인</LoginLink>
 					</FuncBtnWrapper>
 				</HeaderDiv>
-				<HeaderDiv hasBottomBorder>
+				<HeaderDiv hasbottomborder>
 					<Nav>
 						<NavItem fontSize="15px">홈</NavItem>
 						<NavLink to="ranking" fontSize="15px">
@@ -87,11 +87,6 @@ const Main = () => {
 						13.14 패치노트 보기
 					</PatchLink>
 				</HeaderDiv>
-				{/* <HeaderDiv backgroundColor={colors.point}>
-					<AdLink to="https://gigs.op.gg/intro?&utm_source=opgg&utm_medium=txt&utm_campaign=gnb_tier_1">
-						이번 배치는 망할 수 없으니까! 프로 전문가한테 강의 받고 티어 올리자!
-					</AdLink>
-				</HeaderDiv> */}
 			</Header>
 			<MainSection>
 				<img
@@ -253,8 +248,8 @@ const HeaderDiv = styled.div`
 	display: flex;
 	justify-content: ${(props) => props.justify || "center"};
 	height: ${(props) => props.height || "50px"};
-	background-color: ${(props) => props.backgroundColor || colors.primary};
-	${({ hasBottomBorder }) => hasBottomBorder && "border-bottom: 1px solid #4171D6;"}
+	background-color: ${(props) => props.background || colors.primary};
+	${({ hasbottomborder }) => hasbottomborder && "border-bottom: 1px solid #4171D6;"}
 `;
 
 // 헤더 윗줄

@@ -5,4 +5,6 @@ export const colors = {
 	text_secondary: "#b3cdff",
 	text_back: "#bfc8cd",
 	point: "#feb902",
+	red: "#e84057",
+	gray: "#758592",
 };

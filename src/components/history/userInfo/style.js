@@ -1,17 +1,19 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { colors } from "../../../common/styles";
 
 export const UserInfoWrapper = styled.div`
 	width: 100%;
 	border-bottom: 1px solid ${colors.text_back};
+	background-color: white;
 `;
 export const UserInfo = styled.section`
 	width: 1080px;
 	display: flex;
 	justify-content: start;
 	padding-bottom: 20px;
-	margin: 30px auto;
-
+	padding: 50px 0;
+	margin: 0 auto;
 	h1 {
 		margin: 0;
 	}

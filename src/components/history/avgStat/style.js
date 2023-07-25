@@ -9,6 +9,7 @@ export const StatContainer = styled.section`
 	background-color: white;
 	border-radius: 4px;
 	padding: 20px;
+	margin: 20px auto;
 `;
 
 export const StatsDiv = styled.div``;

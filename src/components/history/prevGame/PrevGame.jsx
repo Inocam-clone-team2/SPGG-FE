@@ -1,23 +1,30 @@
 import React from "react";
 import * as S from "./style";
 import { Link } from "react-router-dom";
+import { colors } from "../../../common/styles";
 
 const PrevGame = () => {
 	return (
-		<S.StatsPerGame>
-			<S.GameInfo>
-				<div>
-					<p>솔랭</p>
-					<p>3시간 전</p>
-					<p>승리</p>
-					<p>20분 35초</p>
-				</div>
-				<div>
+		<S.StatsPerGame isWin={true}>
+			<S.GameInfo isWin={true}>
+				<S.GameDiv>
+					<S.ResultText isWin={true} fontWeight="700">
+						솔랭
+					</S.ResultText>
+					<S.InfoText>3시간 전</S.InfoText>
+					<S.Bar isWin={true}></S.Bar>
+					<S.InfoText>승리</S.InfoText>
+					<S.InfoText>20분 35초</S.InfoText>
+				</S.GameDiv>
+				<S.GameDiv>
 					<S.ChamInfo>
-						<img
-							src="https://opgg-static.akamaized.net/meta/images/lol/champion/Rakan.png?image=c_crop,h_103,w_103,x_9,y_9/q_auto,f_webp,w_96&v=1690128491870"
-							alt="cham"
-						/>
+						<S.ChamImgWrapper>
+							<img
+								src="https://opgg-static.akamaized.net/meta/images/lol/champion/Rakan.png?image=c_crop,h_103,w_103,x_9,y_9/q_auto,f_webp,w_96&v=1690128491870"
+								alt="cham"
+							/>
+							<S.ChamLevel>11</S.ChamLevel>
+						</S.ChamImgWrapper>
 						<S.SpellWrapper>
 							<img
 								src="https://opgg-static.akamaized.net/meta/images/lol/spell/SummonerFlash.png?image=q_auto,f_webp,w_44&v=1690128491870"
@@ -36,9 +43,12 @@ const PrevGame = () => {
 								alt=""
 							/>
 						</S.SpellWrapper>
-						<div>
-							<p>1 / 0 / 13</p>
-							<p>Perfect 평점</p>
+						<div class="kda">
+							<S.KdaText>1</S.KdaText>
+							<S.KdaText color={colors.gray}>/</S.KdaText>
+							<S.KdaText color={colors.red}>2</S.KdaText>
+							<S.KdaText color={colors.gray}>/</S.KdaText>
+							<S.KdaText>2</S.KdaText>
 						</div>
 					</S.ChamInfo>
 					<S.ItemInfo>
@@ -71,13 +81,12 @@ const PrevGame = () => {
 							alt="item"
 						/>
 					</S.ItemInfo>
-				</div>
-				<div>
-					<p>킬관여 78%</p>
-					<p>제어 와드 9</p>
-					<p>CS 29 (1.4)</p>
-					<p>Master</p>
-				</div>
+				</S.GameDiv>
+				<S.GameDiv>
+					<S.InfoText>제어 와드 9</S.InfoText>
+					<S.InfoText>CS 29 (1.4)</S.InfoText>
+					<S.InfoText>Master</S.InfoText>
+				</S.GameDiv>
 				<S.Players>
 					<ul>
 						<li>
@@ -85,35 +94,35 @@ const PrevGame = () => {
 								src="https://opgg-static.akamaized.net/meta/images/lol/champion/Jax.png?image=c_crop,h_103,w_103,x_9,y_9/q_auto,f_webp,w_32&v=1690128491870"
 								alt=""
 							/>
-							nickname
+							<S.PlayerLink to="">nickname</S.PlayerLink>
 						</li>
 						<li>
 							<img
 								src="https://opgg-static.akamaized.net/meta/images/lol/champion/Jax.png?image=c_crop,h_103,w_103,x_9,y_9/q_auto,f_webp,w_32&v=1690128491870"
 								alt=""
 							/>
-							nickname
+							<S.PlayerLink to="">nickname</S.PlayerLink>
 						</li>
 						<li>
 							<img
 								src="https://opgg-static.akamaized.net/meta/images/lol/champion/Jax.png?image=c_crop,h_103,w_103,x_9,y_9/q_auto,f_webp,w_32&v=1690128491870"
 								alt=""
 							/>
-							nickname
+							<S.PlayerLink to="">nickname</S.PlayerLink>
 						</li>
 						<li>
 							<img
 								src="https://opgg-static.akamaized.net/meta/images/lol/champion/Jax.png?image=c_crop,h_103,w_103,x_9,y_9/q_auto,f_webp,w_32&v=1690128491870"
 								alt=""
 							/>
-							nickname
+							<S.PlayerLink to="">nickname</S.PlayerLink>
 						</li>
 						<li>
 							<img
 								src="https://opgg-static.akamaized.net/meta/images/lol/champion/Jax.png?image=c_crop,h_103,w_103,x_9,y_9/q_auto,f_webp,w_32&v=1690128491870"
 								alt=""
 							/>
-							nickname
+							<S.PlayerLink to="">nickname</S.PlayerLink>
 						</li>
 					</ul>
 					<ul>
@@ -122,35 +131,35 @@ const PrevGame = () => {
 								src="https://opgg-static.akamaized.net/meta/images/lol/champion/Jax.png?image=c_crop,h_103,w_103,x_9,y_9/q_auto,f_webp,w_32&v=1690128491870"
 								alt=""
 							/>
-							nickname
+							<S.PlayerLink to="">nickname</S.PlayerLink>
 						</li>
 						<li>
 							<img
 								src="https://opgg-static.akamaized.net/meta/images/lol/champion/Jax.png?image=c_crop,h_103,w_103,x_9,y_9/q_auto,f_webp,w_32&v=1690128491870"
 								alt=""
 							/>
-							nickname
+							<S.PlayerLink to="">nickname</S.PlayerLink>
 						</li>
 						<li>
 							<img
 								src="https://opgg-static.akamaized.net/meta/images/lol/champion/Jax.png?image=c_crop,h_103,w_103,x_9,y_9/q_auto,f_webp,w_32&v=1690128491870"
 								alt=""
 							/>
-							nickname
+							<S.PlayerLink to="">nickname</S.PlayerLink>
 						</li>
 						<li>
 							<img
 								src="https://opgg-static.akamaized.net/meta/images/lol/champion/Jax.png?image=c_crop,h_103,w_103,x_9,y_9/q_auto,f_webp,w_32&v=1690128491870"
 								alt=""
 							/>
-							nickname
+							<S.PlayerLink to="">nickname</S.PlayerLink>
 						</li>
 						<li>
 							<img
 								src="https://opgg-static.akamaized.net/meta/images/lol/champion/Jax.png?image=c_crop,h_103,w_103,x_9,y_9/q_auto,f_webp,w_32&v=1690128491870"
 								alt=""
 							/>
-							nickname
+							<S.PlayerLink to="">nickname</S.PlayerLink>
 						</li>
 					</ul>
 				</S.Players>

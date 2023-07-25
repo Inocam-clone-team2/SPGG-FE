@@ -1,7 +1,7 @@
 import React from "react";
 import * as S from "./style";
 
-const AvgStats = () => {
+const AvgStat = () => {
 	const fillHeight = 100 - 45;
 	return (
 		<S.StatContainer>
@@ -117,4 +117,4 @@ const AvgStats = () => {
 	);
 };
 
-export default AvgStats;
+export default AvgStat;
