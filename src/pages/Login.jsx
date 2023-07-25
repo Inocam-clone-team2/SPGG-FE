@@ -46,6 +46,10 @@ const Login = () => {
     navigate(`/signup`);
   };
 
+  const handleGotoMain = () => {
+    navigate("/");
+  };
+
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const handleLogin = async (e) => {

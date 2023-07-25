@@ -6,6 +6,7 @@ import Community from "../pages/community/Community";
 import PostEdit from "../pages/community/PostEdit";
 import Ranking from "../pages/Ranking";
 import History from "../pages/History";
+import History2 from "../pages/History2";
 import PostDetail from "../pages/community/PostDetail";
 import PostWrite from "../pages/community/PostWrite";
 function Router() {
@@ -20,7 +21,9 @@ function Router() {
 				<Route path="PostWrite" element={<PostWrite />} />
 				<Route path="PostEdit" element={<PostEdit />} />
 				<Route path="ranking" element={<Ranking />} />
-				<Route path="history" element={<History />} />
+				<Route path="history" element={<History />} />        
+        <Route path="history2/:searchUser" element={<History2 />} />
+
 			</Routes>
 		</BrowserRouter>
 	);
