@@ -7,7 +7,7 @@ import Edit from "../pages/community/PostEdit";
 import Ranking from "../pages/Ranking";
 import History from "../pages/History";
 import CommunityDetail from "../pages/community/PostDetail";
-import PostForm from "../pages/community/PostWrite";
+import PostWrite from "../pages/community/PostWrite";
 function Router() {
 	return (
 		<BrowserRouter>
@@ -17,7 +17,7 @@ function Router() {
 				<Route path="signup" element={<Signup />} />
 				<Route path="community" element={<Community />} />
 				<Route path="communitydetail" element={<CommunityDetail />} />
-				<Route path="postform" element={<PostForm />} />
+				<Route path="PostWrite" element={<PostWrite />} />
 				<Route path="edit" element={<Edit />} />
 				<Route path="ranking" element={<Ranking />} />
 				<Route path="history" element={<History />} />

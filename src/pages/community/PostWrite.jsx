@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { CommunityWrap } from "./Community";
-import Header1 from "../../components/Header1";
+import Header1 from "../../components/community/Header1";
 import MainForm from "./CommunityMainForm";
-import Footer2 from "../../components/Footer2";
+import Footer2 from "../../components/community/Footer2";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const CommunityWrite = () => {
+const PostWrite = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const storageUserId = parseInt(localStorage.getItem("userId"));
@@ -28,11 +28,11 @@ const CommunityWrite = () => {
 
     axios
       .post(
-        "http://59.20.79.42:58002/post/writeProc",
+        "http://3.37.36./api/post",
         {
           title: title,
           content: content,
-          user: {
+          userId: {
             id: storageUserId,
           },
         },
@@ -48,7 +48,7 @@ const CommunityWrite = () => {
         console.log(response);
 
         alert("글작성이 완료되었습니다.");
-        navigate("/community"); // navigate 함수를 사용하여 페이지 이동
+        navigate("/community");
       })
       .catch((error) => {
         console.log(error.response);
@@ -89,7 +89,7 @@ const CommunityWrite = () => {
                       <button
                         className="article-write__button article-write__button--cancel"
                         type="button"
-                        onClick={() => navigate("/community")} // navigate 함수를 사용하여 페이지 이동
+                        onClick={() => navigate("/community")}
                       >
                         취소
                       </button>
@@ -200,4 +200,4 @@ text-align: center;
     justify-content: space-between;
   }`;
 
-export default CommunityWrite;
+export default PostWrite;

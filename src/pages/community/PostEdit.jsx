@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { CommunityWrap } from "./Community";
-import Header1 from "../../components/Header1";
+import Header1 from "../../components/community/Header1";
 import MainForm from "./CommunityMainForm";
-import Footer2 from "../../components/Footer2";
-import { useNavigate } from "react-router-dom"; // withRouter 대신 useNavigate를 사용하기 위해 import 변경
+import Footer2 from "../../components/community/Footer2";
+import { useNavigate } from "react-router-dom"; 
 import axios from "axios";
 
 const CommunityEdit = () => {
@@ -14,7 +14,7 @@ const CommunityEdit = () => {
   const [updateTitle, setUpdateTitle] = useState(paramTitle);
   const [updateContent, setUpdateContent] = useState(paramContent);
   const storageUserId = parseInt(localStorage.getItem("userId"));
-  const navigate = useNavigate(); // useNavigate 훅을 사용하여 navigate 함수를 가져옵니다.
+  const navigate = useNavigate(); 
 
   const handleChangeTitle = (e) => {
     setUpdateTitle(e.target.value);
@@ -24,17 +24,16 @@ const CommunityEdit = () => {
     setUpdateContent(e.target.value);
   };
 
-  // 이거 작성완료 누르면 데이터보내고 본진으로 가는것을 구현할 것이다
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.put(
-        "http://59.20.79.42:58002/post/update",
+        "http://3.37.36./api/post",
         {
           id: paramPostId,
           title: updateTitle,
           content: updateContent,
-          user: {
+          userId: {
             id: storageUserId,
           },
         },
@@ -49,7 +48,7 @@ const CommunityEdit = () => {
       console.log(response.data);
       alert("글 수정이 완료되었습니다");
 
-      navigate("/community/" + paramPostId); // navigate 함수를 사용하여 페이지 이동
+      navigate("/community/" + paramPostId); 
     } catch (error) {
       console.log("에러", error.response);
     }
@@ -91,7 +90,7 @@ const CommunityEdit = () => {
                       <button
                         className="article-write__button article-write__button--cancel"
                         type="button"
-                        onClick={() => navigate("/community")} // navigate 함수를 사용하여 페이지 이동
+                        onClick={() => navigate("/community")}
                       >
                         취소
                       </button>

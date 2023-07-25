@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Header1 from "./../../components/Header1";
-import Footer2 from "./../../components/Footer2";
+import Header1 from "../../components/community/Header1";
+import Footer2 from "../../components/community/Footer2";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import MainForm from "./CommunityMainForm";
