@@ -1,6 +1,7 @@
 import * as s from "./SignupStyleComponents";
 import React, { useReducer } from "react";
 import { useNavigate } from "react-router-dom";
+import instance from "../../api/post";
 
 const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 
@@ -22,7 +23,9 @@ const initialState = {
 const reducer = (state, action) => {
   switch (action.type) {
     case "CHANGE_FIELD":
-      return { ...state, [action.field]: action.value };
+      const updatedState = { ...state, [action.field]: action.value };
+      // console.log("업데이트된 상태: ", updatedState.email);
+      return updatedState;
     case "SET_FOCUS":
       return { ...state, [action.field]: action.isFocused };
     case "SET_HAS_INPUT":
@@ -43,6 +46,43 @@ const SignupSlideTwo = ({ onNextButtonClick }) => {
   };
 
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  //중복확인 기능
+  const onSubmitHandler = async (e) => {
+    e.preventDefault();
+    const { email } = state;
+
+    console.log(email);
+    try {
+      const res = await instance.post(`/api/auth/checkId`, { email });
+
+      console.log("res", res);
+    } catch (error) {
+      console.error("Post 요청 오류:", error);
+    }
+  };
+
+  const onSignupHandler = async (e) => {
+    e.preventDefault();
+    const { email, nickname, password } = state;
+
+    console.log(email);
+    console.log(nickname);
+    console.log(password);
+    try {
+      const res = await instance.post(`/api/auth/signup`, {
+        email,
+        nickname,
+        password,
+      });
+      console.log("res", res);
+
+      alert("회원가입에 성공했습니다.");
+      handleAgreementBtn();
+    } catch (error) {
+      console.error("Post 요청 오류:", error);
+    }
+  };
 
   const handleFocus = (field) => {
     dispatch({ type: "SET_FOCUS", field, isFocused: true });
@@ -131,6 +171,9 @@ const SignupSlideTwo = ({ onNextButtonClick }) => {
                   name="email"
                   pattern={emailRegex.source} // 정규식 패턴 적용
                 />
+                <button type="submit" onClick={onSubmitHandler}>
+                  중복확인
+                </button>
               </s.InputContainer>{" "}
               <s.InputContainer>
                 <s.InputSignupLabel
@@ -181,7 +224,7 @@ const SignupSlideTwo = ({ onNextButtonClick }) => {
           <s.InfoBox boxHeight="15%">
             <s.ButtonGroup>
               <s.DisgreeButton onClick={handlePostClick}>취소</s.DisgreeButton>
-              <s.AgreementButton onClick={handleAgreementBtn}>
+              <s.AgreementButton type="submit" onClick={onSignupHandler}>
                 가입하기
               </s.AgreementButton>
             </s.ButtonGroup>

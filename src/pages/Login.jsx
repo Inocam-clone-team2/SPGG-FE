@@ -7,6 +7,8 @@ import {
 } from "./Signup";
 import * as s from "../components/signup-slide/SignupStyleComponents";
 import { useNavigate } from "react-router-dom";
+import post from "../api/post";
+import instance from "../api/post";
 
 const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 
@@ -25,7 +27,10 @@ const initialState = {
 const reducer = (state, action) => {
   switch (action.type) {
     case "CHANGE_FIELD":
-      return { ...state, [action.field]: action.value };
+      // console.log("액션: ", action);
+      const updatedState = { ...state, [action.field]: action.value };
+      // console.log("업데이트된 상태: ", updatedState.email);
+      return updatedState;
     case "SET_FOCUS":
       return { ...state, [action.field]: action.isFocused };
     case "SET_HAS_INPUT":
@@ -45,7 +50,42 @@ const Login = () => {
     navigate(`/signup`);
   };
 
+  const handleGotoMain = () => {
+    navigate(`/`);
+  };
+
+  // console.log(state.email);
+
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    const { email, password } = state;
+    console.log(state);
+    console.log(email);
+    console.log(password);
+    if (email && password) {
+      try {
+        const response = await instance.post(`/api/auth/login`, {
+          email,
+          password,
+        });
+        console.log("response", response);
+
+        if (response.status === 200) {
+          // localStorage.setItem("authorization", accesstoken);
+          let accessToken = response.headers.get("authorization");
+          localStorage.setItem("authorization", accessToken);
+          alert("로그인 성공");
+          handleGotoMain();
+        } else {
+          alert("로그인 실패");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
 
   const handleFocus = (field) => {
     dispatch({ type: "SET_FOCUS", field, isFocused: true });
@@ -67,6 +107,8 @@ const Login = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     dispatch({ type: "CHANGE_FIELD", field: name, value });
+    // console.log("dispatch할 액션의 필드: ", name); // action.field 확인
+    // console.log("값", value);
   };
 
   const handleHasInput = (field, hasInput) => {
@@ -187,7 +229,7 @@ const Login = () => {
                 }}
               >
                 <s.NextButton
-                  onClick={handleAgreementBtn}
+                  // onClick={handleAgreementBtn}
                   style={{
                     marginTop: "5px",
                     height: "60px",
@@ -196,6 +238,8 @@ const Login = () => {
                     fontSize: "20px",
                     fontWeight: "bold",
                   }}
+                  type="submit"
+                  onClick={handleLogin}
                 >
                   로그인
                 </s.NextButton>{" "}
