@@ -5,15 +5,53 @@ import Header1 from "../../components/community/Header1";
 import MainForm from "./CommunityMainForm";
 import Footer2 from "../../components/community/Footer2";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import instance from "../../api/post"
+import api from "../../api/post"
 
 const PostWrite = () => {
+  const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [image, setImage] = useState(null);
-  const [category, setCategory] = useState("FREE");
-  const navigate = useNavigate();
+  const [file, setFile] = useState(null);
+
+  const onSubmitHandler = async (event, title, content, file) => {
+    if (title === "" || content === "") {
+      alert("제목과 내용을 입력해주세요.");
+
+      return;
+    }
+
+    const postFormData = new FormData();
+
+    const data = {
+      title: title,
+      content: content,
+    };
+
+    postFormData.append(
+      "data",
+      new Blob([JSON.stringify(data)], { type: "application/json" })
+    );
+    postFormData.append("file", file);
+
+    try {
+      const response = await api.post(`api/post`, postFormData);
+      navigate(`/community`);
+      setTitle("");
+      setContent("");
+      setFile(null);
+
+      console.log(response);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const handleFileUpload = (event) => {
+    const selectedFile = event.target.files[0];
+    if (selectedFile) {
+      setFile(selectedFile);
+    }
+  };
 
   const handleChangeTitle = (e) => {
     setTitle(e.target.value);
@@ -21,80 +59,6 @@ const PostWrite = () => {
 
   const handleChangeContent = (e) => {
     setContent(e.target.value);
-  };
-
-  const handleChangeCategory = (e) => {setCategory(e.target.value);};
-  const handleChangeImage = (e) => {
-    setImage(e.target.file);
-}
-  const handleSubmit = (e) => async (event, title, content, file) => {
-    e.preventDefault();
-    console.log(title);
-    console.log(content);
-
-    const data = {
-      title: title,
-      content: content,
-      category: category,
-    };
-
-    postFormData.append(
-      "data",
-      new Blob([JSON.stringify(data)], { type: "application/json" })
-    );
-
-    try {
-      const response = await instance.post(`api/post`, postFormData);
-      navigate(`/community`); // 이동
-      setTitle("");
-      setContent("");
-      setFile(null);
-
-      console.log(response);
-      // 요청에 대한 응답 처리
-    } catch (error) {
-      console.error("Error:", error);
-
-      // 에러 처리
-    }
-    // setTitle("");
-    // setContent("");
-
-
-  }
-
-    // instance
-    //   .post(
-    //     "/api/post",
-    //     {
-    //       title: title,
-    //       content: content,
-    //       category: category,
-    //     },
-    //     {
-    //       headers: {
-    //         // Accept: 'application/json',
-    //         Authorization: "Bearer " + localStorage.getItem("jwtToken"),
-    //       },
-    //     }
-    //   )
-    //   .then((response) => {
-    //     console.log(response);
-
-    //     alert("글작성이 완료되었습니다.");
-    //     navigate("/community");
-    //   })
-    //   .catch((error) => {
-    //     console.log(error.response);
-    //   });
-  };
-
-  const handleFileUpload = (event) => {
-    const selectedFile = event.target.files[0];
-    if (selectedFile) {
-      setFile(selectedFile);
-      // onSubmitHandler(event, title, content, file); // 전송
-    }
   };
 
   return (
@@ -106,7 +70,10 @@ const PostWrite = () => {
           <div style={{backgroundColor:'#ebeef1'}}>
             <WriteBox>
               <div className="content">
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={(event) => {
+              event.preventDefault();
+              onSubmitHandler(event, title, content, file);
+            }}>
                   <div className="article-write">
                     <div className="article-write-header">
                       <div className="article-write__title">글쓰기</div>
@@ -163,6 +130,8 @@ const PostWrite = () => {
     </div>
   );
 };
+
+export default PostWrite;
 
 const WriteBox = styled.div`
 text-align: center;
@@ -251,5 +220,3 @@ text-align: center;
     display: flex;
     justify-content: space-between;
   }`;
-
-export default PostWrite;

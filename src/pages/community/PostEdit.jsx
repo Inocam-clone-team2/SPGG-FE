@@ -7,7 +7,7 @@ import Footer2 from "../../components/community/Footer2";
 import { useNavigate } from "react-router-dom"; 
 import axios from "axios";
 
-const CommunityEdit = () => {
+const PostEdit = () => {
   const paramTitle = ""; // 기본값으로 설정할 값으로 변경
   const paramContent = ""; // 기본값으로 설정할 값으로 변경
   const paramPostId = ""; // 기본값으로 설정할 값으로 변경
@@ -202,4 +202,4 @@ const WriteBox = styled.div`
     justify-content: space-between;
   }`;
 
-export default CommunityEdit;
+export default PostEdit;

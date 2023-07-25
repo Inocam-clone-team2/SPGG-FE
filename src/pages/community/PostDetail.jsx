@@ -4,194 +4,62 @@ import { CommunityWrap } from "./Community";
 import Header1 from "../../components/community/Header1";
 import Footer2 from "../../components/community/Footer2";
 import MainForm from "./CommunityMainForm";
-import CommentWrap from "./CommentWrap";
+// import CommentWrap from "./CommentWrap";
 import moment from "moment";
 import "moment/locale/ko";
 import { Link } from "react-router-dom";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
+import api from "../../api/post"
 
-const PostDetail = ({ match, history }) => {
-  const { postId } = useParams();
-  const [replies, setReplies] = useState([]);
-  const [resp, setResp] = useState({});
-  const [postUserId, setPostUserId] = useState(0);
-  const storageUserId = parseInt(localStorage.getItem("userId"));
-
+const PostDetail = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
+  const [post, setPost] = useState([]);
+  const postId = id;
+  const postState = post;
+
+  const fetchPost = async () => {
+    try {
+      const response = await api.get(`api/post/${id}`);
+
+      setPost(response.data.data);
+      console.log(response)
+    } catch (error) {
+      console.error('API 요청 오류:', error);
+    }
+  };
 
   useEffect(() => {
-    const enterPage = async () => {
-      moment.locale("ko");
-
-      if (
-        localStorage.getItem("updateView") === null ||
-        localStorage.getItem("updateView").indexOf(postId) === -1
-      ) {
-        await axios
-          .put(
-            "http://3.37.36./api/post" + postId,
-            {},
-            {
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: "Bearer " + localStorage.getItem("jwtToken"),
-              },
-            }
-          )
-          .then((response) => {
-            if (localStorage.getItem("updateView") == null) {
-              localStorage.setItem("updateView", postId);
-            } else {
-              localStorage.setItem(
-                "updateView",
-                localStorage.getItem("updateView") + "," + postId
-              );
-            }
-          })
-          .catch((error) => {
-            console.log("에러", error.response);
-          });
-      }
-
-      await axios
-        .get("http://59.20.79.42:58002/post/detail/" + postId)
-        .then((response) => {
-          if (response.data.statusCode === 400) {
-            alert("해당 글이 없습니다.");
-            navigate("/community");
-          }
-
-          console.log(11, response.data);
-          setResp(response.data);
-          setPostUserId(response.data.data.post.user.id);
-        })
-        .catch((error) => {
-          console.log("에러", error);
-        });
-    };
-
-    enterPage();
+    fetchPost();
   }, []);
 
-  const deletePost = () => {
-    if (window.confirm("게시글을 삭제하시겠습니까?") == true) {
-      axios
-        .delete("http://59.20.79.42:58002/post/delete/" + postId, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + localStorage.getItem("jwtToken"),
-          },
-        })
-        .then((response) => {
-          setResp(response.data);
+  if (!post) {
+    return <div>Loading...</div>;
+  }
 
-          navigate("/community");
-        })
-        .catch((error) => {
-          console.log("에러", error.response);
-        });
+  const handlePostClick = () => {
+    navigate(`/`);
+  };
+
+  const handleGoBackPage = (id) => {
+    if (id === '1') {
+      alert('첫번째 페이지입니다!');
+      return; // 첫 번째 요소이면 함수 실행을 중지하고 종료합니다.
     } else {
-      return;
+      const previousId = parseInt(id) - 1;
+      navigate(`/detail/${previousId}`);
     }
   };
 
-  const addLike = () => {
-    if (localStorage.getItem("updateLike") !== null) {
-      const storageUpdateLike = localStorage.getItem("updateLike");
-
-      if (storageUpdateLike.indexOf(postId) !== -1) {
-        return;
-      }
+  const onDeletePost = async () => {
+    try {
+      await api.delete(`/post/${id}`);
+      console.log('삭제되었습니다!');
+      navigate(`/`);
+    } catch (error) {
+      alert('포스트에 대한 권한이 없습니다.');
+      console.error('댓글 삭제 오류:', error);
     }
-
-    axios
-      .put(
-        "http://59.20.79.42:58002/post/update/like/" + postId,
-        {},
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + localStorage.getItem("jwtToken"),
-          },
-        }
-      )
-      .then((response) => {
-        if (localStorage.getItem("updateLike") === null) {
-          localStorage.setItem("updateLike", response.data.data.post.id);
-        } else {
-          localStorage.setItem(
-            "updateLike",
-            localStorage.getItem("updateLike") +
-              "," +
-              response.data.data.post.id
-          );
-        }
-
-        setResp(response.data);
-      })
-      .catch((error) => {
-        console.log("에러", error.response);
-      });
-  };
-
-  // reply 추가, 삭제 로직 구현
-  // reply 추가 로직
-  const addReply = (reply) => {
-    axios
-      .post(
-        "http://59.20.79.42:58002/reply/writeProc/",
-        {
-          reply: reply,
-          post: {
-            id: postId,
-          },
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + localStorage.getItem("jwtToken"),
-          },
-        }
-      )
-      .then((response) => {
-        console.log("replyresponse1", response);
-        console.log("replyresponse2", response.data);
-
-        axios
-          .get("http://59.20.79.42:58002/post/detail/" + postId)
-          .then((response) => {
-            setResp(response.data);
-          });
-      })
-      .catch((error) => {
-        console.log(error.response);
-      });
-  };
-
-  const deleteReply = (id) => {
-    // if (user.post.replise.reply.id !== id) {
-    //   alert('삭제 못함');
-    //   return;
-    // }
-    console.log(id);
-    axios
-      .delete("http://59.20.79.42:58002/reply/delete/" + id, {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("jwtToken"),
-        },
-      })
-      .then((response) => {
-        axios
-          .get("http://59.20.79.42:58002/post/detail/" + postId)
-          .then((response) => {
-            console.log(100, response);
-            setResp(response.data);
-          });
-      })
-      .catch((error) => {
-        console.log(error.response);
-      });
   };
 
   return (
@@ -201,99 +69,83 @@ const PostDetail = ({ match, history }) => {
         <div className="community-container">
           <MainForm />
           <CommunityContentBox>
-            {resp.statusCode === 201
-              ? resp.data.type === 1 && (
-                  <div key={resp.data.post.id}>
-                    <div className="article">
-                      <div className="article-header">
-                        <div className="article__title">
-                          {resp.data.post.title}
-                        </div>
-                        <div className="article-meta">
-                          <div className="article-meta-list">
-                            <div className="article-meta__item">
-                              <span>
-                                {moment(resp.data.post.createDate)
-                                  .startOf("second")
-                                  .fromNow()}
-                              </span>
-                            </div>
-                            <div className="article-meta__item article-meta__item--name">
-                              {resp.data.post.user.nickname}
-                            </div>
-                          </div>
-                          <div className="article-meta-list article-meta-list--right">
-                            <div className="article-meta__item">
-                              <span>조회 {resp.data.post.viewCount}</span>
-                            </div>
-                            <div className="article-meta__item">
-                              <span>댓글 {resp.data.post.replies.length}</span>
-                            </div>
-                            <div className="article-meta__item">
-                              <span>추천 {resp.data.post.likeCount}</span>
-                            </div>
-                          </div>
-                        </div>
-
-                        {postUserId === storageUserId && (
-                          <div className="article-action">
-                            <div className="article-action__item">
-                              <button
-                                onClick={deletePost}
-                                className="article-action__button button button--red button--red--border"
-                              >
-                                삭제
-                              </button>
-                            </div>
-                            <div className="article-action__item">
-                              <Link
-                                to={{
-                                  pathname: "/edit",
-                                  state: {
-                                    postId: resp.data.post.id,
-                                    title: resp.data.post.title,
-                                    content: resp.data.post.content,
-                                  },
-                                }}
-                                className="article-action__button__button"
-                              >
-                                수정
-                              </Link>
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                      <div className="article-content-wrap">
-                        <div className="article-content">
-                          <p>{resp.data.post.content}</p>
-                        </div>
-                      </div>
-                      <div className="article-box">
-                        <div className="postVote">
-                          <button
-                            style={{ cursor: "pointer" }}
-                            onClick={addLike}
-                            type="submit"
-                            className="article-vote__button"
-                          >
-                            <span className="article-vote__up-arrow">추천</span>
-                            <span className="article-vote__up-count">
-                              {resp.data.post.likeCount}
-                            </span>
-                          </button>
-                        </div>
-                      </div>
-                      <CommentWrap
-                        deleteReply={deleteReply}
-                        addReply={addReply}
-                        replies={resp.data.post.replies}
-                        post={resp.data.post}
-                      />
+            <div className="article">
+              <div className="article-header">
+                <div className="article__title">
+                  {post.title}
+                </div>
+                <div className="article-meta">
+                  <div className="article-meta-list">
+                    <div className="article-meta__item">
+                      <span>
+                        {moment(post.createdAt)
+                          .startOf("second")
+                          .fromNow()}
+                      </span>
+                    </div>
+                    <div className="article-meta__item article-meta__item--name">
+                      {post.nickname}
                     </div>
                   </div>
-                )
-              : ""}
-
+                  <div className="article-meta-list article-meta-list--right">
+                    <div className="article-meta__item">
+                      <span>조회 {post.views}</span>
+                    </div>
+                    <div className="article-meta__item">
+                      <span>댓글 {post.commentcount}</span>
+                    </div>
+                    <div className="article-meta__item">
+                      <span>추천 {post.liked}</span>
+                    </div>
+                  </div>
+                </div>
+                  <div className="article-action">
+                    <div className="article-action__item">
+                      <button
+                        onClick={(e) => onDeletePost()}
+                        className="article-action__button button button--red button--red--border">
+                        삭제
+                      </button>
+                    </div>
+                    <div className="article-action__item">
+                      <Link
+                        to={{
+                          pathname: "/PostEdit",
+                          state: {
+                            postId: post.id,
+                            title: post.title,
+                            content: post.content,
+                          },
+                        }}
+                        className="article-action__button__button"
+                      >
+                        수정
+                      </Link>
+                    </div>
+                  </div>
+              </div>
+              <div className="article-content-wrap">
+                <div className="article-content">
+                  <p>{post.content}</p>
+                </div>
+              </div>
+              <div className="article-box">
+                <div className="postVote">
+                  <button
+                    style={{ cursor: "pointer" }}
+                    // onClick={addLiked}
+                    type="submit"
+                    className="article-vote__button"
+                  >
+                    <span className="article-vote__up-arrow">추천</span>
+                    <span className="article-vote__up-count">
+                      {post.liked}
+                    </span>
+                  </button>
+                </div>
+              </div>
+              {/* <CommentWrap/> */}
+            </div>
             <Footer2 />
           </CommunityContentBox>
         </div>
