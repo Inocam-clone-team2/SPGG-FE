@@ -9,10 +9,9 @@ instance.interceptors.request.use(
   // 요청을 보내기 전 수행되는 함수
   //매개변수 이름은 config가 아니라도 됨
   function (config) {
-    console.log("인터셉터 요청 성공!");
-    let accesstoken = localStorage.getItem("authorization");
-    config.headers.Authorization = accesstoken;
-
+   console.log("인터셉터 요청 성공!");
+   let accesstoken = localStorage.getItem("authorization");
+   config.headers.Authorization = accesstoken;
     return config;
   },
   //오류 요청을 보내기 전 수행되는 함수
