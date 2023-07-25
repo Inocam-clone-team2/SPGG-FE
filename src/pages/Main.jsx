@@ -13,6 +13,10 @@ const Main = () => {
     setSearchUser(e.target.value);
   };
 
+  const onClickGotoCommunity = () => {
+    navigate("/community");
+  };
+
   const searchSummoner = async () => {
     if (!searchUser) {
       setSearchUser([]);
@@ -88,6 +92,9 @@ const Main = () => {
             <NavLink to="ranking" fontSize="15px">
               랭킹
             </NavLink>
+            <NavItem fontSize="15px" onClick={onClickGotoCommunity}>
+              커뮤니티
+            </NavItem>
           </Nav>
           <PatchLink to="https://www.youtube.com/watch?v=7KRBH8RadNc">
             13.14 패치노트 보기
