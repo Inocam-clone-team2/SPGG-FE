@@ -27,7 +27,6 @@ function Router() {
 				<Route path="history/:summonerName" element={<History />} />
 				<Route path="header" element={<Header />} />
 				<Route path="header2" element={<Header2 />} />
-				<Route path="comment" element={<Comment />} />
 			</Routes>
 		</BrowserRouter>
 	);

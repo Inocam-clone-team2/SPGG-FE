@@ -4,8 +4,10 @@ export const CommentWrapper = styled.section`
 	box-sizing: border-box;
 	width: 730px;
 	height: 100%;
-	background-color: pink;
+	background-color: white;
 	border-radius: 4px;
+	margin-top: 40px;
+	box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.15);
 `;
 
 export const CommentHeader = styled.section`
@@ -81,13 +83,13 @@ export const CommentContent = styled.div`
 	width: 100%;
 	height: fit-content;
 	min-height: 40px;
-	background-color: skyblue;
 `;
 
 export const CommentBtn = styled.button`
-	border: none;
 	background: none;
 	cursor: pointer;
 	color: ${(props) => props.color || "#5383e8"};
 	margin-right: 10px;
+	border: none !important;
+	font-weight: 700;
 `;
