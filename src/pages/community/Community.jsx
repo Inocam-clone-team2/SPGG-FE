@@ -5,8 +5,8 @@ import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import MainForm from "./CommunityMainForm";
 import moment from "moment";
-import axios from "axios";
 import "moment/locale/ko";
+import axios from "axios";
 import api from "../../api/post"
 
 
@@ -19,47 +19,26 @@ const Community = () => {
   const [statusCode, setStatusCode] = useState(0);
   const [inputValue, setInputValue] = useState("");
   const navigate = useNavigate();
+  const [searchOption, setSearchOption] = useState("title");
 
   useEffect(() => {
     axios
-      api.get("/api/post")
+      api.get("/api/post?page=")
       .then((response) => {
         setCommunity(response.data.data.content);
         setStatusCode(response.data.statusCode);
-        console.log(1, community);
-        console.log(2, statusCode);
       })
       .catch((error) => {
         console.log(error);
       });
   }, []);
 
-  const handlePrevPage = () => {
-    let prevPage = postPage - 1;
-    if (postPage < 0) {
-      return;
-    }
-    console.log(6, prevPage);
-    axios
-      api.get("/api/post/" + prevPage)
-      .then((response) => {
-        setCommunity(response.data.data.content);
-        setStatusCode(response.data.statusCode);
-
-        setPostPage(postPage - 1);
-      })
-      .catch((error) => {
-        console.log(error.response);
-      });
-  };
-
   const handleNextPage = () => {
-    let nextPage = postPage + 1;
+    const nextPage = postPage + 1;
 
     axios
-      api.get("/api/post/" + nextPage)
+      api.get("/api/post?page=" + nextPage)
       .then((response) => {
-        console.log(response.data.statusCode);
         setCommunity(response.data.data.content);
         setStatusCode(response.data.statusCode);
         setPostPage(postPage + 1);
@@ -69,17 +48,47 @@ const Community = () => {
       });
   };
 
-  const handleOnSubmit = (e) => {
-    e.preventDefault();
+  const handlePrevPage = () => {
+    let prevPage = postPage - 1;
+    if (postPage < 0) {
+      return;
+    }
     axios
-      api.get("/api/post/?tilte=" + inputValue)
+      api.get("/api/post?page=" + prevPage)
       .then((response) => {
-        console.log(response);
-        setCommunity(response);
+        setCommunity(response.data.data.content);
+        setStatusCode(response.data.statusCode);
+        setPostPage(postPage - 1);
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error.response);
       });
+  };
+
+  const handleOnSubmit = (e) => {
+    e.preventDefault();
+
+    if (searchOption === "title") {
+      axios
+        api.get("/api/post?title=" + inputValue)
+        .then((response) => {
+          console.log(2, inputValue);
+          setCommunity(response.data.data.content);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else if (searchOption === "nickname") {
+      axios
+        api.get("/api/post?nickname=" + inputValue)
+        .then((response) => {
+          console.log(2, inputValue);
+          setCommunity(response.data.data.content);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
 
   const handleOnChange = (e) => {
@@ -87,16 +96,29 @@ const Community = () => {
     setInputValue(e.target.value);
 
     const search = async () => {
-      await axios
-        api.get("/api/post/?tilte=" + inputValue)
-        .then((response) => {
-          console.log(response);
+      if (searchOption === "title") {
+        axios
+        api.get("/api/post?title=" + inputValue)
+          .then((response) => {
+            console.log(2, inputValue);
 
-          setCommunity(response);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+            setCommunity(response.data.data.content);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else if (searchOption === "nickname") {
+        axios
+        api.get("/api/post?nickname=" + inputValue)
+          .then((response) => {
+            console.log(2, inputValue);
+
+            setCommunity(response.data.data.content);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
     };
     setTimeout(400);
     search();
@@ -128,9 +150,12 @@ const Community = () => {
               >
                 <div className="post-search-wrap">
                   <form className="post-search" onSubmit={handleOnSubmit}>
-                    <select className="post-search-select">
-                      <option>제목</option>
-                      <option>닉네임</option>
+                    <select
+                    className="post-search-select"
+                    onChange={(e) => setSearchOption(e.target.value)}
+                    value={searchOption}>
+                      <option value="title">제목</option>
+                      <option value="nickname">닉네임</option>
                     </select>
                     <input
                       onChange={handleOnChange}
