@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import UserInfo from "../components/history/userInfo/UserInfo";
 import AvgStat from "../components/history/avgStat/AvgStat";
@@ -9,33 +9,33 @@ import { useQuery } from "react-query";
 import { getSummonerData } from "../api/summoner";
 
 const History = () => {
-  const navigate = useNavigate();
-  const { summonerName } = useParams();
+	const navigate = useNavigate();
+	const { summonerName } = useParams();
 
-  //유저 정보 조회
-  const useSummonerData = (summonerName) => {
-    return useQuery(["summonerData", summonerName], () =>
-      getSummonerData(summonerName)
-    );
-  };
+	//유저 정보 조회
+	const useSummonerData = (summonerName) => {
+		return useQuery(["summonerData", summonerName], () => getSummonerData(summonerName));
+	};
 
-  const { data, isLoading, error } = useSummonerData(summonerName);
-  if (isLoading) {
-    return console.log(isLoading);
-  }
-  if (error) {
-    navigate(-1);
-    return alert("존재하지 않는 유저입니다.");
-  }
+	const { data, isLoading, error } = useSummonerData(summonerName);
 
-  return (
-    <HistoryWrapper>
-      <Header2 />
-      <UserInfo data={data} />
-      <AvgStat data={data} />
-      <PrevGame data={data} summonerName={summonerName} />
-    </HistoryWrapper>
-  );
+	if (error) {
+		alert("잘못된 접근입니다.");
+		return navigate("/");
+	}
+
+	if (isLoading) {
+		return <div>Loading...</div>;
+	}
+
+	return (
+		<HistoryWrapper>
+			<Header2 />
+			<UserInfo data={data} />
+			<AvgStat data={data} />
+			<PrevGame data={data} summonerName={summonerName} />
+		</HistoryWrapper>
+	);
 };
 
 export default History;
