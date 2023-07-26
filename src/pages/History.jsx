@@ -41,7 +41,9 @@ const History = () => {
 export default History;
 
 const HistoryWrapper = styled.section`
-  width: 100%;
-  height: 100vh;
-  background-color: #e1e4e7;
+	width: 100%;
+	min-height: 100vh;
+	height: 100%;
+	padding-bottom: 200px;
+	background-color: #e1e4e7;
 `;
