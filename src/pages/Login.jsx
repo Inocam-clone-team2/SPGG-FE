@@ -41,6 +41,9 @@ const reducer = (state, action) => {
 };
 
 const Login = () => {
+  const API_KEY = process.env.REACT_APP_REST_API_KEY;
+  const REDIRECT_URI = "http://localhost:3000/oauth";
+  const KAKAO_AUTH_URI = `https://kauth.kakao.com/oauth/authorize?client_id=${API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
   const navigate = useNavigate();
   const handleGotoSignup = () => {
     navigate(`/signup`);
@@ -111,6 +114,11 @@ const Login = () => {
     return state.email.trim() === "" || state.password.trim() === "";
   };
 
+  const handleKakaoLogin = () => {
+    // 카카오톡 로그인 URI로 리다이렉트
+    window.location.href = KAKAO_AUTH_URI;
+  };
+
   return (
     <div>
       <Bodylayout>
@@ -141,6 +149,7 @@ const Login = () => {
                     fontSize: "20px",
                     fontWeight: "bold",
                   }}
+                  onClick={handleKakaoLogin}
                 >
                   카카오톡 로그인
                   <img

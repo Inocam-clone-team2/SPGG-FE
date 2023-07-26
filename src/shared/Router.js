@@ -9,24 +9,25 @@ import History from "../pages/History";
 import History2 from "../pages/History2";
 import PostDetail from "../pages/community/PostDetail";
 import PostWrite from "../pages/community/PostWrite";
+import BestPost from "../pages/BestPost";
 function Router() {
-	return (
-		<BrowserRouter>
-			<Routes>
-				<Route path="" element={<Main />} />
-				<Route path="login" element={<Login />} />
-				<Route path="signup" element={<Signup />} />
-				<Route path="community" element={<Community />} />
-				<Route path="PostDetail/:id" element={<PostDetail />} />
-				<Route path="PostWrite" element={<PostWrite />} />
-				<Route path="PostEdit" element={<PostEdit />} />
-				<Route path="ranking" element={<Ranking />} />
-				<Route path="history" element={<History />} />        
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="" element={<Main />} />
+        <Route path="login" element={<Login />} />
+        <Route path="signup" element={<Signup />} />
+        <Route path="community" element={<Community />} />
+        <Route path="PostDetail/:id" element={<PostDetail />} />
+        <Route path="PostWrite" element={<PostWrite />} />
+        <Route path="PostEdit" element={<PostEdit />} />
+        <Route path="ranking" element={<Ranking />} />
+        <Route path="history" element={<History />} />
+        <Route path="best" element={<BestPost />} />
         <Route path="history2/:searchUser" element={<History2 />} />
-
-			</Routes>
-		</BrowserRouter>
-	);
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default Router;
