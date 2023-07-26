@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <a href="javascript:kakaoLogin();"
+      ><img
+        src="https://www.gb.go.kr/Main/Images/ko/member/certi_kakao_login.png"
+    /></a>
+    <script
+      src="https://t1.kakaocdn.net/kakao_js_sdk/2.3.0/kakao.min.js"
+      integrity="sha384-70k0rrouSYPWJt7q9rSTKpiTfX6USlMYjZUtr1Du+9o4cGvhPAWxngdtVZDdErlh"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      window.KaKao.init("51045b110a3255dd5db7c1afa8b646a5");
+      function kakaologin() {
+        window.kakao.Auth.login({
+          scope: "profile,account_email",
+          success: function (authObj) {
+            console.log(authObj);
+            Kakao.API.request({
+              url: "/v2/user/me",
+            })
+              .then(function (response) {
+                console.log(response);
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
+          },
+        });
+      }
+    </script>
+  </body>
+</html>
