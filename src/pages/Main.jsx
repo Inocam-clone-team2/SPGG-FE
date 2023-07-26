@@ -14,15 +14,15 @@ const Main = () => {
 		setSummonerName(e.target.value);
 	};
 
-	const searchSummoner = async () => {
-		if (searchUser.trim() === "") {
+	const handleSearchBtn = async () => {
+		if (summonerName.trim() === "") {
 			alert("검색어를 입력해주세요.");
 			return;
 		}
 
 		try {
-			const response = await getSummonerData(searchUser);
-			navigate(`/history/${searchUser}`);
+			const response = await getSummonerData(summonerName);
+			navigate(`/history/${summonerName}`);
 		} catch (error) {
 			console.error("Error occurred:", error);
 			alert("OP.GG에 등록되지 않은 소환사입니다. 오타를 확인 후 다시 검색해주세요.");
@@ -31,7 +31,6 @@ const Main = () => {
 
 	return (
 		<div>
-			<History summonerName={summonerName} />
 			<Header />
 			<MainSection>
 				<img
@@ -39,7 +38,7 @@ const Main = () => {
 					alt="mainImg"
 				/>
 				<SeachContainer>
-					<label for="searchHome" class="searchTag">
+					<label htmlFor="searchHome" className="searchTag">
 						Search
 					</label>
 					<input
@@ -50,9 +49,9 @@ const Main = () => {
 						onChange={handleInput}
 					/>
 					<label
-						for="searchHome"
-						class="onClickSearchHandler"
-						onClick={searchSummoner}></label>
+						htmlFor="searchHome"
+						className="onClickSearchHandler"
+						onClick={handleSearchBtn}></label>
 				</SeachContainer>
 				<BoardWrapper>
 					<BoardHeader>SP.GG Talk 인기글</BoardHeader>
