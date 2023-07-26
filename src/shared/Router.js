@@ -3,6 +3,8 @@ import Main from "../pages/Main";
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
 import Community from "../pages/community/Community";
+import CommunityPopular from "../pages/community/CommunityPopular";
+import CommunityTop from "../pages/community/CommunityTop";
 import PostEdit from "../pages/community/PostEdit";
 import Ranking from "../pages/Ranking";
 import History from "../pages/History";
@@ -18,6 +20,8 @@ function Router() {
         <Route path="login" element={<Login />} />
         <Route path="signup" element={<Signup />} />
         <Route path="community" element={<Community />} />
+        <Route path="CommunityPopular" element={<CommunityPopular />} />
+        <Route path="CommunityTop" element={<CommunityTop />} />
         <Route path="PostDetail/:id" element={<PostDetail />} />
         <Route path="PostWrite" element={<PostWrite />} />
         <Route path="PostEdit" element={<PostEdit />} />

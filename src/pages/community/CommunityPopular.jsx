@@ -10,7 +10,7 @@ import axios from "axios";
 import api from "../../api/post"
 
 
-const Community = () => {
+const CommunityPopular = () => {
 
   moment.locale("ko");
 
@@ -23,7 +23,7 @@ const Community = () => {
 
   useEffect(() => {
     axios
-    api.get("/api/post?page=")
+    api.get("/api/post/popular?page=")
       .then((response) => {
         setCommunity(response.data.data.content);
         setStatusCode(response.data.statusCode);
@@ -37,7 +37,7 @@ const Community = () => {
     const nextPage = postPage + 1;
 
     axios
-    api.get("/api/post?page=" + nextPage)
+    api.get("/api/post/popular?page=" + nextPage)
       .then((response) => {
         setCommunity(response.data.data.content);
         setStatusCode(response.data.statusCode);
@@ -54,7 +54,7 @@ const Community = () => {
       return;
     }
     axios
-    api.get("/api/post?page=" + prevPage)
+    api.get("/api/post/popular?page=" + prevPage)
       .then((response) => {
         setCommunity(response.data.data.content);
         setStatusCode(response.data.statusCode);
@@ -149,17 +149,17 @@ const Community = () => {
                 style={{ height: "48px", position: "relative" }}
               >
                 <div className="community-link-header">
-                <Link to="/CommunityPopular" className="filter-link">
+                <Link to="/CommunityPopular" className="filter-link active">
                     <img
                       alt="popularIcon"
-                      src="https://talk.op.gg/images/icon-hot@2x.png"
+                      src="https://talk.op.gg/images/icon-hot-on@2x.png"
                     />
                     <span>인기</span>
                 </Link>
-                <Link to="/Community" className="filter-link active">
+                <Link to="/Community" className="filter-link">
                     <img
                       alt="newestIcon"
-                      src="https://talk.op.gg/images/icon-new-on@2x.png"
+                      src="https://talk.op.gg/images/icon-new@2x.png"
                     />
                     <span>최신</span>
                 </Link>
@@ -569,4 +569,4 @@ margin: auto;
 
 
 
-export default Community;
+export default CommunityPopular;
