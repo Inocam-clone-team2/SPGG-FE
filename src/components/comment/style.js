@@ -93,3 +93,8 @@ export const CommentBtn = styled.button`
 	border: none !important;
 	font-weight: 700;
 `;
+
+export const EmptyComment = styled.div`
+	text-align: center;
+	line-height: 50px;
+`;

@@ -29,12 +29,16 @@ const Comment = ({ commentList }) => {
 		}
 	};
 
+	//댓글 수
+	const commentCount = commentList?.length ?? 0;
+	console.log(commentCount, commentList);
+
 	return (
 		<S.CommentWrapper>
 			<S.CommentHeader>
 				<h3>댓글</h3>
 				<S.CommentSpan>
-					총 <S.CommentSpan color="#16ae81">{commentList.length}</S.CommentSpan>개
+					총 <S.CommentSpan color="#16ae81">0</S.CommentSpan>개
 				</S.CommentSpan>
 			</S.CommentHeader>
 			<S.CommentForm>
@@ -49,8 +53,10 @@ const Comment = ({ commentList }) => {
 				</S.CommentSubmit>
 			</S.CommentForm>
 			<S.CommentList>
-				{commentList.length === 0 ? (
-					<div>등록된 댓글이 없습니다.</div>
+				{commentCount === 0 ? (
+					<S.EmptyComment>
+						<S.CommentSpan>등록된 댓글이 없습니다.</S.CommentSpan>
+					</S.EmptyComment>
 				) : (
 					<>
 						{commentList.map((comment) => (
