@@ -533,38 +533,6 @@ margin: auto;
       color: #16AE81;
     }
   }
-}
-
-
-.post-popular {
-  width: 56px;
-  height: 48px;
-  margin-left: 15px;
-  display: flex;
-  align-items: center;
-}
-.popular-text {
-  color: #16AE81
-}
-
-.post-newest {
-  width: 56px;
-  height: 48px;
-  margin-left: 15px;
-}
-
-.newest-text {
-  color: #7B858E
-}
-
-.post-top {
-  width: 56px;
-  height: 48px;
-  margin-left: 15px;
-}
-
-.top-text {
-  color: #7B858E
 }`;
 
 
