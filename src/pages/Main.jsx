@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import logo from "../assets/logo.png";
 import { colors } from "../common/styles";
 import instance from "../api/post";
+import Header from "../components/common/header/Header";
+import { useQuery } from "react-query";
+import { getSummonerData } from "../api/summoner";
 
 const Main = () => {
 	const navigate = useNavigate();
@@ -14,80 +16,35 @@ const Main = () => {
 	};
 
 	const searchSummoner = async () => {
-		if (!searchUser) {
-			setSearchUser([]);
-			return;
-		}
-
-		try {
-			const response = await instance.get(`/api/search/test?summonerName=${searchUser}`);
-			setSearchUser(response.data.summoner.name);
-			navigate(`/history2/${searchUser}`);
-			//   console.log("res", response.data.summoner.name);
-		} catch (error) {
-			alert("검색한 유저가 없습니다.");
-			//   console.error("Error during page search:", error);
-		}
+		getSummonerData(searchUser);
+		navigate(`/history/${searchUser}`);
 	};
+	// const searchSummoner = async () => {
+	// 	if (!searchUser) {
+	// 		setSearchUser([]);
+	// 		return;
+	// 	}
 
-	useEffect(() => {
-		if (searchUser) {
-			searchSummoner(searchUser);
-		}
-	}, []);
+	// 	try {
+	// 		const response = await instance.get(`/api/search/test?summonerName=${searchUser}`);
+	// 		setSearchUser(response.data.summoner.name);
+	// 		navigate(`/history2/${searchUser}`);
+	// 		console.log("res", response.data.summoner.name);
+	// 	} catch (error) {
+	// 		alert("존재하지 않는 유저입니다.");
+	// 		//   console.error("Error during page search:", error);
+	// 	}
+	// };
+
+	// useEffect(() => {
+	// 	if (searchUser) {
+	// 		searchSummoner(searchUser);
+	// 	}
+	// }, []);
 
 	return (
 		<div>
-			<Header>
-				<HeaderDiv height="40px" justify="space-between" background={colors.secondary}>
-					<HeaderLeft>
-						<LogoLink to="/">
-							<LogoImg src={logo} alt="logo" />
-						</LogoLink>
-						<Nav>
-							<NavItem>
-								<img
-									src="https://opgg-gnb.akamaized.net/static/images/icons/img-navi-lol-white.svg?image=q_auto,f_webp,w_48&v=1690002931051"
-									alt="lol"
-								/>
-								<span>리그오브레전드</span>
-							</NavItem>
-							<NavItem>
-								<NavLink to="/community">
-									<img
-										src="
-								https://opgg-gnb.akamaized.net/static/images/icons/img-navi-talk-white.svg"
-										alt="lol"
-									/>
-									톡피지지
-								</NavLink>
-							</NavItem>
-						</Nav>
-					</HeaderLeft>
-					<FuncBtnWrapper>
-						<FuncBtn background="https://s-lol-web.op.gg/images/icon/feedback.svg">
-							<TooltipText>FAQ/피드백</TooltipText>
-						</FuncBtn>
-						<FuncBtn background="https://s-lol-web.op.gg/images/icon/icon-lightmode.svg">
-							<TooltipText>Light mode</TooltipText>
-						</FuncBtn>
-						<FuncBtn background="https://s-lol-web.op.gg/images/icon/icon-world-light-blue.svg?v=1690030599664"></FuncBtn>
-						<span>한국어 ▾</span>
-						<LoginLink to="/login">로그인</LoginLink>
-					</FuncBtnWrapper>
-				</HeaderDiv>
-				<HeaderDiv hasbottomborder>
-					<Nav>
-						<NavItem fontSize="15px">홈</NavItem>
-						<NavLink to="ranking" fontSize="15px">
-							랭킹
-						</NavLink>
-					</Nav>
-					<PatchLink to="https://www.youtube.com/watch?v=7KRBH8RadNc">
-						13.14 패치노트 보기
-					</PatchLink>
-				</HeaderDiv>
-			</Header>
+			<Header />
 			<MainSection>
 				<img
 					src="https://opgg-static.akamaized.net/logo/20230717181253.4193b693203f4c9ca15ec82267ba2682.png?image=q_auto,f_webp,w_auto&v=1690030599664"
@@ -104,9 +61,10 @@ const Main = () => {
 						value={searchUser}
 						onChange={handleInput}
 					/>
-					<label for="searchHome" class="onClickSearchHandler" onClick={searchSummoner}>
-						.GG
-					</label>
+					<label
+						for="searchHome"
+						class="onClickSearchHandler"
+						onClick={searchSummoner}></label>
 				</SeachContainer>
 				{/* <ul>
           {searchResults.map((summoner) => (
@@ -236,124 +194,6 @@ const Main = () => {
 
 export default Main;
 
-const Header = styled.header`
-	width: 100%;
-	align-items: center;
-	background-color: ${colors.primary};
-	color: ${colors.text_back};
-`;
-
-const HeaderDiv = styled.div`
-	width: 100%;
-	display: flex;
-	justify-content: ${(props) => props.justify || "center"};
-	height: ${(props) => props.height || "50px"};
-	background-color: ${(props) => props.background || colors.primary};
-	${({ hasbottomborder }) => hasbottomborder && "border-bottom: 1px solid #4171D6;"}
-`;
-
-// 헤더 윗줄
-const HeaderLeft = styled.div`
-	display: flex;
-`;
-
-const LogoLink = styled(Link)`
-	display: flex;
-	align-items: center;
-	background-color: ${colors.primary};
-	height: 100%;
-`;
-
-const LogoImg = styled.img`
-	width: 70px;
-	margin: 10px 20px;
-`;
-const Nav = styled.ul`
-	display: flex;
-	list-style: none;
-	justify-content: flex-start;
-	margin: 0;
-	padding: 0;
-
-	& > :first-child {
-		background-color: ${colors.primary};
-		color: white;
-	}
-
-	& > :last-child {
-		margin-right: 400px;
-	}
-`;
-
-const NavItem = styled.li`
-	display: flex;
-	align-items: center;
-	font-size: ${(props) => props.fontSize || "12px"};
-	font-weight: 600;
-	height: 100%;
-	gap: 10px;
-	padding: 0 10px;
-`;
-
-const NavLink = styled(Link)`
-	text-decoration: none;
-	color: ${colors.text_back};
-	display: flex;
-	justify-content: center;
-	justify-items: baseline;
-	align-items: center;
-	gap: 15px;
-	cursor: pointer;
-	font-size: ${(props) => props.fontSize || "14px"};
-`;
-const FuncBtn = styled.button`
-	width: 24px;
-	height: 24px;
-	border: none;
-	background: transparent;
-	background-image: url(${(props) => props.background});
-	position: relative;
-	margin: 0 20px;
-	padding: 0;
-
-	/* 버튼에 호버 시 툴팁 스타일 적용 */
-	&:hover .tooltip-text {
-		visibility: visible;
-	}
-`;
-
-const FuncBtnWrapper = styled.div`
-	display: flex;
-	align-items: center;
-	justify-content: end;
-`;
-
-const TooltipText = styled.div`
-	visibility: hidden;
-	background-color: #333;
-	color: #fff;
-	padding: 5px;
-	border-radius: 4px;
-	position: absolute;
-	z-index: 1;
-	bottom: 120%;
-	left: 50%;
-	transform: translateX(-50%);
-	white-space: nowrap;
-`;
-
-const LoginLink = styled(Link)`
-	background-color: ${colors.primary};
-	border: none;
-	border-radius: 4px;
-	width: 64px;
-	height: 26px;
-	text-decoration: none;
-	color: white;
-	text-align: center;
-	font-weight: bold;
-`;
-
 const MainSection = styled.section`
 	box-sizing: border-box;
 	background-color: ${colors.primary};
@@ -362,60 +202,6 @@ const MainSection = styled.section`
 	text-align: center;
 	padding: 130px;
 `;
-
-// 링크
-const AdLink = styled(Link)`
-	text-decoration: none;
-	color: ${colors.text};
-`;
-
-const PatchLink = styled(Link)`
-	background-color: #4171d6;
-	border-radius: 18px;
-	width: 140px;
-	height: 30px;
-	color: white;
-	text-decoration: none;
-	font-size: 12px;
-	line-height: 30px;
-	text-align: center;
-	margin-top: 10px;
-`;
-
-// const SearchWrapper = styled.form`
-//   background-color: white;
-//   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.19);
-//   border-radius: 30px;
-//   text-align: left;
-//   margin: 0 auto;
-//   width: 800px;
-//   height: 60px;
-//   overflow: hidden;
-
-//   input {
-//     width: 100%;
-//     height: 100%;
-//     position: relative;
-//     border: none;
-//     padding: 20px;
-//   }
-// `;
-
-// const SearchBtn = styled.button`
-//   position: absolute;
-//   background: transparent;
-//   background-image: url("https://s-lol-web.op.gg/images/icon/icon-gg.svg");
-//   background-size: 36px 24px;
-//   background-position: 12px center;
-//   background-repeat: no-repeat;
-//   border: none;
-//   right: 104px;
-//   top: 1px;
-//   font-size: 0;
-//   width: 60px;
-//   height: 32px;
-//   overflow: hidden;
-// `;
 
 const BoardWrapper = styled.div`
 	background-color: white;
@@ -487,7 +273,7 @@ const SeachContainer = styled.div`
 		padding-left: 40px;
 		padding-right: 40px; /* 라벨의 너비 + 좌우 여백(10px * 2) */
 		width: 100%;
-		height: 80%;
+		height: 60px;
 		border-radius: 30px;
 		border: none;
 		font-size: 15px;
@@ -497,19 +283,23 @@ const SeachContainer = styled.div`
 	label.onClickSearchHandler {
 		position: absolute;
 		top: 50%;
-		right: 10px;
+		right: 5px;
 		transform: translateY(-50%);
 		padding: 8px 16px;
-		background-color: transparent;
-		font-size: 30px;
-		font-weight: bold;
+		background: transparent;
+		background-image: url("https://s-lol-web.op.gg/images/icon/icon-gg.svg");
+		background-size: 46px 34px;
+		background-position: 12px center;
+		background-repeat: no-repeat;
+		width: 50px;
+		height: 52px;
 		color: #007bff;
 		cursor: pointer;
 		border-radius: 4px;
 	}
 	label.searchTag {
 		position: absolute;
-		top: 25%;
+		top: 30%;
 		left: 10px;
 		transform: translateY(-50%);
 		padding: 8px 16px;
