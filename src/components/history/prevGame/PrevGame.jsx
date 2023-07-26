@@ -112,36 +112,6 @@ const PrevGame = (data, summonerName) => {
 										<S.KdaText>{match.info.searchUserInfo.assists}</S.KdaText>
 									</div>
 								</S.ChamInfo>
-								{/* <S.ItemInfo>
-									<img
-										src={`https://opgg-static.akamaized.net/meta/images/lol/item/${match.info.searchUserInfo.item0}.png?image=q_auto,f_webp,w_44&v=1690128491870`}
-										alt="item0"
-									/>
-									<img
-										src={`https://opgg-static.akamaized.net/meta/images/lol/item/${match.info.searchUserInfo.item1}.png?image=q_auto,f_webp,w_44&v=1690128491870`}
-										alt="item1"
-									/>
-									<img
-										src={`https://opgg-static.akamaized.net/meta/images/lol/item/${match.info.searchUserInfo.item2}.png?image=q_auto,f_webp,w_44&v=1690128491870`}
-										alt="item2"
-									/>
-									<img
-										src={`https://opgg-static.akamaized.net/meta/images/lol/item/${match.info.searchUserInfo.item3}.png?image=q_auto,f_webp,w_44&v=1690128491870`}
-										alt="item3"
-									/>
-									<img
-										src={`https://opgg-static.akamaized.net/meta/images/lol/item/${match.info.searchUserInfo.item4}.png?image=q_auto,f_webp,w_44&v=1690128491870`}
-										alt="item4"
-									/>
-									<img
-										src={`https://opgg-static.akamaized.net/meta/images/lol/item/${match.info.searchUserInfo.item5}.png?image=q_auto,f_webp,w_44&v=1690128491870`}
-										alt="item5"
-									/>
-									<img
-										src={`https://opgg-static.akamaized.net/meta/images/lol/item/${match.info.searchUserInfo.item6}.png?image=q_auto,f_webp,w_44&v=1690128491870`}
-										alt="item6"
-									/>
-								</S.ItemInfo> */}
 								<S.ItemInfo>
 									{[0, 1, 2, 3, 4, 5, 6].map((itemNumber) => (
 										<React.Fragment key={itemNumber}>

@@ -39,26 +39,28 @@ const AvgStat = (data) => {
 			</S.StatsDiv>
 			<S.StatsDiv>
 				<S.StatText>플레이한 챔피언 (최근 10게임)</S.StatText>
-				{Object.keys(playedCham).map((championKey, index) => (
-					<S.ChrPlayed key={index}>
-						<img
-							src={`https://opgg-static.akamaized.net/meta/images/lol/champion/${championKey}.png`}
-							alt="champimg"
-						/>
-						<S.TextAlign>
-							<S.StatText fontSize="11px">
-								{Math.floor(playedCham[championKey].champOdds)}%
-							</S.StatText>
-							<S.StatText fontSize="11px">
-								({playedCham[championKey].winCount}승{" "}
-								{playedCham[championKey].loseCount}패)
-							</S.StatText>
-							<S.StatText fontSize="11px" color="">
-								{playedCham[championKey].averKda.toFixed(2)} 평점
-							</S.StatText>
-						</S.TextAlign>
-					</S.ChrPlayed>
-				))}
+				{Object.keys(playedCham)
+					.slice(0, 3)
+					.map((championKey, index) => (
+						<S.ChrPlayed key={index}>
+							<img
+								src={`https://opgg-static.akamaized.net/meta/images/lol/champion/${championKey}.png`}
+								alt="champimg"
+							/>
+							<S.TextAlign>
+								<S.StatText fontSize="11px">
+									{Math.floor(playedCham[championKey].champOdds)}%
+								</S.StatText>
+								<S.StatText fontSize="11px">
+									({playedCham[championKey].winCount}승{" "}
+									{playedCham[championKey].loseCount}패)
+								</S.StatText>
+								<S.StatText fontSize="11px" color="">
+									{playedCham[championKey].averKda.toFixed(2)} 평점
+								</S.StatText>
+							</S.TextAlign>
+						</S.ChrPlayed>
+					))}
 			</S.StatsDiv>
 			<S.StatsDiv>
 				<S.StatText>선호 포지션 (랭크)</S.StatText>
