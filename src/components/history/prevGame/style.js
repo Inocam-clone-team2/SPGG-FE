@@ -23,7 +23,7 @@ export const GameInfo = styled.div`
 `;
 
 export const GameDiv = styled.div`
-	margin: 0 30px;
+	width: 160px;
 `;
 
 export const ResultText = styled.div`
@@ -131,6 +131,7 @@ export const Players = styled.div`
 	ul {
 		list-style: none;
 		font-size: 12px;
+		width: 150px;
 	}
 
 	li {
