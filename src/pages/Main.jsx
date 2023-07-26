@@ -6,13 +6,14 @@ import instance from "../api/post";
 import Header from "../components/common/header/Header";
 import { useQuery } from "react-query";
 import { getSummonerData } from "../api/summoner";
+import History from "./History";
 
 const Main = () => {
   const navigate = useNavigate();
-  const [searchUser, setSearchUser] = useState("");
+  const [summonerName, setSummonerName] = useState("");
 
   const handleInput = (e) => {
-    setSearchUser(e.target.value);
+    setSummonerName(e.target.value);
   };
 
   // const searchSummoner = async () => {
@@ -21,17 +22,17 @@ const Main = () => {
   // };
 
   const searchSummoner = async () => {
-    if (!searchUser) {
-      setSearchUser([]);
+    if (!summonerName) {
+      setSummonerName([]);
       return;
     }
 
     try {
       const response = await instance.get(
-        `/api/search/test?summonerName=${searchUser}`
+        `/api/search/test?summonerName=${summonerName}`
       );
-      setSearchUser(response.data.summoner.name);
-      navigate(`/history2/${searchUser}`);
+      setSummonerName(response.data.summoner.name);
+      navigate(`/history`);
       console.log("res", response.data.summoner.name);
     } catch (error) {
       alert("존재하지 않는 유저입니다.");
@@ -40,13 +41,14 @@ const Main = () => {
   };
 
   useEffect(() => {
-    if (searchUser) {
-      searchSummoner(searchUser);
+    if (summonerName) {
+      searchSummoner(summonerName);
     }
   }, []);
 
   return (
     <div>
+      <History summonerName={summonerName} />
       <Header />
       <MainSection>
         <img
@@ -61,7 +63,7 @@ const Main = () => {
             className="searchHome"
             placeholder="소환사명,소환사명..."
             type="text"
-            value={searchUser}
+            value={summonerName}
             onChange={handleInput}
           />
           <label
