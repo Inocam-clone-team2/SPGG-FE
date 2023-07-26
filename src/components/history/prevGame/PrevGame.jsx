@@ -50,7 +50,6 @@ const PrevGame = (data, summonerName) => {
 				const teamBlue = Array.isArray(match.info.participants)
 					? match.info.participants.filter((participant) => participant.team === "Blue")
 					: [];
-				console.log(teamBlue, teamRed);
 
 				return (
 					<S.StatsPerGame key={index} isWin={match.info.searchUserInfo.win}>
