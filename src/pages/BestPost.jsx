@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import instance from "../api/post";
 import styled from "styled-components";
-import Like from "./Like";
+import Like from "../components/Like";
 
 const BestPost = () => {
   const [bestPosts, setBestPosts] = useState([]);

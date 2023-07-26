@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import * as S from "./style";
+import * as A from "../header/style";
 import styled from "styled-components";
 
 const Header2 = () => {
