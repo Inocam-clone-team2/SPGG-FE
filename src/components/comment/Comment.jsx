@@ -5,7 +5,7 @@ import { useQuery, useMutation, useQueryClient } from "react-query";
 import { useParams, useNavigate } from "react-router-dom";
 import { addComment, fetchComment, deleteComment, modifyComment } from "../../api/post";
 
-const Comment = () => {
+const Comment = ({ commentList }) => {
 	const { id } = useParams();
 	const navigate = useNavigate();
 	const queryClient = useQueryClient();
@@ -34,7 +34,7 @@ const Comment = () => {
 			<S.CommentHeader>
 				<h3>댓글</h3>
 				<S.CommentSpan>
-					총 <S.CommentSpan color="#16ae81">100</S.CommentSpan>개
+					총 <S.CommentSpan color="#16ae81">{commentList.length}</S.CommentSpan>개
 				</S.CommentSpan>
 			</S.CommentHeader>
 			<S.CommentForm>
@@ -49,14 +49,25 @@ const Comment = () => {
 				</S.CommentSubmit>
 			</S.CommentForm>
 			<S.CommentList>
-				<S.EachComment>
-					<h4>
-						닉네임 <S.CommentSpan>n시간 전</S.CommentSpan>
-					</h4>
-					<S.CommentContent>내용</S.CommentContent>
-					<S.CommentBtn>수정</S.CommentBtn>
-					<S.CommentBtn color="#e84057">삭제</S.CommentBtn>
-				</S.EachComment>
+				{commentList.length === 0 ? (
+					<div>등록된 댓글이 없습니다.</div>
+				) : (
+					<>
+						{commentList.map((comment) => (
+							<S.EachComment key={comment.id}>
+								<h4>
+									{comment.nickname}{" "}
+									<S.CommentSpan>
+										{moment(comment.createdAt).fromNow()}
+									</S.CommentSpan>
+								</h4>
+								<S.CommentContent>{comment.content}</S.CommentContent>
+								<S.CommentBtn>수정</S.CommentBtn>
+								<S.CommentBtn color="#e84057">삭제</S.CommentBtn>
+							</S.EachComment>
+						))}
+					</>
+				)}
 			</S.CommentList>
 		</S.CommentWrapper>
 	);

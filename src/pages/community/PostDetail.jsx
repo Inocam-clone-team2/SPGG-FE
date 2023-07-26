@@ -21,11 +21,13 @@ const PostDetail = () => {
 			const response = await api.get(`api/post/${id}`);
 
 			setPost(response.data.data);
-			console.log(response);
 		} catch (error) {
 			console.error("API 요청 오류:", error);
 		}
 	};
+
+	// 댓글 컴포넌트로 넘길 댓글목록
+	const commentList = post.commentList;
 
 	useEffect(() => {
 		fetchPost();
@@ -120,7 +122,7 @@ const PostDetail = () => {
 							</div>
 						</div>
 					</div>
-					<Comment />
+					<Comment commentList={commentList} />
 					<Footer2 />
 				</CommunityContentBox>
 			</div>

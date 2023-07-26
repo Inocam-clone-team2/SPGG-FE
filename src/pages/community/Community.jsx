@@ -268,6 +268,7 @@ const ContentBox = styled.div`
 	max-width: 728px;
 	background-color: white;
 	margin: auto;
+
 	.community-header {
 		position: relative;
 		margin-bottom: 8px;
@@ -289,6 +290,7 @@ const ContentBox = styled.div`
 		font-weight: 700;
 		margin-bottom: 8px;
 	}
+
 	.article-box {
 		display: flex;
 		margin-top: 0;

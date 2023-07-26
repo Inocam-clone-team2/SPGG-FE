@@ -50,12 +50,6 @@ export const addComment = async (payload) => {
 	return response.data;
 };
 
-// 댓글 조회
-export const fetchComment = async (postId) => {
-	const response = await instance.get(`/api/post/${id}/comment`);
-	return response.data;
-};
-
 // 댓글 삭제
 export const deleteComment = async (payload) => {
 	const postId = payload["postId"]; // 게시물 ID
