@@ -7,6 +7,8 @@ import MainForm from "./CommunityMainForm";
 import moment from "moment";
 import axios from "axios";
 import "moment/locale/ko";
+import api from "../../api/post"
+
 
 const Community = () => {
 
@@ -20,7 +22,7 @@ const Community = () => {
 
   useEffect(() => {
     axios
-      .get("http://3.37.36./api/post")
+      api.get("/api/post")
       .then((response) => {
         setCommunity(response.data.data.content);
         setStatusCode(response.data.statusCode);
@@ -39,9 +41,8 @@ const Community = () => {
     }
     console.log(6, prevPage);
     axios
-      .get("http://3.37.36./api/post/" + prevPage)
+      api.get("/api/post/" + prevPage)
       .then((response) => {
-        console.log(response.data.statusCode);
         setCommunity(response.data.data.content);
         setStatusCode(response.data.statusCode);
 
@@ -56,7 +57,7 @@ const Community = () => {
     let nextPage = postPage + 1;
 
     axios
-      .get("http://3.37.36./api/post/" + nextPage)
+      api.get("/api/post/" + nextPage)
       .then((response) => {
         console.log(response.data.statusCode);
         setCommunity(response.data.data.content);
@@ -71,10 +72,10 @@ const Community = () => {
   const handleOnSubmit = (e) => {
     e.preventDefault();
     axios
-      .get("api/post/find/" + inputValue)
+      api.get("/api/post/?tilte=" + inputValue)
       .then((response) => {
-        console.log(2, inputValue);
-        setCommunity(response.data.data.content);
+        console.log(response);
+        setCommunity(response);
       })
       .catch((error) => {
         console.log(error);
@@ -87,11 +88,11 @@ const Community = () => {
 
     const search = async () => {
       await axios
-        .get("api/post/find/" + inputValue)
+        api.get("/api/post/?tilte=" + inputValue)
         .then((response) => {
-          console.log(2, inputValue);
+          console.log(response);
 
-          setCommunity(response.data.data.content);
+          setCommunity(response);
         })
         .catch((error) => {
           console.log(error);
@@ -128,7 +129,8 @@ const Community = () => {
                 <div className="post-search-wrap">
                   <form className="post-search" onSubmit={handleOnSubmit}>
                     <select className="post-search-select">
-                      <option>제목+내용</option>
+                      <option>제목</option>
+                      <option>닉네임</option>
                     </select>
                     <input
                       onChange={handleOnChange}
