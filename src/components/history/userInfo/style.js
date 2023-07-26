@@ -54,6 +54,7 @@ export const RefreshBtn = styled.button`
 	font-weight: 700;
 	display: block;
 	margin: 10px 0;
+	cursor: pointer;
 `;
 
 export const InfoSpan = styled.span`

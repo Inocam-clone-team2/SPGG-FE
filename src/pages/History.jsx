@@ -31,7 +31,7 @@ const History = () => {
 			<Header2 />
 			<UserInfo data={data} />
 			<AvgStat data={data} />
-			<PrevGame data={data} />
+			<PrevGame data={data} summonerName={summonerName} />
 		</HistoryWrapper>
 	);
 };

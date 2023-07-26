@@ -118,6 +118,13 @@ export const ItemInfo = styled.div`
 	}
 `;
 
+export const EmptyItem = styled.div`
+	width: 22px;
+	height: 22px;
+	border-radius: 4px;
+	background-color: ${(props) => (props.isWin ? "#b3cdff" : "#ffbac3")};
+`;
+
 export const Players = styled.div`
 	display: flex;
 
