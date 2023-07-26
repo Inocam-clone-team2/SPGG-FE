@@ -66,11 +66,6 @@ const Main = () => {
 						class="onClickSearchHandler"
 						onClick={searchSummoner}></label>
 				</SeachContainer>
-				{/* <ul>
-          {searchResults.map((summoner) => (
-            <li key={summoner.id}>{summoner.name}</li>
-          ))}
-        </ul> */}
 				<BoardWrapper>
 					<BoardHeader>SP.GG Talk 인기글</BoardHeader>
 					<BoardUl>
