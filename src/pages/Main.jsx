@@ -8,104 +8,43 @@ import { useQuery } from "react-query";
 import { getSummonerData } from "../api/summoner";
 
 const Main = () => {
-	const navigate = useNavigate();
-	const [searchUser, setSearchUser] = useState("");
+  const navigate = useNavigate();
+  const [searchUser, setSearchUser] = useState("");
 
-	const handleInput = (e) => {
-		setSearchUser(e.target.value);
-	};
+  const handleInput = (e) => {
+    setSearchUser(e.target.value);
+  };
 
-	const searchSummoner = async () => {
-		getSummonerData(searchUser);
-		navigate(`/history/${searchUser}`);
-	};
-	// const searchSummoner = async () => {
-	// 	if (!searchUser) {
-	// 		setSearchUser([]);
-	// 		return;
-	// 	}
+  const searchSummoner = async () => {
+    getSummonerData(searchUser);
+    navigate(`/history/${searchUser}`);
+  };
+  // const searchSummoner = async () => {
+  // 	if (!searchUser) {
+  // 		setSearchUser([]);
+  // 		return;
+  // 	}
 
-	// 	try {
-	// 		const response = await instance.get(`/api/search/test?summonerName=${searchUser}`);
-	// 		setSearchUser(response.data.summoner.name);
-	// 		navigate(`/history2/${searchUser}`);
-	// 		console.log("res", response.data.summoner.name);
-	// 	} catch (error) {
-	// 		alert("존재하지 않는 유저입니다.");
-	// 		//   console.error("Error during page search:", error);
-	// 	}
-	// };
+  // 	try {
+  // 		const response = await instance.get(`/api/search/test?summonerName=${searchUser}`);
+  // 		setSearchUser(response.data.summoner.name);
+  // 		navigate(`/history2/${searchUser}`);
+  // 		console.log("res", response.data.summoner.name);
+  // 	} catch (error) {
+  // 		alert("존재하지 않는 유저입니다.");
+  // 		//   console.error("Error during page search:", error);
+  // 	}
+  // };
 
-	// useEffect(() => {
-	// 	if (searchUser) {
-	// 		searchSummoner(searchUser);
-	// 	}
-	// }, []);
+  // useEffect(() => {
+  // 	if (searchUser) {
+  // 		searchSummoner(searchUser);
+  // 	}
+  // }, []);
 
   return (
     <div>
-      <Header>
-        <HeaderDiv
-          height="40px"
-          justify="space-between"
-          backgroundColor={colors.secondary}
-        >
-          <HeaderLeft>
-            <LogoLink to="/">
-              <LogoImg src={logo} alt="logo" />
-            </LogoLink>
-            <Nav>
-              <NavItem>
-                <img
-                  src="https://opgg-gnb.akamaized.net/static/images/icons/img-navi-lol-white.svg?image=q_auto,f_webp,w_48&v=1690002931051"
-                  alt="lol"
-                />
-                <span>리그오브레전드</span>
-              </NavItem>
-              <NavItem>
-                <NavLink to="/community">
-                  <img
-                    src="
-								https://opgg-gnb.akamaized.net/static/images/icons/img-navi-talk-white.svg"
-                    alt="lol"
-                  />
-                  톡피지지
-                </NavLink>
-              </NavItem>
-            </Nav>
-          </HeaderLeft>
-          <FuncBtnWrapper>
-            <FuncBtn background="https://s-lol-web.op.gg/images/icon/feedback.svg">
-              <TooltipText>FAQ/피드백</TooltipText>
-            </FuncBtn>
-            <FuncBtn background="https://s-lol-web.op.gg/images/icon/icon-lightmode.svg">
-              <TooltipText>Light mode</TooltipText>
-            </FuncBtn>
-            <FuncBtn background="https://s-lol-web.op.gg/images/icon/icon-world-light-blue.svg?v=1690030599664"></FuncBtn>
-            <span>한국어 ▾</span>
-            <LoginLink to="/login">로그인</LoginLink>
-          </FuncBtnWrapper>
-        </HeaderDiv>
-        <HeaderDiv hasBottomBorder>
-          <Nav>
-            <NavItem fontSize="15px">홈</NavItem>
-            <NavLink to="ranking" fontSize="15px">
-              랭킹
-            </NavLink>
-            <NavItem fontSize="15px" onClick={onClickGotoCommunity}>
-              커뮤니티
-            </NavItem>
-          </Nav>
-          <PatchLink to="https://www.youtube.com/watch?v=7KRBH8RadNc">
-            13.14 패치노트 보기
-          </PatchLink>
-        </HeaderDiv>
-        {/* <HeaderDiv backgroundColor={colors.point}>
-					<AdLink to="https://gigs.op.gg/intro?&utm_source=opgg&utm_medium=txt&utm_campaign=gnb_tier_1">
-						이번 배치는 망할 수 없으니까! 프로 전문가한테 강의 받고 티어 올리자!
-					</AdLink>
-				</HeaderDiv> */}
-      </Header>
+      <Header />
       <MainSection>
         <img
           src="https://opgg-static.akamaized.net/logo/20230717181253.4193b693203f4c9ca15ec82267ba2682.png?image=q_auto,f_webp,w_auto&v=1690030599664"
@@ -255,119 +194,119 @@ const Main = () => {
 export default Main;
 
 const MainSection = styled.section`
-	box-sizing: border-box;
-	background-color: ${colors.primary};
-	min-height: 100vh;
-	height: calc(100% + 100px);
-	text-align: center;
-	padding: 130px;
+  box-sizing: border-box;
+  background-color: ${colors.primary};
+  min-height: 100vh;
+  height: calc(100% + 100px);
+  text-align: center;
+  padding: 130px;
 `;
 
 const BoardWrapper = styled.div`
-	background-color: white;
-	width: 800px;
-	height: 450px;
-	margin: 100px auto;
-	border-radius: 4px;
+  background-color: white;
+  width: 800px;
+  height: 450px;
+  margin: 100px auto;
+  border-radius: 4px;
 `;
 
 //인기글
 const BoardHeader = styled.div`
-	text-align: start;
-	margin: 20px 0 30px 20px;
+  text-align: start;
+  margin: 20px 0 30px 20px;
 `;
 
 const BoardUl = styled.ul`
-	text-decoration: none;
+  text-decoration: none;
 
-	li {
-		display: flex;
-	}
+  li {
+    display: flex;
+  }
 
-	img {
-		height: 56px;
-		width: 100px;
-	}
+  img {
+    height: 56px;
+    width: 100px;
+  }
 `;
 
 const PostInfo = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: start;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
 `;
 
 //푸터
 const Footer = styled.footer`
-	background-color: ${colors.primary};
-	color: white;
+  background-color: ${colors.primary};
+  color: white;
 
-	div {
-		display: flex;
-		flex-direction: column;
-		font-size: 14px;
-		margin: 0 20px;
-	}
+  div {
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+    margin: 0 20px;
+  }
 `;
 
 const FooterNav = styled.nav`
-	display: flex;
+  display: flex;
 `;
 
 const FooterRight = styled.div`
-	border-top: 1px solid white;
-	margin-top: 10px;
-	padding: 20px;
+  border-top: 1px solid white;
+  margin-top: 10px;
+  padding: 20px;
 `;
 const SeachContainer = styled.div`
-	position: relative;
-	background-color: transparent;
-	height: 10vh;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 800px;
-	margin: 0 auto;
+  position: relative;
+  background-color: transparent;
+  height: 10vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 800px;
+  margin: 0 auto;
 
-	/* input 요소의 왼쪽 패딩을 라벨의 너비만큼 조정하여 라벨이 input 안쪽으로 들어가도록 합니다. */
-	.searchHome {
-		padding-left: 40px;
-		padding-right: 40px; /* 라벨의 너비 + 좌우 여백(10px * 2) */
-		width: 100%;
-		height: 60px;
-		border-radius: 30px;
-		border: none;
-		font-size: 15px;
-		box-shadow: rgba(0, 0, 0, 0.19) 0px 2px 2px 0px;
-	}
-	/* 스타일을 조정하여 라벨을 버튼처럼 보이도록 설정합니다. */
-	label.onClickSearchHandler {
-		position: absolute;
-		top: 50%;
-		right: 5px;
-		transform: translateY(-50%);
-		padding: 8px 16px;
-		background: transparent;
-		background-image: url("https://s-lol-web.op.gg/images/icon/icon-gg.svg");
-		background-size: 46px 34px;
-		background-position: 12px center;
-		background-repeat: no-repeat;
-		width: 50px;
-		height: 52px;
-		color: #007bff;
-		cursor: pointer;
-		border-radius: 4px;
-	}
-	label.searchTag {
-		position: absolute;
-		top: 30%;
-		left: 10px;
-		transform: translateY(-50%);
-		padding: 8px 16px;
-		background-color: transparent;
-		font-size: 13px;
-		font-weight: bold;
-		color: #202020;
-		cursor: pointer;
-		border-radius: 4px;
-	}
+  /* input 요소의 왼쪽 패딩을 라벨의 너비만큼 조정하여 라벨이 input 안쪽으로 들어가도록 합니다. */
+  .searchHome {
+    padding-left: 40px;
+    padding-right: 40px; /* 라벨의 너비 + 좌우 여백(10px * 2) */
+    width: 100%;
+    height: 60px;
+    border-radius: 30px;
+    border: none;
+    font-size: 15px;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 2px 2px 0px;
+  }
+  /* 스타일을 조정하여 라벨을 버튼처럼 보이도록 설정합니다. */
+  label.onClickSearchHandler {
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    transform: translateY(-50%);
+    padding: 8px 16px;
+    background: transparent;
+    background-image: url("https://s-lol-web.op.gg/images/icon/icon-gg.svg");
+    background-size: 46px 34px;
+    background-position: 12px center;
+    background-repeat: no-repeat;
+    width: 50px;
+    height: 52px;
+    color: #007bff;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  label.searchTag {
+    position: absolute;
+    top: 30%;
+    left: 10px;
+    transform: translateY(-50%);
+    padding: 8px 16px;
+    background-color: transparent;
+    font-size: 13px;
+    font-weight: bold;
+    color: #202020;
+    cursor: pointer;
+    border-radius: 4px;
+  }
 `;
