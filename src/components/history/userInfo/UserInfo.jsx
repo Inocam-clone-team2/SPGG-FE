@@ -2,9 +2,7 @@ import React from "react";
 import * as S from "./style";
 
 const UserInfo = (data) => {
-	console.log("조회", data);
 	const playerInfo = data.data.summoner;
-	console.log("아이디", JSON.stringify(playerInfo));
 
 	//프로필 아이콘
 	const profileIcon =

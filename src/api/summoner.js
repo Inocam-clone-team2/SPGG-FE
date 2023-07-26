@@ -11,7 +11,6 @@ export const getSummonerData = async (summonerName) => {
 		});
 		return response.data;
 	} catch (error) {
-		console.log("주소", BASE_URL);
 		console.error(error);
 	}
 };

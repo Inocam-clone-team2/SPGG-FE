@@ -3,7 +3,9 @@ import * as S from "./style";
 import { Link } from "react-router-dom";
 import { colors } from "../../../common/styles";
 
-const PrevGame = () => {
+const PrevGame = (data) => {
+	console.log("조회", data.data.matchInfo);
+	const matches = data.data.matchInfo;
 	return (
 		<S.StatsPerGame isWin={true}>
 			<S.GameInfo isWin={true}>

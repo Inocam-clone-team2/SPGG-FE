@@ -56,7 +56,7 @@ export const DonutChart = styled.div`
 	position: relative;
 
 	&::before {
-		content: "65%";
+		content: "${(props) => props.winningPercentage}%";
 		position: absolute;
 		top: 20%;
 		left: 20%;

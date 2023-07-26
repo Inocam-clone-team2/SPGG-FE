@@ -30,8 +30,8 @@ const History = () => {
 		<HistoryWrapper>
 			<Header2 />
 			<UserInfo data={data} />
-			<AvgStat />
-			<PrevGame />
+			<AvgStat data={data} />
+			<PrevGame data={data} />
 		</HistoryWrapper>
 	);
 };
