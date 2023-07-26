@@ -9,18 +9,16 @@ import "moment/locale/ko";
 import { Link } from "react-router-dom";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../../api/post"
+import Like from "../../components/Like"
 
 const PostDetail = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [post, setPost] = useState([]);
-  const postId = id;
-  const postState = post;
 
   const fetchPost = async () => {
     try {
       const response = await api.get(`api/post/${id}`);
-
       setPost(response.data.data);
       console.log(response)
     } catch (error) {
@@ -81,7 +79,7 @@ const PostDetail = () => {
                       <span>조회 {post.views}</span>
                     </div>
                     <div className="article-meta__item">
-                      <span>댓글 {post.commentcount}</span>
+                      <span>댓글 {post.commentCount}</span>
                     </div>
                     <div className="article-meta__item">
                       <span>추천 {post.liked}</span>
@@ -120,17 +118,7 @@ const PostDetail = () => {
               </div>
               <div className="article-box">
                 <div className="postVote">
-                  <button
-                    style={{ cursor: "pointer" }}
-                    // onClick={addLiked}
-                    type="submit"
-                    className="article-vote__button"
-                  >
-                    <span className="article-vote__up-arrow">추천</span>
-                    <span className="article-vote__up-count">
-                      {post.liked}
-                    </span>
-                  </button>
+                  <Like postId={ post.id } />
                 </div>
               </div>
             </div>
