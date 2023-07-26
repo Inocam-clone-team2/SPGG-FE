@@ -9,6 +9,8 @@ import History from "../pages/History";
 import PostDetail from "../pages/community/PostDetail";
 import PostWrite from "../pages/community/PostWrite";
 import BestPost from "../pages/BestPost";
+import Header from "../components/common/header/Header";
+import Header2 from "../components/common/header2/Header2";
 
 function Router() {
 	return (
@@ -23,6 +25,7 @@ function Router() {
 				<Route path="PostEdit" element={<PostEdit />} />
 				<Route path="ranking" element={<Ranking />} />
 				<Route path="history/:summonerName" element={<History />} />
+				<Route path="header" element={<Header />} />
 			</Routes>
 		</BrowserRouter>
 	);

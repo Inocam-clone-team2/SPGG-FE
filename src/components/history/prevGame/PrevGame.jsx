@@ -60,12 +60,7 @@ const PrevGame = (data, summonerName) => {
 									fontWeight="700">
 									솔랭
 								</S.ResultText>
-								<S.InfoText>
-									{formattedTime} /{" "}
-									{moment(match.info.gameEndTime, "YYYYMMDDHHmm")
-										.startOf("day")
-										.fromNow()}
-								</S.InfoText>
+								<S.InfoText>{formattedTime}</S.InfoText>
 								<S.Bar isWin={match.info.searchUserInfo.win}></S.Bar>
 								<S.InfoText>{winText}</S.InfoText>
 								<S.InfoText>
@@ -163,7 +158,7 @@ const PrevGame = (data, summonerName) => {
 												alt=""
 											/>
 											<S.PlayerLink
-												tto={`/history/${participant.summonerName}`}>
+												to={`/history/${participant.summonerName}`}>
 												{participant.summonerName}
 											</S.PlayerLink>
 										</li>

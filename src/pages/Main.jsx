@@ -28,7 +28,6 @@ const Main = () => {
 			alert("OP.GG에 등록되지 않은 소환사입니다. 오타를 확인 후 다시 검색해주세요.");
 		}
 	};
-
 	return (
 		<div>
 			<Header />
@@ -37,7 +36,7 @@ const Main = () => {
 					src="https://opgg-static.akamaized.net/logo/20230717181253.4193b693203f4c9ca15ec82267ba2682.png?image=q_auto,f_webp,w_auto&v=1690030599664"
 					alt="mainImg"
 				/>
-				<SeachContainer>
+				<SearchContainer>
 					<label htmlFor="searchHome" className="searchTag">
 						Search
 					</label>
@@ -52,7 +51,7 @@ const Main = () => {
 						htmlFor="searchHome"
 						className="onClickSearchHandler"
 						onClick={handleSearchBtn}></label>
-				</SeachContainer>
+				</SearchContainer>
 				<BoardWrapper>
 					<BoardHeader>SP.GG Talk 인기글</BoardHeader>
 					<BoardUl>
@@ -240,7 +239,7 @@ const FooterRight = styled.div`
 	margin-top: 10px;
 	padding: 20px;
 `;
-const SeachContainer = styled.div`
+const SearchContainer = styled.div`
 	position: relative;
 	background-color: transparent;
 	height: 10vh;
