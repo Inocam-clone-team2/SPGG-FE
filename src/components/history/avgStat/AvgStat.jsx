@@ -1,8 +1,11 @@
 import React from "react";
 import * as S from "./style";
 
-const AvgStat = () => {
+const AvgStat = (data) => {
 	const fillHeight = 100 - 45;
+
+	console.log("조회", data);
+
 	return (
 		<S.StatContainer>
 			<S.StatsDiv>

@@ -43,7 +43,7 @@ const PrevGame = () => {
 								alt=""
 							/>
 						</S.SpellWrapper>
-						<div class="kda">
+						<div className="kda">
 							<S.KdaText>1</S.KdaText>
 							<S.KdaText color={colors.gray}>/</S.KdaText>
 							<S.KdaText color={colors.red}>2</S.KdaText>

@@ -21,7 +21,7 @@ function Router() {
 				<Route path="PostWrite" element={<PostWrite />} />
 				<Route path="PostEdit" element={<PostEdit />} />
 				<Route path="ranking" element={<Ranking />} />
-				<Route path="history" element={<History />} />
+				<Route path="history/:summonerName" element={<History />} />
 				<Route path="history2/:searchUser" element={<History2 />} />
 			</Routes>
 		</BrowserRouter>
