@@ -15,32 +15,35 @@ const Main = () => {
     setSearchUser(e.target.value);
   };
 
-  const searchSummoner = async () => {
-    getSummonerData(searchUser);
-    navigate(`/history/${searchUser}`);
-  };
   // const searchSummoner = async () => {
-  // 	if (!searchUser) {
-  // 		setSearchUser([]);
-  // 		return;
-  // 	}
-
-  // 	try {
-  // 		const response = await instance.get(`/api/search/test?summonerName=${searchUser}`);
-  // 		setSearchUser(response.data.summoner.name);
-  // 		navigate(`/history2/${searchUser}`);
-  // 		console.log("res", response.data.summoner.name);
-  // 	} catch (error) {
-  // 		alert("존재하지 않는 유저입니다.");
-  // 		//   console.error("Error during page search:", error);
-  // 	}
+  //   getSummonerData(searchUser);
+  //   navigate(`/history/${searchUser}`);
   // };
 
-  // useEffect(() => {
-  // 	if (searchUser) {
-  // 		searchSummoner(searchUser);
-  // 	}
-  // }, []);
+  const searchSummoner = async () => {
+    if (!searchUser) {
+      setSearchUser([]);
+      return;
+    }
+
+    try {
+      const response = await instance.get(
+        `/api/search/test?summonerName=${searchUser}`
+      );
+      setSearchUser(response.data.summoner.name);
+      navigate(`/history2/${searchUser}`);
+      console.log("res", response.data.summoner.name);
+    } catch (error) {
+      alert("존재하지 않는 유저입니다.");
+      //   console.error("Error during page search:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (searchUser) {
+      searchSummoner(searchUser);
+    }
+  }, []);
 
   return (
     <div>
@@ -65,9 +68,7 @@ const Main = () => {
             for="searchHome"
             class="onClickSearchHandler"
             onClick={searchSummoner}
-          >
-            .GG
-          </label>
+          ></label>
         </SeachContainer>
         <BoardWrapper>
           <BoardHeader>SP.GG Talk 인기글</BoardHeader>
