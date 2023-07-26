@@ -164,6 +164,9 @@ const Footer = styled.footer`
   div {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
     font-size: 14px;
     margin: 0 20px;
   }
@@ -171,6 +174,9 @@ const Footer = styled.footer`
 
 const FooterNav = styled.nav`
   display: flex;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
 `;
 
 const FooterRight = styled.div`
