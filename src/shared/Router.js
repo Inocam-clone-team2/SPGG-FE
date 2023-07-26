@@ -24,7 +24,7 @@ function Router() {
         <Route path="ranking" element={<Ranking />} />
         <Route path="history" element={<History />} />
         <Route path="best" element={<BestPost />} />
-        <Route path="history2/:searchUser" element={<History2 />} />
+        <Route path="history/:summonerName" element={<History />} />
       </Routes>
     </BrowserRouter>
   );
