@@ -37,15 +37,19 @@ const PostDetail = () => {
   }
 
   const onDeletePost = async () => {
-    try {
-      await api.delete(`/post/${id}`);
-      console.log('삭제되었습니다!');
-      navigate(`/`);
-    } catch (error) {
-      alert('포스트에 대한 권한이 없습니다.');
-      console.error('댓글 삭제 오류:', error);
+    const confirmDelete = window.confirm("글을 삭제하시겠습니까?");
+    if (confirmDelete) {
+      try {
+        await api.delete(`api/post/${id}`);
+        console.log('삭제되었습니다!');
+        navigate(`/community`);
+      } catch (error) {
+        alert('포스트에 대한 권한이 없습니다.');
+        console.error('댓글 삭제 오류:', error);
+      }
     }
   };
+
 
   return (
     <div>
