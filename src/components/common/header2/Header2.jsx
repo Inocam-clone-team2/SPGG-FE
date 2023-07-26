@@ -3,39 +3,32 @@ import { useNavigate } from "react-router";
 import * as S from "./style";
 import * as A from "../header/style";
 import styled from "styled-components";
+import { getSummonerData } from "../../../api/summoner";
 
 const Header2 = () => {
   const navigate = useNavigate();
-  const [searchUser, setSearchUser] = useState("");
+  const [summonerName, setSummonerName] = useState("");
 
   const handleInput = (e) => {
-    setSearchUser(e.target.value);
+    setSummonerName(e.target.value);
   };
 
-  const searchSummoner = async () => {
-    if (!searchUser) {
-      setSearchUser([]);
+  const handleSearchBtn = async () => {
+    if (summonerName.trim() === "") {
+      alert("검색어를 입력해주세요.");
       return;
     }
 
     try {
-      const response = await instance.get(
-        `/api/search/test?summonerName=${searchUser}`
-      );
-      setSearchUser(response.data.summoner.name);
-      navigate(`/history2/${searchUser}`);
-      console.log("res", response.data.summoner.name);
+      const response = await getSummonerData(summonerName);
+      navigate(`/history/${summonerName}`);
     } catch (error) {
-      alert("존재하지 않는 유저입니다.");
-      //   console.error("Error during page search:", error);
+      console.error("Error occurred:", error);
+      alert(
+        "OP.GG에 등록되지 않은 소환사입니다. 오타를 확인 후 다시 검색해주세요."
+      );
     }
   };
-
-  useEffect(() => {
-    if (searchUser) {
-      searchSummoner(searchUser);
-    }
-  }, []);
 
   return (
     <S.Header>
@@ -51,13 +44,13 @@ const Header2 = () => {
             className="searchHome"
             placeholder="소환사명,소환사명..."
             type="text"
-            value={searchUser}
+            value={summonerName}
             onChange={handleInput}
           />
           <label
             for="searchHome"
             class="onClickSearchHandler"
-            onClick={searchSummoner}
+            onClick={handleSearchBtn}
           ></label>
         </SearchContainer>
       </SearchSection>
