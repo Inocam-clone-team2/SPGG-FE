@@ -6,6 +6,7 @@ import MainForm from "./CommunityMainForm";
 import Footer2 from "../../components/community/Footer2";
 import { useNavigate } from "react-router-dom"; 
 import axios from "axios";
+import api from "../../api/post"
 
 const PostEdit = () => {
   const paramTitle = ""; // 기본값으로 설정할 값으로 변경
@@ -13,46 +14,57 @@ const PostEdit = () => {
   const paramPostId = ""; // 기본값으로 설정할 값으로 변경
   const [updateTitle, setUpdateTitle] = useState(paramTitle);
   const [updateContent, setUpdateContent] = useState(paramContent);
-  const storageUserId = parseInt(localStorage.getItem("userId"));
+  const [updatefile, setUpdateFile] = useState(null);
   const navigate = useNavigate(); 
 
+  const onSubmitHandler = async (event, title, content, file) => {
+    if (title === "" || content === "") {
+      alert("제목과 내용을 입력해주세요.");
+
+      return;
+    }
+
+    const postFormData = new FormData();
+
+    const data = {
+      title: title,
+      content: content,
+    };
+
+    postFormData.append(
+      "data",
+      new Blob([JSON.stringify(data)], { type: "application/json" })
+    );
+    postFormData.append("file", file);
+
+    try {
+      const response = await api.post(`api/post`, postFormData);
+      navigate(`/community`);
+      setUpdateTitle("");
+      setUpdateContent("");
+      setUpdateFile(null);
+
+      console.log(response);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const handleFileUpload = (event) => {
+    const selectedFile = event.target.files[0];
+    if (selectedFile) {
+      setFile(selectedFile);
+    }
+  };
+
   const handleChangeTitle = (e) => {
-    setUpdateTitle(e.target.value);
+    setTitle(e.target.value);
   };
 
   const handleChangeContent = (e) => {
-    setUpdateContent(e.target.value);
+    setContent(e.target.value);
   };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.put(
-        "http://3.37.36./api/post",
-        {
-          id: paramPostId,
-          title: updateTitle,
-          content: updateContent,
-          userId: {
-            id: storageUserId,
-          },
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + localStorage.getItem("jwtToken"),
-          },
-        }
-      );
-
-      console.log(response.data);
-      alert("글 수정이 완료되었습니다");
-
-      navigate("/community/" + paramPostId); 
-    } catch (error) {
-      console.log("에러", error.response);
-    }
-  };
+      
 
   return (
     <div>
@@ -63,7 +75,7 @@ const PostEdit = () => {
           <div style={{backgroundColor:'#ebeef1'}}>
             <WriteBox>
               <div className="content">
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={onSubmitHandler}>
                   <div className="article-write">
                     <div className="article-write-header">
                       <div className="article-write__title">글수정</div>
@@ -86,6 +98,16 @@ const PostEdit = () => {
                         value={updateContent}
                       ></textarea>
                     </div>
+                    <div>
+                    <label htmlFor="file">파일</label>
+                      <input
+                        type="file"
+                        className="file-input"
+                        id="image"
+                        name="image"
+                        accept="image/*"
+                        onChange={handleFileUpload}
+                      /></div>
                     <div className="article-write__btn">
                       <button
                         className="article-write__button article-write__button--cancel"
