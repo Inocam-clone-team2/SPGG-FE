@@ -11,7 +11,7 @@ import PostWrite from "../pages/community/PostWrite";
 import BestPost from "../pages/BestPost";
 import Header from "../components/common/header/Header";
 import Header2 from "../components/common/header2/Header2";
-
+import Comment from "../components/comment/Comment";
 function Router() {
 	return (
 		<BrowserRouter>
@@ -26,6 +26,7 @@ function Router() {
 				<Route path="ranking" element={<Ranking />} />
 				<Route path="history/:summonerName" element={<History />} />
 				<Route path="header" element={<Header />} />
+				<Route path="header2" element={<Header2 />} />
 			</Routes>
 		</BrowserRouter>
 	);
