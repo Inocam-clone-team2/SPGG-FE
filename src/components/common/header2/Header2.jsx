@@ -3,7 +3,8 @@ import { useNavigate } from "react-router";
 import * as S from "./style";
 import * as A from "../header/style";
 import styled from "styled-components";
-
+import logo from "../../../assets/logo.png";
+import { colors } from "../../../common/styles";
 const Header2 = () => {
   const navigate = useNavigate();
   const [searchUser, setSearchUser] = useState("");

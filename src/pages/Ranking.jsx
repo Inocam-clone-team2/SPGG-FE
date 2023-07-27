@@ -25,7 +25,6 @@ const Ranking = () => {
 
   return (
     <Bodylayout>
-      <Header />
       <Header2 />
       <UpperVar>
         <h3>랭킹</h3>
