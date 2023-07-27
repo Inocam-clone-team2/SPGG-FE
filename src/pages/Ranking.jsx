@@ -3,6 +3,7 @@ import Header from "../components/common/header/Header";
 import Header2 from "../components/common/header2/Header2";
 import styled from "styled-components";
 import instance from "../api/post";
+import RankingPage from "./RankeingPage";
 
 const Ranking = () => {
   const [rank, setRank] = useState([]);
@@ -13,39 +14,27 @@ const Ranking = () => {
 
   const fetchRankingData = async () => {
     try {
-      const response = await instance.get(`/api/ranking/top10`);
-      console.log("res", response);
+      const response = await instance.get(`/ranking/top10`);
+      // console.log("ranking", response.data);
+      // console.log("ranking.data", response.data.data);
+      setRank(response.data.data);
     } catch (error) {
       console.log("API 요청 오류:", error);
     }
   };
+
   return (
     <Bodylayout>
       <Header />
       <Header2 />
+      <UpperVar>
+        <h3>랭킹</h3>
+      </UpperVar>
       <Rankingground style={{ width: "1200px" }}>
-        <table>
-          <td>
-            <td>#</td>
-            <td>소환사</td>
-          </td>
-          <td>티어</td>
-          <td>LP</td>
-          <td>모스트 챔피언</td>
-          <td>레벨</td>
-          <td>승률</td>
-          <td>
-            <td>1</td>
-            <td>kakhi shoot</td>
-            <td>challenger</td>
-            <td>668Lp</td>
-            <td>
-              <imag src="https://opgg-static.akamaized.net/meta/images/lol/…,w_103,x_9,y_9/q_auto,f_webp,w_64&v=1690344302082" />
-            </td>
-            <td>73</td>
-            <td>61%</td>
-          </td>
-        </table>
+        <TableBox>
+          {" "}
+          <RankingPage rank={rank} />
+        </TableBox>
       </Rankingground>
       <Footer>
         <FooterNav>
@@ -98,20 +87,78 @@ const Ranking = () => {
   );
 };
 
+const UpperVar = styled.div`
+  width: 100%;
+  height: 60px;
+  margin: 0 auto;
+  font-size: 24px;
+  background-color: #fff;
+  border-bottom: 1px solid #ccc;
+
+  h3 {
+    background-color: #fff;
+    margin-top: 0;
+    margin-left: 650px;
+    padding: 10px 20px 0 20px;
+    /* border-bottom: 1px solid red; */
+  }
+`;
+
+const TableContainer = styled.table`
+  width: 100%;
+  border-collapse: collapse;
+`;
+
+const TableHead = styled.thead`
+  background-color: #f0f0f0;
+`;
+
+const TableHeadCell = styled.th`
+  padding: 10px;
+  font-weight: bold;
+  text-align: left;
+  border-bottom: 1px solid #ccc;
+`;
+
+const TableRow = styled.tr`
+  &:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+`;
+
+const TableCell = styled.td`
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+`;
+
+const RankerHeader = styled.div`
+  background-color: #f7f7f9;
+  color: #9aa4af;
+  display: flex;
+  width: 100%;
+  height: 40px;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-top: -600px;
+  padding: 0px 20px 10px 20px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+`;
+
 const Rankingground = styled.div`
-  /* position: relative; */
   display: flex;
   justify-content: center;
   align-items: center;
   width: 1200px;
-  height: 100vh;
+  height: 1000px;
   /* left: 20%; */
   /* top: 0;
   bottom: 0;
   padding: 10px; */
   margin: 20px auto;
   border-radius: 20px;
-  background-color: #fff;
+  background-color: #f7f7f9;
 `;
 
 export const Bodylayout = styled.div`
@@ -122,7 +169,7 @@ export const Bodylayout = styled.div`
   width:100vh
   height: 100vh;
   //바디가 저 안에 있는 콘텐츠만큼만 높이가 잡히니까  눈에 보이는 영역 다쓰게
-  background-color: #ebeef1;
+  background-color: #DBE0E4;
 `;
 
 const Footer = styled.footer`
@@ -155,6 +202,12 @@ const FooterRight = styled.div`
   border-top: 1px solid white;
   margin-top: 10px;
   padding: 20px;
+`;
+
+const TableBox = styled.div`
+  margin-top: 30px;
+  width: 100%;
+  height: 100%;
 `;
 
 export default Ranking;
