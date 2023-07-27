@@ -7,8 +7,8 @@ import MainForm from "./CommunityMainForm";
 import moment from "moment";
 import "moment/locale/ko";
 import axios from "axios";
-import api from "../../api/post"
-
+import "moment/locale/ko";
+import api from "../../api/post";
 
 const Community = () => {
 
@@ -95,23 +95,11 @@ const Community = () => {
     console.log(1, inputValue);
     setInputValue(e.target.value);
 
-    const search = async () => {
-      if (searchOption === "title") {
-        axios
-        api.get("/api/post?title=" + inputValue)
-          .then((response) => {
-            console.log(2, inputValue);
-
-            setCommunity(response.data.data.content);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      } else if (searchOption === "nickname") {
-        axios
-        api.get("/api/post?nickname=" + inputValue)
-          .then((response) => {
-            console.log(2, inputValue);
+		const search = async () => {
+			await axios;
+			api.get("/api/post/?tilte=" + inputValue)
+				.then((response) => {
+					console.log(response);
 
             setCommunity(response.data.data.content);
           })
@@ -124,114 +112,78 @@ const Community = () => {
     search();
   };
 
-  return (
-    <div>
-      <CommunityWrap>
-        <Header1 />
-        <div className="community-container">
-          <MainForm />
-          <ContentBox >
-            <div className="community-header">
-              <div className="community-header-1">
-                <h2 className="header-text">전체</h2>
-                <div style={{ marginRight: "24px" }}>
-                  <Link to="/PostWrite">
-                    <img
-                      src="/img/iconWrite.png"
-                      style={{ width: "24px" }}
-                      alt="글쓰기"
-                    />
-                  </Link>
-                </div>
-              </div>
-              <div
-                className=" community-header-2"
-                style={{ height: "48px", position: "relative" }}
-              >
-                <div className="community-link-header">
-                <Link to="/CommunityPopular" className="filter-link">
-                    <img
-                      alt="popularIcon"
-                      src="https://talk.op.gg/images/icon-hot@2x.png"
-                    />
-                    <span>인기</span>
-                </Link>
-                <Link to="/Community" className="filter-link active">
-                    <img
-                      alt="newestIcon"
-                      src="https://talk.op.gg/images/icon-new-on@2x.png"
-                    />
-                    <span>최신</span>
-                </Link>
-                <Link to="/CommunityTop" className="filter-link">
-                    <img
-                      alt="topIcon"
-                      src="https://talk.op.gg/images/icon-top@2x.png"
-                    />
-                    <span>TOP</span>
-                </Link>
-                </div>
-                <div className="post-search-wrap">
-                  <form className="post-search" onSubmit={handleOnSubmit}>
-                    <select
-                      className="post-search-select"
-                      onChange={(e) => setSearchOption(e.target.value)}
-                      value={searchOption}>
-                      <option value="title">제목</option>
-                      <option value="nickname">닉네임</option>
-                    </select>
-                    <input
-                      onChange={handleOnChange}
-                      tpye="text"
-                      value={inputValue}
-                      className="post-search-input"
-                      placeholder="검색"
-                    />
-                    <button className="post-search-button">
-                      <img
-                        className="post-search-img"
-                        src="/img/iconSearch.png"
-                        alt="검색"
-                        style={{ cursor: "pointer" }}
-                      />
-                    </button>
-                  </form>
-                </div>
-              </div>
-            </div>
+	return (
+		<div>
+			<CommunityWrap>
+				<Header1 />
+				<div className="community-container">
+					<MainForm />
+					<ContentBox>
+						<div className="community-header">
+							<div className="community-header-1">
+								<h2 className="header-text">전체</h2>
+								<div style={{ marginRight: "24px" }}>
+									<Link to="/PostWrite">
+										<img
+											src="/img/iconWrite.png"
+											style={{ width: "24px" }}
+											alt="글쓰기"
+										/>
+									</Link>
+								</div>
+							</div>
+							<div
+								className=" community-header-2"
+								style={{ height: "48px", position: "relative" }}>
+								<div className="post-search-wrap">
+									<form className="post-search" onSubmit={handleOnSubmit}>
+										<select className="post-search-select">
+											<option>제목</option>
+											<option>닉네임</option>
+										</select>
+										<input
+											onChange={handleOnChange}
+											tpye="text"
+											value={inputValue}
+											className="post-search-input"
+											placeholder="검색"
+										/>
+										<button className="post-search-button">
+											<img
+												className="post-search-img"
+												src="/img/iconSearch.png"
+												alt="검색"
+												style={{ cursor: "pointer" }}
+											/>
+										</button>
+									</form>
+								</div>
+							</div>
+						</div>
 
-            <div className="article-list">
-              {/* 여기서 부터 반복 */}
-              {community.map(
-                (community) =>
-                (
-                  <div className="article-box" key={community.id}>
-                    <div
-                      className="article-item"
-                      style={{ display: "contents" }}
-                    >
-                      <div
-                        className="article-number"
-                        style={{ alignSelf: "center", width: "72px" }}
-                      >
-                        {community.id}
-                      </div>
-                      <div
-                        className="article-list-item__content"
-                        style={{ alignSelf: "center" }}
-                      >
-                        <Link
-                          to={"/PostDetail/" + community.id}
-                          style={{ cursor: "pointer" }}
-                        >
-                          <div
-                            className="aritcle-list-item__title"
-                            style={{ textAlign: "left" }}
-                          >
-                            <span className="post-title">
-                              {community.title}
-                            </span>
-                            {/* <em
+						<div className="article-list">
+							{/* 여기서 부터 반복 */}
+							{community.map((community) => (
+								<div className="article-box" key={community.id}>
+									<div className="article-item" style={{ display: "contents" }}>
+										<div
+											className="article-number"
+											style={{ alignSelf: "center", width: "72px" }}>
+											{community.id}
+										</div>
+										<div
+											className="article-list-item__content"
+											style={{ alignSelf: "center" }}>
+											<Link
+												to={"/PostDetail/" + community.id}
+												style={{ cursor: "pointer" }}>
+												<div
+													className="aritcle-list-item__title"
+													style={{ textAlign: "left" }}>
+													<span className="post-title">
+														{community.title}
+													</span>
+													{/* <em
                                 style={{
                                   color: "#16ae81",
                                   fontStyle: "normal",
@@ -239,84 +191,81 @@ const Community = () => {
                               >
                                 [{community.commentList.length}]
                               </em> */}
-                          </div>
-                        </Link>
-                        <div className="article-list-item-meta">
-                          <div className="article-list-item-meta__item">
-                            <span style={{ color: "#98a0a7" }}>
-                              {moment(community.createdAt)
-                                .startOf("second")
-                                .fromNow()}
-                            </span>
-                            <span className="article-list-author">
-                              {community.nickname}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                )
-              )}
+												</div>
+											</Link>
+											<div className="article-list-item-meta">
+												<div className="article-list-item-meta__item">
+													<span style={{ color: "#98a0a7" }}>
+														{moment(community.createdAt)
+															.startOf("second")
+															.fromNow()}
+													</span>
+													<span className="article-list-author">
+														{community.nickname}
+													</span>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							))}
 
-              <div>
-                <div className="article-list-paging">
-                  <div>
-                    {postPage > 0 && (
-                      <div style={{ display: "inline-block" }}>
-                        <button
-                          style={{ marginRight: "6px" }}
-                          onClick={handlePrevPage}
-                          className="article-list-paging__button"
-                        >
-                          <img
-                            src="/img/iconArrowLeft.png"
-                            alt="이전"
-                            style={{
-                              width: "24px",
-                              height: "24px",
-                              verticalAlign: "middle",
-                              cursor: "pointer",
-                            }}
-                          />
-                          이전
-                        </button>
-                      </div>
-                    )}
+							<div>
+								<div className="article-list-paging">
+									<div>
+										{postPage > 0 && (
+											<div style={{ display: "inline-block" }}>
+												<button
+													style={{ marginRight: "6px" }}
+													onClick={handlePrevPage}
+													className="article-list-paging__button">
+													<img
+														src="/img/iconArrowLeft.png"
+														alt="이전"
+														style={{
+															width: "24px",
+															height: "24px",
+															verticalAlign: "middle",
+															cursor: "pointer",
+														}}
+													/>
+													이전
+												</button>
+											</div>
+										)}
 
-                    {statusCode !== 204 ? (
-                      <div style={{ display: "inline-block" }}>
-                        <button
-                          style={{ marginLeft: "6px" }}
-                          onClick={handleNextPage}
-                          className="article-list-paging__button"
-                        >
-                          다음
-                          <img
-                            src="/img/iconArrowRight.png"
-                            alt="다음"
-                            style={{
-                              width: "24px",
-                              height: "24px",
-                              verticalAlign: "middle",
-                              cursor: "pointer",
-                            }}
-                          />
-                        </button>
-                      </div>
-                    ) : (
-                      <div></div>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-            <Footer2 />
-          </ContentBox>
-        </div>
-      </CommunityWrap>
-    </div>
-  );
+										{statusCode !== 204 ? (
+											<div style={{ display: "inline-block" }}>
+												<button
+													style={{ marginLeft: "6px" }}
+													onClick={handleNextPage}
+													className="article-list-paging__button">
+													다음
+													<img
+														src="/img/iconArrowRight.png"
+														alt="다음"
+														style={{
+															width: "24px",
+															height: "24px",
+															verticalAlign: "middle",
+															cursor: "pointer",
+														}}
+													/>
+												</button>
+											</div>
+										) : (
+											<div></div>
+										)}
+									</div>
+								</div>
+							</div>
+						</div>
+						<Footer2 />
+					</ContentBox>
+				</div>
+			</CommunityWrap>
+		</div>
+	);
 };
 
 export const CommunityWrap = styled.div`
@@ -329,6 +278,7 @@ export const CommunityWrap = styled.div`
 	.community-container {
 		text-align: center;
 		background-color: #ebeef1;
+		margin-top: 38px;
 	}
 `;
 
