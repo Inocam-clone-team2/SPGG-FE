@@ -4,6 +4,8 @@ import { Tooltip } from "antd";
 import instance from "../api/post";
 
 const Like = ({ postId }) => {
+  const sizeValue = 7 * 3;
+  // const colorvalue=#46CFA7;
   const [Likes, setLikes] = useState(0);
   const [LikeAction, setLikeAction] = useState(false);
   console.log(1);
@@ -47,15 +49,22 @@ const Like = ({ postId }) => {
   };
   return (
     <div>
-      <span key="comment-basic-like">
-        <Tooltip title="Like">
+      <span
+        key="comment-basic-like"
+        style={{ display: "flex", gap: "4px", alignItems: "flex-end" }}
+      >
+        <Tooltip title="Like ">
           {LikeAction ? (
-            <BsCaretUpFill onClick={onToggleLike} />
+            <BsCaretUpFill
+              size={7 * 3}
+              color="#4171d6"
+              onClick={onToggleLike}
+            />
           ) : (
-            <BsCaretUp onClick={onToggleLike} />
+            <BsCaretUp size={7 * 3} color="#4171d6" onClick={onToggleLike} />
           )}
         </Tooltip>
-        <span style={{ paddingLeft: "4px", cursor: "auto" }}> {Likes}</span>
+        <span style={{ paddingLeft: "1px", cursor: "auto" }}> {Likes}</span>
       </span>
     </div>
   );
