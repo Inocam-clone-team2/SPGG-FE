@@ -9,6 +9,7 @@ export const UserInfoWrapper = styled.section`
 	background-color: white;
 	display: flex;
 	justify-content: center;
+	margin-top: 38px;
 `;
 
 export const UIcontainer = styled.div`
