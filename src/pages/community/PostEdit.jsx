@@ -42,7 +42,7 @@ const PostEdit = () => {
     setFile(event.target.files[0]);
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event, title, content, file) => {
     event.preventDefault();
 
     const data = {
