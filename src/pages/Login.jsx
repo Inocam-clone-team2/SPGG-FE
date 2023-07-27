@@ -58,16 +58,12 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     const { email, password } = state;
-    console.log(state);
-    console.log(email);
-    console.log(password);
     if (email && password) {
       try {
         const response = await instance.post(`/api/auth/login`, {
           email,
           password,
         });
-        console.log("response", response);
 
         if (response.status === 200) {
           // localStorage.setItem("authorization", accesstoken);

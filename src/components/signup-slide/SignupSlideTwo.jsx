@@ -51,9 +51,6 @@ const SignupSlideTwo = ({ onNextButtonClick }) => {
     e.preventDefault();
     const { email, nickname, password } = state;
 
-    console.log(email);
-    console.log(nickname);
-    console.log(password);
     try {
       const res = await instance.post(`/api/auth/signup`, {
         email,
