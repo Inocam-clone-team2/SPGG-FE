@@ -26,7 +26,7 @@ function Router() {
         <Route path="CommunityTop" element={<CommunityTop />} />
         <Route path="PostDetail/:id" element={<PostDetail />} />
         <Route path="PostWrite" element={<PostWrite />} />
-        <Route path="PostEdit" element={<PostEdit />} />
+        <Route path="PostEdit/:id" element={<PostEdit />} />
         <Route path="ranking" element={<Ranking />} />
         <Route path="history" element={<History />} />
         <Route path="best" element={<BestPost />} />

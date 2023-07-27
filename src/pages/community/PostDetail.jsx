@@ -96,14 +96,7 @@ const PostDetail = () => {
                     </div>
                     <div className="article-action__item">
                       <Link
-                        to={{
-                          pathname: "/PostEdit",
-                          state: {
-                            postId: post.id,
-                            title: post.title,
-                            content: post.content,
-                          },
-                        }}
+                        to={"/PostEdit/" + post.id}
                         className="article-action__button__button"
                       >
                         수정

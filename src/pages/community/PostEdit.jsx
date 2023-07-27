@@ -4,7 +4,6 @@ import { CommunityWrap } from "./Community";
 import Header1 from "../../components/community/Header1";
 import MainForm from "./CommunityMainForm";
 import Footer2 from "../../components/community/Footer2";
-import axios from "axios";
 import api from "../../api/post"
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -14,21 +13,6 @@ const PostEdit = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [file, setFile] = useState(null);
-
-  const fetchPost = async () => {
-      try {
-        const response = await api.get(`/api/post/${id}`);
-        console.log(5, response)
-        setTitle(response.data.data.content.title);
-        setContent(response.data.data.content.content);
-      } catch (error) {
-        console.error('게시글 정보 불러오기 실패:', error);
-      }
-    };
-
-    useEffect(() => {
-      fetchPost();
-    }, []);
 
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
@@ -44,25 +28,30 @@ const PostEdit = () => {
 
   const handleSubmit = async (event, title, content, file) => {
     event.preventDefault();
+    if (title === "" || content === "") {
+      alert("제목과 내용을 입력해주세요.");
+
+      return;
+    }
+
+    const formData = new FormData();
 
     const data = {
       title: title,
       content: content,
     };
 
-    const formData = new FormData();
-    formData.append('data', new Blob([JSON.stringify(data)], { type: 'application/json' }));
+    formData.append(
+      'data',
+      new Blob([JSON.stringify(data)], { type: 'application/json' })
+      );
     formData.append('file', file);
 
     try {
-      await axios.put(`${api}/api/post/${postId}`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-
+      const response = await api.put(`api/post/${id}`, formData);
       alert('게시글이 수정되었습니다.');
-      navigate(`/posts/${postId}`);
+      navigate(`/posts/${id}`);
+      console.log(response)
     } catch (error) {
       console.error('게시글 수정 실패:', error);
       alert('게시글 수정에 실패했습니다.');
