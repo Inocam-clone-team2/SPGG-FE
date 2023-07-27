@@ -44,6 +44,7 @@ const UpperVar = styled.div`
 	width: 100%;
 	height: 60px;
 	margin: 0 auto;
+	margin-top: 38px;
 	font-size: 24px;
 	background-color: #fff;
 	border-bottom: 1px solid #ccc;
@@ -115,14 +116,15 @@ const Rankingground = styled.div`
 `;
 
 export const Bodylayout = styled.div`
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  width:100vh
-  height: 100vh;
-  //바디가 저 안에 있는 콘텐츠만큼만 높이가 잡히니까  눈에 보이는 영역 다쓰게
-  background-color: #DBE0E4;
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	width: 100%;
+	min-height: 100vh;
+	height: fit-content;
+	//바디가 저 안에 있는 콘텐츠만큼만 높이가 잡히니까  눈에 보이는 영역 다쓰게
+	background-color: #dbe0e4;
 `;
 
 const TableBox = styled.div`
