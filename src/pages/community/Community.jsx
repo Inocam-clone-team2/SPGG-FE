@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Header1 from "../../components/community/Header1";
+import Header2 from "../../components/common/header2/Header2";
 import Footer2 from "../../components/community/Footer2";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
@@ -7,7 +7,6 @@ import MainForm from "./CommunityMainForm";
 import moment from "moment";
 import "moment/locale/ko";
 import axios from "axios";
-import "moment/locale/ko";
 import api from "../../api/post";
 
 const Community = () => {
@@ -95,25 +94,38 @@ const Community = () => {
 		setInputValue(e.target.value);
 
 		const search = async () => {
-			await axios;
-			api.get("/api/post/?tilte=" + inputValue)
-				.then((response) => {
-					console.log(response);
+			if (searchOption === "title") {
+				axios;
+				api.get("/api/post?title=" + inputValue)
+					.then((response) => {
+						console.log(2, inputValue);
 
-					setCommunity(response.data.data.content);
-				})
-				.catch((error) => {
-					console.log(error);
-				});
+						setCommunity(response.data.data.content);
+					})
+					.catch((error) => {
+						console.log(error);
+					});
+			} else if (searchOption === "nickname") {
+				axios;
+				api.get("/api/post?nickname=" + inputValue)
+					.then((response) => {
+						console.log(2, inputValue);
+
+						setCommunity(response.data.data.content);
+					})
+					.catch((error) => {
+						console.log(error);
+					});
+			}
 		};
+		setTimeout(400);
+		search();
 	};
-	setTimeout(400);
-	search();
 
 	return (
 		<div>
 			<CommunityWrap>
-				<Header1 />
+				<Header2 />
 				<div className="community-container">
 					<MainForm />
 					<ContentBox>
@@ -133,11 +145,37 @@ const Community = () => {
 							<div
 								className=" community-header-2"
 								style={{ height: "48px", position: "relative" }}>
+								<div className="community-link-header">
+									<Link to="/CommunityPopular" className="filter-link">
+										<img
+											alt="popularIcon"
+											src="https://talk.op.gg/images/icon-hot@2x.png"
+										/>
+										<span>인기</span>
+									</Link>
+									<Link to="/Community" className="filter-link active">
+										<img
+											alt="newestIcon"
+											src="https://talk.op.gg/images/icon-new-on@2x.png"
+										/>
+										<span>최신</span>
+									</Link>
+									<Link to="/CommunityTop" className="filter-link">
+										<img
+											alt="topIcon"
+											src="https://talk.op.gg/images/icon-top@2x.png"
+										/>
+										<span>TOP</span>
+									</Link>
+								</div>
 								<div className="post-search-wrap">
 									<form className="post-search" onSubmit={handleOnSubmit}>
-										<select className="post-search-select">
-											<option>제목</option>
-											<option>닉네임</option>
+										<select
+											className="post-search-select"
+											onChange={(e) => setSearchOption(e.target.value)}
+											value={searchOption}>
+											<option value="title">제목</option>
+											<option value="nickname">닉네임</option>
 										</select>
 										<input
 											onChange={handleOnChange}
