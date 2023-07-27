@@ -7,13 +7,14 @@ export const Header = styled.header`
 	align-items: center;
 	background-color: ${colors.primary};
 	color: ${colors.text_back};
+	box-sizing: border-box;
 `;
 
 export const HeaderDiv = styled.div`
 	width: 100%;
 	display: flex;
-	justify-content: ${(props) => props.justify || "center"};
-	height: ${(props) => props.height || "50px"};
+	justify-content: space-between;
+	height: ${(props) => props.height || "50"}px;
 	background-color: ${(props) => props.background || colors.primary};
 	${({ hasbottomborder }) => hasbottomborder && "border-bottom: 1px solid #4171D6;"}
 `;
@@ -70,7 +71,7 @@ export const NavLink = styled(Link)`
 	align-items: center;
 	gap: 15px;
 	cursor: pointer;
-	font-size: ${(props) => props.fontSize || "14px"};
+	font-size: ${(props) => props.fontSize || "14"}px;
 `;
 export const FuncBtn = styled.button`
 	width: 24px;
@@ -79,7 +80,7 @@ export const FuncBtn = styled.button`
 	background: transparent;
 	background-image: url(${(props) => props.background});
 	position: relative;
-	margin: 0 20px;
+	margin: 0 10px;
 	padding: 0;
 
 	/* 버튼에 호버 시 툴팁 스타일 적용 */
@@ -88,10 +89,14 @@ export const FuncBtn = styled.button`
 	}
 `;
 
+export const HeaderSpan = styled.span`
+	width: fit-content;
+`;
+
 export const FuncBtnWrapper = styled.div`
 	display: flex;
 	align-items: center;
-	justify-content: end;
+	padding-right: 20px;
 `;
 
 export const TooltipText = styled.div`
@@ -118,6 +123,7 @@ export const LoginLink = styled(Link)`
 	color: white;
 	text-align: center;
 	font-weight: bold;
+	line-height: 28px;
 `;
 
 // ad링크
