@@ -13,7 +13,7 @@ const PostWrite = () => {
   const [content, setContent] = useState("");
   const [file, setFile] = useState(null);
 
-  const onSubmitHandler = async (event, title, content, file) => {
+  const onSubmitHandler = async (title, content, file) => {
     if (title === "" || content === "") {
       alert("제목과 내용을 입력해주세요.");
 

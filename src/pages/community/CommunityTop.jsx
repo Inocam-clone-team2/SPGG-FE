@@ -10,7 +10,7 @@ import axios from "axios";
 import api from "../../api/post"
 
 
-const Community = () => {
+const CommunityTop = () => {
 
   moment.locale("ko");
 
@@ -23,7 +23,7 @@ const Community = () => {
 
   useEffect(() => {
     axios
-    api.get("/api/post?page=")
+    api.get("/api/post/mostView?page=")
       .then((response) => {
         setCommunity(response.data.data.content);
         setStatusCode(response.data.statusCode);
@@ -37,7 +37,7 @@ const Community = () => {
     const nextPage = postPage + 1;
 
     axios
-    api.get("/api/post?page=" + nextPage)
+    api.get("/api/post/mostView?page=" + nextPage)
       .then((response) => {
         setCommunity(response.data.data.content);
         setStatusCode(response.data.statusCode);
@@ -54,7 +54,7 @@ const Community = () => {
       return;
     }
     axios
-    api.get("/api/post?page=" + prevPage)
+    api.get("/api/post/mostView?page=" + prevPage)
       .then((response) => {
         setCommunity(response.data.data.content);
         setStatusCode(response.data.statusCode);
@@ -156,17 +156,17 @@ const Community = () => {
                     />
                     <span>인기</span>
                 </Link>
-                <Link to="/Community" className="filter-link active">
+                <Link to="/Community" className="filter-link">
                     <img
                       alt="newestIcon"
-                      src="https://talk.op.gg/images/icon-new-on@2x.png"
+                      src="https://talk.op.gg/images/icon-new@2x.png"
                     />
                     <span>최신</span>
                 </Link>
-                <Link to="/CommunityTop" className="filter-link">
+                <Link to="/CommunityTop" className="filter-link active">
                     <img
                       alt="topIcon"
-                      src="https://talk.op.gg/images/icon-top@2x.png"
+                      src="https://talk.op.gg/images/icon-top-on@2x.png"
                     />
                     <span>TOP</span>
                 </Link>
@@ -320,17 +320,16 @@ const Community = () => {
 };
 
 export const CommunityWrap = styled.div`
-	margin: 0 auto;
-	vertical-align: middle;
-	justify-content: center;
-	max-width: 100%;
-	background-size: 100%;
+margin: 0 auto;
+  vertical-align: middle;
+  justify-content: center;
+  max-width: 100%;
+  background-size: 100%;
 
-	.community-container {
-		text-align: center;
-		background-color: #ebeef1;
-	}
-`;
+  .community-container {
+    text-align: center;
+    background-color: #ebeef1;
+  }`;
 
 const ContentBox = styled.div`
 max-width: 728px;
@@ -536,4 +535,6 @@ margin: auto;
   }
 }`;
 
-export default Community;
+
+
+export default CommunityTop;
