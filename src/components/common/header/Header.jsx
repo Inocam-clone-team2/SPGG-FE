@@ -6,7 +6,7 @@ import { colors } from "../../../common/styles";
 const Header = () => {
 	return (
 		<S.Header>
-			<S.HeaderDiv height="40px" justify="space-between" background={colors.secondary}>
+			<S.HeaderDiv height="40px" background={colors.secondary}>
 				<S.HeaderLeft>
 					<S.LogoLink to="/">
 						<S.LogoImg src={logo} alt="logo" />
@@ -39,16 +39,21 @@ const Header = () => {
 						<S.TooltipText>Light mode</S.TooltipText>
 					</S.FuncBtn>
 					<S.FuncBtn background="https://s-lol-web.op.gg/images/icon/icon-world-light-blue.svg?v=1690030599664"></S.FuncBtn>
-					<span>한국어 ▾</span>
 					<S.LoginLink to="/login">로그인</S.LoginLink>
 				</S.FuncBtnWrapper>
 			</S.HeaderDiv>
 			<S.HeaderDiv hasbottomborder="true">
 				<S.Nav>
-					<S.NavItem fontSize="15px">홈</S.NavItem>
-					<S.NavLink to="ranking" fontSize="15px">
-						랭킹
-					</S.NavLink>
+					<S.NavItem>
+						<S.NavLink to="/" fontSize="15">
+							홈
+						</S.NavLink>
+					</S.NavItem>
+					<S.NavItem>
+						<S.NavLink to="ranking" fontSize="15">
+							랭킹
+						</S.NavLink>
+					</S.NavItem>
 				</S.Nav>
 				<S.PatchLink to="https://www.youtube.com/watch?v=7KRBH8RadNc">
 					13.14 패치노트 보기

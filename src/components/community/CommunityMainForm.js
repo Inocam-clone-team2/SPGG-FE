@@ -5,17 +5,15 @@ import { Link, useNavigate } from "react-router-dom";
 const MainForm = () => {
   const [username, setUsername] = useState("");
   const navigate = useNavigate(); 
-  const url = "https://www.op.gg/summoners/kr/"
 
   const handleOnChange = (e) => {
     setUsername(e.target.value);
   };
 
   const handleOnSubmit = (e) => {
-  //   e.preventDefault();
-  //   navigate("https://www.op.gg/summoners/kr/" + username);
-  // };
-  window.open(url + username)};
+    e.preventDefault();
+    navigate("/summonor/kr/" + username);
+  };
 
   return (
     <MainFormBox style={{

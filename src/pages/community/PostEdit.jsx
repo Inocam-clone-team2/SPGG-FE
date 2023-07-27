@@ -1,70 +1,73 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { CommunityWrap } from "./Community";
 import Header1 from "../../components/community/Header1";
 import MainForm from "./CommunityMainForm";
 import Footer2 from "../../components/community/Footer2";
-import { useNavigate } from "react-router-dom"; 
 import axios from "axios";
 import api from "../../api/post"
+import { useNavigate, useParams } from 'react-router-dom';
 
 const PostEdit = () => {
-  const paramTitle = ""; // 기본값으로 설정할 값으로 변경
-  const paramContent = ""; // 기본값으로 설정할 값으로 변경
-  const paramPostId = ""; // 기본값으로 설정할 값으로 변경
-  const [updateTitle, setUpdateTitle] = useState(paramTitle);
-  const [updateContent, setUpdateContent] = useState(paramContent);
-  const [updatefile, setUpdateFile] = useState(null);
-  const navigate = useNavigate(); 
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const [file, setFile] = useState(null);
 
-  const onSubmitHandler = async (event, title, content, file) => {
-    if (title === "" || content === "") {
-      alert("제목과 내용을 입력해주세요.");
+  const fetchPost = async () => {
+      try {
+        const response = await api.get(`/api/post/${id}`);
+        console.log(5, response)
+        setTitle(response.data.data.content.title);
+        setContent(response.data.data.content.content);
+      } catch (error) {
+        console.error('게시글 정보 불러오기 실패:', error);
+      }
+    };
 
-      return;
-    }
+    useEffect(() => {
+      fetchPost();
+    }, []);
 
-    const postFormData = new FormData();
+  const handleTitleChange = (event) => {
+    setTitle(event.target.value);
+  };
+
+  const handleContentChange = (event) => {
+    setContent(event.target.value);
+  };
+
+  const handleFileChange = (event) => {
+    setFile(event.target.files[0]);
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
     const data = {
       title: title,
       content: content,
     };
 
-    postFormData.append(
-      "data",
-      new Blob([JSON.stringify(data)], { type: "application/json" })
-    );
-    postFormData.append("file", file);
+    const formData = new FormData();
+    formData.append('data', new Blob([JSON.stringify(data)], { type: 'application/json' }));
+    formData.append('file', file);
 
     try {
-      const response = await api.post(`api/post`, postFormData);
-      navigate(`/community`);
-      setUpdateTitle("");
-      setUpdateContent("");
-      setUpdateFile(null);
+      await axios.put(`${api}/api/post/${postId}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
 
-      console.log(response);
+      alert('게시글이 수정되었습니다.');
+      navigate(`/posts/${postId}`);
     } catch (error) {
-      console.error("Error:", error);
+      console.error('게시글 수정 실패:', error);
+      alert('게시글 수정에 실패했습니다.');
     }
   };
-
-  const handleFileUpload = (event) => {
-    const selectedFile = event.target.files[0];
-    if (selectedFile) {
-      setFile(selectedFile);
-    }
-  };
-
-  const handleChangeTitle = (e) => {
-    setTitle(e.target.value);
-  };
-
-  const handleChangeContent = (e) => {
-    setContent(e.target.value);
-  };
-      
 
   return (
     <div>
@@ -75,17 +78,17 @@ const PostEdit = () => {
           <div style={{backgroundColor:'#ebeef1'}}>
             <WriteBox>
               <div className="content">
-                <form onSubmit={onSubmitHandler}>
+                <form onSubmit={handleSubmit}>
                   <div className="article-write">
                     <div className="article-write-header">
                       <div className="article-write__title">글수정</div>
                     </div>
                     <div className="article-write-input">
                       <input
-                        onChange={handleChangeTitle}
+                        onChange={handleTitleChange}
                         type="text"
                         name="title"
-                        value={updateTitle}
+                        value={title}
                         className="article-write__text"
                         placeholder="제목"
                         autoComplete="off"
@@ -93,9 +96,9 @@ const PostEdit = () => {
                     </div>
                     <div className="article-write-content">
                       <textarea
-                        onChange={handleChangeContent}
+                        onChange={handleContentChange}
                         className="article-write__textarea"
-                        value={updateContent}
+                        value={content}
                       ></textarea>
                     </div>
                     <div>
@@ -103,10 +106,10 @@ const PostEdit = () => {
                       <input
                         type="file"
                         className="file-input"
-                        id="image"
+                        id="file"
                         name="image"
                         accept="image/*"
-                        onChange={handleFileUpload}
+                        onChange={handleFileChange}
                       /></div>
                     <div className="article-write__btn">
                       <button
