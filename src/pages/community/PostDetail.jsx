@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { CommunityWrap } from "./Community";
-import Header1 from "../../components/community/Header1";
 import Footer2 from "../../components/community/Footer2";
 import MainForm from "./CommunityMainForm";
 import moment from "moment";
@@ -10,11 +9,14 @@ import { Link } from "react-router-dom";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../../api/post";
 import Like from "../../components/Like";
+import Header2 from "../../components/common/header2/Header2";
+import Comment from "../../components/comment/Comment";
+
 
 const PostDetail = () => {
-  const navigate = useNavigate();
-  const { id } = useParams();
-  const [post, setPost] = useState([]);
+	const navigate = useNavigate();
+	const { id } = useParams();
+	const [post, setPost] = useState([]);
 
   const fetchPost = async () => {
     try {
@@ -26,104 +28,102 @@ const PostDetail = () => {
     }
   };
 
-  useEffect(() => {
-    fetchPost();
-  }, []);
+	useEffect(() => {
+		fetchPost();
+	}, []);
 
-  if (!post) {
-    return <div>Loading...</div>;
-  }
+	if (!post) {
+		return <div>Loading...</div>;
+	}
 
-  const onDeletePost = async () => {
-    const confirmDelete = window.confirm("글을 삭제하시겠습니까?");
-    if (confirmDelete) {
-      try {
-        await api.delete(`api/post/${id}`);
-        console.log("삭제되었습니다!");
-        navigate(`/community`);
-      } catch (error) {
-        alert("포스트에 대한 권한이 없습니다.");
-        console.error("댓글 삭제 오류:", error);
-      }
-    }
-  };
+	const onDeletePost = async () => {
+		const confirmDelete = window.confirm("글을 삭제하시겠습니까?");
+		if (confirmDelete) {
+			try {
+				await api.delete(`api/post/${id}`);
+				console.log("삭제되었습니다!");
+				navigate(`/community`);
+			} catch (error) {
+				alert("포스트에 대한 권한이 없습니다.");
+			}
+		}
+	};
 
-  return (
-    <div>
-      <CommunityWrap>
-        <Header1 />
-        <div className="community-container">
-          <MainForm />
-          <CommunityContentBox>
-            <div className="article">
-              <div className="article-header">
-                <div className="article__title">{post.title}</div>
-                <div className="article-meta">
-                  <div className="article-meta-list">
-                    <div className="article-meta__item">
-                      <span>
-                        {moment(post.createdAt).startOf("second").fromNow()}
-                      </span>
-                    </div>
-                    <div className="article-meta__item article-meta__item--name">
-                      {post.nickname}
-                    </div>
-                  </div>
-                  <div className="article-meta-list article-meta-list--right">
-                    <div className="article-meta__item">
-                      <span>조회 {post.views}</span>
-                    </div>
-                    <div className="article-meta__item">
-                      <span>댓글 {post.commentCount}</span>
-                    </div>
-                    <div className="article-meta__item">
-                      <span>추천 {post.liked}</span>
-                    </div>
-                  </div>
-                </div>
-                <div className="article-action">
-                  <div className="article-action__item">
-                    <button
-                      onClick={(e) => onDeletePost()}
-                      className="article-action__button button button--red button--red--border"
-                    >
-                      삭제
-                    </button>
-                  </div>
-                  <div className="article-action__item">
-                    <Link
-                      to={{
-                        pathname: "/PostEdit",
-                        state: {
-                          postId: post.id,
-                          title: post.title,
-                          content: post.content,
-                        },
-                      }}
-                      className="article-action__button__button"
-                    >
-                      수정
-                    </Link>
-                  </div>
-                </div>
-              </div>
-              <div className="article-content-wrap">
-                <div className="article-content">
-                  <p>{post.content}</p>
-                </div>
-              </div>
-              <div className="article-box">
-                <div className="postVote">
-                  <Like postId={id} />
-                </div>
-              </div>
-            </div>
-            <Footer2 />
-          </CommunityContentBox>
-        </div>
-      </CommunityWrap>
-    </div>
-  );
+	return (
+		<div>
+			<CommunityWrap>
+				<Header2 />
+				<div className="community-container">
+					<MainForm />
+					<CommunityContentBox>
+						<div className="article">
+							<div className="article-header">
+								<div className="article__title">{post.title}</div>
+								<div className="article-meta">
+									<div className="article-meta-list">
+										<div className="article-meta__item">
+											<span>
+												{moment(post.createdAt).startOf("second").fromNow()}
+											</span>
+										</div>
+										<div className="article-meta__item article-meta__item--name">
+											{post.nickname}
+										</div>
+									</div>
+									<div className="article-meta-list article-meta-list--right">
+										<div className="article-meta__item">
+											<span>조회 {post.views}</span>
+										</div>
+										<div className="article-meta__item">
+											<span>댓글 {post.commentCount}</span>
+										</div>
+										<div className="article-meta__item">
+											<span>추천 {post.liked}</span>
+										</div>
+									</div>
+								</div>
+								<div className="article-action">
+									<div className="article-action__item">
+										<button
+											onClick={(e) => onDeletePost()}
+											className="article-action__button button button--red button--red--border">
+											삭제
+										</button>
+									</div>
+									<div className="article-action__item">
+										<Link
+											to={{
+												pathname: "/PostEdit",
+												state: {
+													postId: post.id,
+													title: post.title,
+													content: post.content,
+												},
+											}}
+											className="article-action__button__button">
+											수정
+										</Link>
+									</div>
+								</div>
+							</div>
+							<div className="article-content-wrap">
+								<div className="article-content">
+									<p>{post.content}</p>
+								</div>
+							</div>
+							<div className="article-box">
+								<div className="postVote">
+									<Like postId={post.id} />
+								</div>
+							</div>
+						</div>
+						<Comment />
+						<Footer2 />
+					</CommunityContentBox>
+				</div>
+			</CommunityWrap>
+		</div>
+	);
 };
 
 const CommunityContentBox = styled.div`

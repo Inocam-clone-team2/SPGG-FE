@@ -10,26 +10,55 @@ const Comment = ({ commentList }) => {
 	const queryClient = useQueryClient();
 	const [commentInput, setCommentInput] = useState("");
 
+	/// 댓글 작성 통신
+	const mutation = useMutation((newComment) => addComment({ id, newComment }), {
+		onSuccess: () => {
+			queryClient.invalidateQueries(["comments", id]);
+			setCommentInput("");
+		},
+		onError: () => {
+			alert("댓글 작성에 실패했습니다.");
+		},
+	});
+
 	// 댓글 작성 핸들러
 	const handleCommentSubmit = async (e) => {
 		e.preventDefault();
 
-		if (!commentInput) {
-			alert("댓글 내용을 입력해주세요.");
+		if (!isUserLoggedIn) {
+			alert("로그인이 필요합니다. 로그인 후에 댓글을 작성해주세요.");
 			return;
 		}
-		// 댓글 작성 요청
-		try {
-			await addComment({ id, newComment: { content: commentInput } });
-			// 댓글 작성이 성공적으로 완료되면 해당 쿼리를 재요청하여 업데이트
-			queryClient.invalidateQueries(["comments", id]);
 
-			// 댓글 작성 후 댓글 내용 초기화
-			setCommentInput("");
-		} catch (error) {
-			alert("댓글 작성에 실패했습니다.");
+		if (!commentInput) {
+			alert("내용을 입력해주세요.");
+			return;
 		}
+
+		// 댓글 작성 요청
+		mutation.mutate({ content: commentInput });
 	};
+
+	// // 댓글 작성 핸들러
+	// const handleCommentSubmit = async (e) => {
+	// 	e.preventDefault();
+
+	// 	if (!commentInput) {
+	// 		alert("댓글 내용을 입력해주세요.");
+	// 		return;
+	// 	}
+	// 	// 댓글 작성 요청
+	// 	try {
+	// 		await addComment({ id, newComment: { content: commentInput } });
+	// 		// 댓글 작성이 성공적으로 완료되면 해당 쿼리를 재요청하여 업데이트
+	// 		queryClient.invalidateQueries(["comments", id]);
+
+	// 		// 댓글 작성 후 댓글 내용 초기화
+	// 		setCommentInput("");
+	// 	} catch (error) {
+	// 		alert("댓글 작성에 실패했습니다.");
+	// 	}
+	// };
 	// 댓글 조회 GET api/post/31/comment 403
 	const { data: test } = useQuery(["comments", id], fetchComment, {
 		staleTime: 300000,
