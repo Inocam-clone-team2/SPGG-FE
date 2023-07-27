@@ -4,6 +4,7 @@ import { colors } from "../../../common/styles";
 
 export const Header = styled.header`
 	width: 100%;
+	height: fit-content;
 	align-items: center;
 	background-color: ${colors.primary};
 	color: ${colors.text_back};
@@ -14,6 +15,7 @@ export const HeaderDiv = styled.div`
 	width: 100%;
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
 	height: ${(props) => props.height || "50"}px;
 	background-color: ${(props) => props.background || colors.primary};
 	${({ hasbottomborder }) => hasbottomborder && "border-bottom: 1px solid #4171D6;"}
@@ -28,7 +30,7 @@ export const LogoLink = styled(Link)`
 	display: flex;
 	align-items: center;
 	background-color: ${colors.primary};
-	height: 100%;
+	height: 46px;
 `;
 
 export const LogoImg = styled.img`
@@ -72,6 +74,11 @@ export const NavLink = styled(Link)`
 	gap: 15px;
 	cursor: pointer;
 	font-size: ${(props) => props.fontSize || "14"}px;
+
+	img {
+		height: 46px;
+		width: 60px;
+	}
 `;
 export const FuncBtn = styled.button`
 	width: 24px;
