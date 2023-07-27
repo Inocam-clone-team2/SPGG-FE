@@ -8,10 +8,12 @@ import CommunityTop from "../pages/community/CommunityTop";
 import PostEdit from "../pages/community/PostEdit";
 import Ranking from "../pages/Ranking";
 import History from "../pages/History";
-import History2 from "../pages/History2";
 import PostDetail from "../pages/community/PostDetail";
 import PostWrite from "../pages/community/PostWrite";
 import BestPost from "../pages/BestPost";
+import Header from "../components/common/header/Header";
+import Header2 from "../components/common/header2/Header2";
+import Comment from "../components/comment/Comment";
 function Router() {
   return (
     <BrowserRouter>

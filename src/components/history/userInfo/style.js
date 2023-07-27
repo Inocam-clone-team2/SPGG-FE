@@ -1,19 +1,27 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import { colors } from "../../../common/styles";
 
-export const UserInfoWrapper = styled.div`
+export const UserInfoWrapper = styled.section`
+	box-sizing: border-box;
 	width: 100%;
+	height: 200px;
 	border-bottom: 1px solid ${colors.text_back};
 	background-color: white;
+	display: flex;
+	justify-content: center;
 `;
-export const UserInfo = styled.section`
+
+export const UIcontainer = styled.div`
 	width: 1080px;
 	display: flex;
+	justify-content: space-between;
+	align-items: center;
+`;
+
+export const UserInfo = styled.div`
+	display: flex;
 	justify-content: start;
-	padding-bottom: 20px;
-	padding: 50px 0;
-	margin: 0 auto;
+
 	h1 {
 		margin: 0;
 	}

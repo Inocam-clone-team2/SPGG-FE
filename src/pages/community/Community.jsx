@@ -320,16 +320,17 @@ const Community = () => {
 };
 
 export const CommunityWrap = styled.div`
-margin: 0 auto;
-  vertical-align: middle;
-  justify-content: center;
-  max-width: 100%;
-  background-size: 100%;
+	margin: 0 auto;
+	vertical-align: middle;
+	justify-content: center;
+	max-width: 100%;
+	background-size: 100%;
 
-  .community-container {
-    text-align: center;
-    background-color: #ebeef1;
-  }`;
+	.community-container {
+		text-align: center;
+		background-color: #ebeef1;
+	}
+`;
 
 const ContentBox = styled.div`
 max-width: 728px;
@@ -534,7 +535,5 @@ margin: auto;
     }
   }
 }`;
-
-
 
 export default Community;

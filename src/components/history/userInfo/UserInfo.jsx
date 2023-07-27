@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import * as S from "./style";
-
+import ad from "../../../assets/ad.jpeg";
 const UserInfo = (data) => {
 	const playerInfo = data.data.summoner;
 
@@ -20,20 +20,23 @@ const UserInfo = (data) => {
 
 	return (
 		<S.UserInfoWrapper>
-			<S.UserInfo>
-				<S.ImgWrapper>
-					<img src={profileIcon} alt="profile" />
-					<div>{playerInfo.summonerLevel}</div>
-				</S.ImgWrapper>
-				<div>
-					<h1>{playerInfo.name}</h1>
-					{/* <S.InfoSpan>
+			<S.UIcontainer>
+				<S.UserInfo>
+					<S.ImgWrapper>
+						<img src={profileIcon} alt="profile" />
+						<div>{playerInfo.summonerLevel}</div>
+					</S.ImgWrapper>
+					<div>
+						<h1>{playerInfo.name}</h1>
+						{/* <S.InfoSpan>
 						랭킹 <S.InfoSpan color="blue">3</S.InfoSpan>위(상위 0.0004%)
 					</S.InfoSpan> */}
-					<S.RefreshBtn onClick={() => location.reload()}>전적 갱신</S.RefreshBtn>
-					{/* <S.InfoSpan color="gray">최근 업데이트: 2시간 전</S.InfoSpan> */}
-				</div>
-			</S.UserInfo>
+						<S.RefreshBtn onClick={() => location.reload()}>전적 갱신</S.RefreshBtn>
+						{/* <S.InfoSpan color="gray">최근 업데이트: 2시간 전</S.InfoSpan> */}
+					</div>
+				</S.UserInfo>
+				<img src={ad} alt="ad" />
+			</S.UIcontainer>
 		</S.UserInfoWrapper>
 	);
 };
