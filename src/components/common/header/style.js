@@ -4,7 +4,7 @@ import { colors } from "../../../common/styles";
 
 export const Header = styled.header`
 	width: 100%;
-	height: fit-content;
+	height: 100%;
 	align-items: center;
 	background-color: ${colors.primary};
 	color: ${colors.text_back};
