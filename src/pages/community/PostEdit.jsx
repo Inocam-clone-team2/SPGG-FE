@@ -4,78 +4,56 @@ import { CommunityWrap } from "./Community";
 import Header1 from "../../components/community/Header1";
 import MainForm from "./CommunityMainForm";
 import Footer2 from "../../components/community/Footer2";
-import axios from "axios";
-import api from "../../api/post"
-import { useNavigate, useParams } from 'react-router-dom';
-
+import api from "../../api/post";
+import { useNavigate, useParams } from "react-router-dom";
 const PostEdit = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
   const [file, setFile] = useState(null);
-
-  const fetchPost = async () => {
-      try {
-        const response = await api.get(`/api/post/${id}`);
-        console.log(5, response)
-        setTitle(response.data.data.content.title);
-        setContent(response.data.data.content.content);
-      } catch (error) {
-        console.error('게시글 정보 불러오기 실패:', error);
-      }
-    };
-
-    useEffect(() => {
-      fetchPost();
-    }, []);
-
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
   };
-
   const handleContentChange = (event) => {
     setContent(event.target.value);
   };
-
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
   };
-
   const handleSubmit = async (event, title, content, file) => {
     event.preventDefault();
-
+    if (title === "" || content === "") {
+      alert("제목과 내용을 입력해주세요.");
+      return;
+    }
+    const formData = new FormData();
     const data = {
       title: title,
       content: content,
     };
-
-    const formData = new FormData();
-    formData.append('data', new Blob([JSON.stringify(data)], { type: 'application/json' }));
-    formData.append('file', file);
-
+    formData.append(
+      "data",
+      new Blob([JSON.stringify(data)], { type: "application/json" })
+    );
+    formData.append("file", file);
     try {
-      await axios.put(`${api}/api/post/${postId}`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-
-      alert('게시글이 수정되었습니다.');
-      navigate(`/posts/${postId}`);
+      const response = await api.put(`api/post/${id}`, formData);
+      alert("게시글이 수정되었습니다.");
+      navigate(`/posts/${id}`);
+      console.log(response);
     } catch (error) {
-      console.error('게시글 수정 실패:', error);
-      alert('게시글 수정에 실패했습니다.');
+      console.error("게시글 수정 실패:", error);
+      alert("게시글 수정에 실패했습니다.");
     }
   };
-
   return (
     <div>
       <CommunityWrap>
         <Header1 />
         <div className="communityWrite-conatiner">
           <MainForm />
-          <div style={{backgroundColor:'#ebeef1'}}>
+          <div style={{ backgroundColor: "#EBEEF1" }}>
             <WriteBox>
               <div className="content">
                 <form onSubmit={handleSubmit}>
@@ -102,7 +80,7 @@ const PostEdit = () => {
                       ></textarea>
                     </div>
                     <div>
-                    <label htmlFor="file">파일</label>
+                      <label htmlFor="file">파일</label>
                       <input
                         type="file"
                         className="file-input"
@@ -110,7 +88,8 @@ const PostEdit = () => {
                         name="image"
                         accept="image/*"
                         onChange={handleFileChange}
-                      /></div>
+                      />
+                    </div>
                     <div className="article-write__btn">
                       <button
                         className="article-write__button article-write__button--cancel"
@@ -137,14 +116,11 @@ const PostEdit = () => {
     </div>
   );
 };
-
 const WriteBox = styled.div`
   text-align: center;
   width: 728px;
   margin: auto;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.15);
-
-
   .article-write {
     background: rgb(255, 255, 255);
     padding: 20px 10px;
@@ -152,7 +128,6 @@ const WriteBox = styled.div`
   .article-write__title {
     text-align: left;
   }
-
   .article-write__title {
     color: rgb(30, 32, 34);
     font-weight: 700;
@@ -167,7 +142,6 @@ const WriteBox = styled.div`
     padding-top: 8px;
     background: rgb(255, 255, 255);
   }
-
   .article-write__text {
     display: block;
     width: 100%;
@@ -182,7 +156,6 @@ const WriteBox = styled.div`
     border-image: initial;
     padding: 10px 16px 9px;
   }
-
   .article-write-content {
     width: 100%;
   }
@@ -196,7 +169,6 @@ const WriteBox = styled.div`
     resize: none;
     height: 447px;
   }
-
   .article-write__button--submit {
     margin-top: 16px;
     position: static;
@@ -209,7 +181,6 @@ const WriteBox = styled.div`
     line-height: 19px;
     font-size: 16px;
   }
-
   .article-write__button--cancel {
     margin-top: 16px;
     line-height: 19px;
@@ -221,10 +192,9 @@ const WriteBox = styled.div`
     width: 154px;
     height: 48px;
   }
-
   .article-write__btn {
     display: flex;
     justify-content: space-between;
-  }`;
-
+  }
+`;
 export default PostEdit;
