@@ -50,7 +50,7 @@ const Header = () => {
 						</S.NavLink>
 					</S.NavItem>
 					<S.NavItem>
-						<S.NavLink to="ranking" fontSize="15">
+						<S.NavLink to="/ranking" fontSize="15">
 							랭킹
 						</S.NavLink>
 					</S.NavItem>

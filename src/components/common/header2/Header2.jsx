@@ -101,7 +101,7 @@ const Header2 = () => {
 						</A.NavLink>
 					</A.NavItem>
 					<A.NavItem>
-						<A.NavLink to="ranking" fontSize="15">
+						<A.NavLink to="/ranking" fontSize="15">
 							랭킹
 						</A.NavLink>
 					</A.NavItem>
